@@ -17,18 +17,17 @@ namespace eStolutionTech.Data.Entities
         [Required]
         public int TimeOffType { get; set; }
         [Required]
-        public string EmployeeId { get; set; }
+        public Guid UserId { get; set; }
         [Required]
         public string FromDate { get; set; }
         [Required]
         public string ToDate { get; set; }
         public string AdminNote { get; set; }
-        public int DepartmentId { get; set; }
-        public int JobTitleId { get; set; }
         public string Duration { get; set; }
         public string FromHour { get; set; }
         public string ToHour { get; set; }
         public string RequestUnit { get; set; }
         public string Status { get; set; }
+        public User User { get; set; }
     }
 }

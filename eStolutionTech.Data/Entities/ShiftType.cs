@@ -6,21 +6,20 @@ using System.Text;
 
 namespace eStolutionTech.Data.Entities
 {
-    [Table("Shifts")]
-    public class Shift
+    [Table("ShiftTypes")]
+    public class ShiftType
     {
         public int Id { get; set; }
         [Required]
-        public string ProjectId { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
         [Required]
-        public Guid UserId { get; set; }
+        public DateTime StartIn { get; set; }
         [Required]
-        public DateTime Date { get; set; }
+        public DateTime EndIn { get; set; }
         [Required]
-        public string WorkingHours { get; set; }
+        public DateTime StartOut { get; set; }
         [Required]
-        public string Comment { get; set; }
-        public string Activity { get; set; }
-        public User User { get; set; }
+        public DateTime EndOut { get; set; }
     }
 }

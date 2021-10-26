@@ -1,11 +1,11 @@
-﻿using eStolutionTech.Data.Configurations;
-using eStolutionTech.Data.Entities;
+﻿using eSolutionTech.Data.Configurations;
+using eSolutionTech.Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 
-namespace eStolutionTech.Data.EF
+namespace eSolutionTech.Data.EF
 {
     public class eTechDbContext : IdentityDbContext<User, Role, Guid>
     {

@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using eStolutionTech.Data.EF;
+using eSolutionTech.Data.EF;
 
-namespace eStolutionTech.Data.Migrations
+namespace eSolutionTech.Data.Migrations
 {
     [DbContext(typeof(eTechDbContext))]
     [Migration("20211025155109_AspNetCoreIdentityDatabase2510")]

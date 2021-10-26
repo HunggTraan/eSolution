@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace eStolutionTech.Data.Migrations
+namespace eSolutionTech.Data.Migrations
 {
     public partial class AspNetCoreIdentityDatabase : Migration
     {

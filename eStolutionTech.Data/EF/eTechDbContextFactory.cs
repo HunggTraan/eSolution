@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace eStolutionTech.Data.EF
+namespace eSolutionTech.Data.EF
 {
     public class eTechDbContextFactory : IDesignTimeDbContextFactory<eTechDbContext>
     {

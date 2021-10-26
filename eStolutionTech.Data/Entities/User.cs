@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace eStolutionTech.Data.Entities
+namespace eSolutionTech.Data.Entities
 {
     public class User : IdentityUser<Guid>
     {

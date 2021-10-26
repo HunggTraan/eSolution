@@ -1,11 +1,11 @@
-﻿using eStolutionTech.Data.Enums;
+﻿using eSolutionTech.Data.Enums;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace eStolutionTech.Data.Entities
+namespace eSolutionTech.Data.Entities
 {
     [Table("Departments")]
     public class Department

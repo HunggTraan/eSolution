@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace eStolutionTech.Data.Entities
+namespace eSolutionTech.Data.Entities
 {
     public class Role : IdentityRole<Guid>
     {

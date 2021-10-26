@@ -16,4 +16,13 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Catalog\Shifts\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\eSolution.Utilities\eSolution.Utilities.csproj" />
+    <ProjectReference Include="..\eStolutionTech.Data\eSolutionTech.Data.csproj" />
+  </ItemGroup>
+
 </Project>

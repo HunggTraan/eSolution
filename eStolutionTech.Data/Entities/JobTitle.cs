@@ -1,8 +1,8 @@
-﻿using eStolutionTech.Data.Enums;
+﻿using eSolutionTech.Data.Enums;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace eStolutionTech.Data.Entities
+namespace eSolutionTech.Data.Entities
 {
     [Table("JobTitles")]
     public class JobTitle

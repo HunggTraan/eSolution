@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace eStolutionTech.Data.Entities
+namespace eSolutionTech.Data.Entities
 {
     [Table("TimeOffTypes")]
     public class TimeOffType

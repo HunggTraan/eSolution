@@ -1,8 +1,8 @@
-﻿using eStolutionTech.Data.Entities;
+﻿using eSolutionTech.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace eStolutionTech.Data.Configurations
+namespace eSolutionTech.Data.Configurations
 {
     public class DepartmentConfiguration : IEntityTypeConfiguration<Department>
     {

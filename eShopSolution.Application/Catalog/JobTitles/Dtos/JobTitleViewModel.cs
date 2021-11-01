@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace eSolutionTech.Application.Catalog.Departments.Dtos
+namespace eSolutionTech.Application.Catalog.JobTitles.Dtos
 {
-    public class DepartmentCreateRequest
+    public class JobTitleViewModel
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
         public string Description { get; set; }

@@ -13,7 +13,7 @@ namespace eSolutionTech.Application.Catalog.Departments
         Task<int> Update(DepartmentUpdateRequest request);
         Task<int> Delete(int departmentId);
         Task<List<DepartmentViewModel>>  GetAll();
-        PagedResult<DepartmentViewModel> GetAllPaging(GetDepartmentPagingRequest request);
-        PagedResult<DepartmentViewModel> GetById(int departmentId);
+        Task<PagedResult<DepartmentViewModel>> GetAllPaging(GetDepartmentPagingRequest request);
+        Task<DepartmentViewModel> GetById(int departmentId);
     }
 }

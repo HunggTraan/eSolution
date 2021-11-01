@@ -26,7 +26,6 @@ namespace eSolutionTech.Application.Catalog.Departments
                 Code = request.Code,
                 Name = request.Name,
                 Description = request.Description,
-                ParentId = request.ParentId
             };
             _context.Departments.Add(department);
             return await _context.SaveChangesAsync();
@@ -49,8 +48,7 @@ namespace eSolutionTech.Application.Catalog.Departments
         public async Task<PagedResult<DepartmentViewModel>> GetAllPaging(GetDepartmentPagingRequest request)
         {
             var query = from department in _context.Departments
-                        join parentDepartment in _context.Departments on department.ParentId equals parentDepartment.ParentId
-                        select new { department, parentDepartment };
+                        select new { department };
             if (!string.IsNullOrEmpty(request.KeyWord))
                 query = query.Where(x => x.department.Code.Contains(request.KeyWord) || x.department.Name.Contains(request.KeyWord));
 
@@ -62,8 +60,7 @@ namespace eSolutionTech.Application.Catalog.Departments
                     Id = x.department.Id,
                     Name = x.department.Name,
                     Code = x.department.Code,
-                    Description = x.department.Description,
-                    ParentId = x.department.ParentId
+                    Description = x.department.Description
                 }).ToListAsync();
 
             var pagedResult = new PagedResult<DepartmentViewModel>()
@@ -74,14 +71,35 @@ namespace eSolutionTech.Application.Catalog.Departments
             return pagedResult;
         }
 
-        public PagedResult<DepartmentViewModel> GetById(int departmentId)
+        public async Task<DepartmentViewModel> GetById(int departmentId)
         {
-            throw new NotImplementedException();
+            var department = await _context.Departments.FindAsync(departmentId);
+
+            var departmentViewModel = new DepartmentViewModel()
+            {
+                Id = department.Id,
+                Name = department.Name,
+                Code = department.Code,
+                Description = department.Description,
+            };
+            return departmentViewModel;
         }
 
-        public Task<int> Update(DepartmentUpdateRequest request)
+        public async Task<int> Update(DepartmentUpdateRequest request)
         {
-            throw new NotImplementedException();
+            var department = await _context.Departments.FindAsync(request.Id);
+            if (department == null) throw new eTechException($"Cannot find a department with id: {request.Id}");
+
+            if(string.IsNullOrEmpty(request.Name))
+                throw new eTechException($"Name cannot be null");
+            if (string.IsNullOrEmpty(request.Code))
+                throw new eTechException($"Code cannot be null");
+            department.Name = request.Name;
+            department.Code = request.Code;
+            department.Description = request.Description;
+
+            return await _context.SaveChangesAsync();
         }
+
     }
 }

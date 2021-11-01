@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace eSolutionTech.Application.Catalog.Departments.Dtos
+namespace eSolutionTech.Application.Catalog.JobTitles.Dtos
 {
-    public class DepartmentCreateRequest
+    public class JobTitleCreateRequest
     {
         public string Name { get; set; }
         public string Code { get; set; }

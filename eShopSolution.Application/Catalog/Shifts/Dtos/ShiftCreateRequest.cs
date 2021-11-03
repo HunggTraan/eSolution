@@ -1,33 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace eSolutionTech.Data.Entities
+namespace eSolutionTech.Application.Catalog.Shifts.Dtos
 {
-    [Table("Shifts")]
-    public class Shift
+    public class ShiftCreateRequest
     {
-        public int Id { get; set; }
-        [Required]
         public string ProjectId { get; set; }
-        [Required]
         public Guid UserId { get; set; }
-        [Required]
         public DateTime Date { get; set; }
-        [Required]
         public string WorkingHours { get; set; }
-        [Required]
         public string Comment { get; set; }
         public string Activity { get; set; }
-        [Required]
         public DateTime StartIn { get; set; }
-        [Required]
         public DateTime EndIn { get; set; }
-        [Required]
         public DateTime StartOut { get; set; }
-        [Required]
         public DateTime EndOut { get; set; }
     }
 }

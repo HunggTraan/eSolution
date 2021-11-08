@@ -18,10 +18,6 @@ namespace eSolutionTech.Data.Configurations
             builder.Property(x => x.Date).IsRequired(true);
             builder.Property(x => x.WorkingHours).IsRequired(true);
             builder.Property(x => x.Comment).IsRequired(true);
-            builder.Property(x => x.StartIn).IsRequired(true).HasDefaultValue(DateTime.UtcNow);
-            builder.Property(x => x.StartOut).IsRequired(true).HasDefaultValue(DateTime.UtcNow);
-            builder.Property(x => x.EndIn).IsRequired(true).HasDefaultValue(DateTime.UtcNow);
-            builder.Property(x => x.EndOut).IsRequired(true).HasDefaultValue(DateTime.UtcNow);
         }
     }
 }

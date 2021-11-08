@@ -21,13 +21,5 @@ namespace eSolutionTech.Data.Entities
         [Required]
         public string Comment { get; set; }
         public string Activity { get; set; }
-        [Required]
-        public DateTime StartIn { get; set; }
-        [Required]
-        public DateTime EndIn { get; set; }
-        [Required]
-        public DateTime StartOut { get; set; }
-        [Required]
-        public DateTime EndOut { get; set; }
     }
 }

@@ -28,10 +28,6 @@ namespace eSolutionTech.Application.Catalog.Shifts
                 Activity = request.Activity,
                 Comment = request.Comment,
                 Date = request.Date,
-                StartIn = request.StartIn,
-                StartOut = request.StartOut,
-                EndIn = request.EndIn,
-                EndOut = request.EndOut,
                 WorkingHours = request.WorkingHours
             };
             _context.Shifts.Add(shift);
@@ -118,10 +114,6 @@ namespace eSolutionTech.Application.Catalog.Shifts
                 Activity = shift.Activity,
                 Comment = shift.Comment,
                 Date = shift.Date,
-                StartIn = shift.StartIn,
-                StartOut = shift.StartOut,
-                EndIn = shift.EndIn,
-                EndOut = shift.EndOut,
                 WorkingHours = shift.WorkingHours
             };
             return shiftViewModel;

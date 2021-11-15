@@ -1,16 +1,14 @@
 ﻿using eShopSolution.Utilities.Exceptions;
-using eSolutionTech.Application.Catalog.Shifts.Dtos;
-using eSolutionTech.Application.Dtos;
 using eSolutionTech.Data.EF;
 using eSolutionTech.Data.Entities;
+using eSolutionTech.ViewModels.Common;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
-namespace eSolutionTech.Application.Catalog.Shifts
+namespace eSolutionTech.ViewModels.Catalog.Shifts
 {
     public class ShiftService : IShiftService
     {

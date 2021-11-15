@@ -1,11 +1,8 @@
-﻿using eSolutionTech.Application.Catalog.Projects.Dtos;
-using eSolutionTech.Application.Dtos;
-using System;
+﻿using eSolutionTech.ViewModels.Common;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace eSolutionTech.Application.Catalog.Projects
+namespace eSolutionTech.ViewModels.Catalog.Projects
 {
     public interface IProjectService
     {

@@ -1,11 +1,10 @@
-﻿using eSolutionTech.Application.Catalog.JobTitles.Dtos;
-using eSolutionTech.Application.Dtos;
-using System;
+﻿
+using eSolutionTech.ViewModels.Catalog.JobTitles.Dtos;
+using eSolutionTech.ViewModels.Common;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace eSolutionTech.Application.Catalog.JobTitles
+namespace eSolutionTech.ViewModels.Catalog.JobTitles
 {
     public interface IJobTitleService
     {

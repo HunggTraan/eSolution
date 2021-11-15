@@ -1,11 +1,9 @@
-﻿using eSolutionTech.Application.Catalog.TimeOffTypes.Dtos;
-using eSolutionTech.Application.Dtos;
-using System;
+﻿using eSolutionTech.ViewModels.Catalog.TimeOffTypes.Dtos;
+using eSolutionTech.ViewModels.Common;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace eSolutionTech.Application.Catalog.TimeOffTypes
+namespace eSolutionTech.ViewModels.Catalog.TimeOffTypes
 {
     public interface ITimeOffTypeService
     {

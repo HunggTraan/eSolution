@@ -1,16 +1,15 @@
-﻿using eSolutionTech.Application.Catalog.TimeOffTypes.Dtos;
-using eSolutionTech.Application.Dtos;
+﻿using eShopSolution.Utilities.Exceptions;
 using eSolutionTech.Data.EF;
+using eSolutionTech.Data.Entities;
+using eSolutionTech.ViewModels.Catalog.TimeOffTypes.Dtos;
+using eSolutionTech.ViewModels.Common;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 using System.Linq;
-using eSolutionTech.Data.Entities;
-using eShopSolution.Utilities.Exceptions;
-using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
-namespace eSolutionTech.Application.Catalog.TimeOffTypes
+namespace eSolutionTech.ViewModels.Catalog.TimeOffTypes
 {
     public class TimeOffTypeService : ITimeOffTypeService
     {

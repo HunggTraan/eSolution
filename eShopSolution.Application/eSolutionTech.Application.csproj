@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\eSolution.Utilities\eSolution.Utilities.csproj" />
     <ProjectReference Include="..\eSolutionTech.Data\eSolutionTech.Data.csproj" />
+    <ProjectReference Include="..\eSolutionTech.ViewModels\eSolutionTech.ViewModels.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,16 +1,15 @@
 ﻿using eShopSolution.Utilities.Exceptions;
-using eSolutionTech.Application.Catalog.JobTitles.Dtos;
-using eSolutionTech.Application.Dtos;
 using eSolutionTech.Data.EF;
 using eSolutionTech.Data.Entities;
+using eSolutionTech.ViewModels.Catalog.JobTitles.Dtos;
+using eSolutionTech.ViewModels.Common;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
-namespace eSolutionTech.Application.Catalog.JobTitles
+namespace eSolutionTech.ViewModels.Catalog.JobTitles
 {
     public class JobTitleService : IJobTitleService
     {

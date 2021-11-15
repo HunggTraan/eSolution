@@ -1,16 +1,14 @@
 ﻿using eShopSolution.Utilities.Exceptions;
-using eSolutionTech.Application.Catalog.Projects.Dtos;
-using eSolutionTech.Application.Dtos;
 using eSolutionTech.Data.EF;
 using eSolutionTech.Data.Entities;
+using eSolutionTech.ViewModels.Common;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace eSolutionTech.Application.Catalog.Projects
+namespace eSolutionTech.ViewModels.Catalog.Projects
 {
     public class ProjectService : IProjectService
     {

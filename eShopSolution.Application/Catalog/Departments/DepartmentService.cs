@@ -1,16 +1,15 @@
 ﻿using eShopSolution.Utilities.Exceptions;
-using eSolutionTech.Application.Catalog.Departments.Dtos;
-using eSolutionTech.Application.Dtos;
 using eSolutionTech.Data.EF;
 using eSolutionTech.Data.Entities;
+using eSolutionTech.ViewModels.Catalog.Departments;
+using eSolutionTech.ViewModels.Common;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace eSolutionTech.Application.Catalog.Departments
+namespace eSolutionTech.ViewModels.Catalog.Departments
 {
     public class DepartmentService : IDepartmentService
     {
@@ -40,9 +39,21 @@ namespace eSolutionTech.Application.Catalog.Departments
             return await _context.SaveChangesAsync();
         }
 
-        public Task<List<DepartmentViewModel>> GetAll()
+        public async Task<List<DepartmentViewModel>> GetAll()
         {
-            throw new NotImplementedException();
+            var query = from department in _context.Departments
+                        select new { department };
+            var data = await query.Select(x => new DepartmentViewModel()
+            {
+                Id = x.department.Id,
+                Code = x.department.Code,
+                Name = x.department.Name,
+                Description = x.department.Description
+            }).ToListAsync();
+
+            if (data != null)
+                return data;
+            else return new List<DepartmentViewModel>();
         }
 
         public async Task<PagedResult<DepartmentViewModel>> GetAllPaging(GetDepartmentPagingRequest request)

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace eSolutionTech.Application.Catalog.Departments.Dtos
+namespace eSolutionTech.ViewModels.Catalog.Departments
 {
     public class DepartmentCreateRequest
     {

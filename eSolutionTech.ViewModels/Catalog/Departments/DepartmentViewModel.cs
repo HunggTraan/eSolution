@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace eSolutionTech.Application.Catalog.Departments.Dtos
+namespace eSolutionTech.ViewModels.Catalog.Departments
 {
-    public class DepartmentUpdateRequest
+    public class DepartmentViewModel
     {
         public int Id { get; set; }
         public string Name { get; set; }

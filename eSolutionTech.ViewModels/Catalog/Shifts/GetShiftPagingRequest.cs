@@ -1,9 +1,7 @@
-﻿using eSolutionTech.Application.Dtos;
+﻿using eSolutionTech.ViewModels.Common;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace eSolutionTech.Application.Catalog.Shifts.Dtos
+namespace eSolutionTech.ViewModels.Catalog.Shifts
 {
     public class GetShiftPagingRequest : PagingRequestBase
     {

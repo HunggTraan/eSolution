@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace eSolutionTech.Application.Catalog.Shifts.Dtos
+namespace eSolutionTech.ViewModels.Catalog.Shifts
 {
-    public class ShiftUpdateRequest
+    public class ShiftCreateRequest
     {
-        public int Id { get; set; }
         public string ProjectId { get; set; }
         public Guid UserId { get; set; }
         public DateTime Date { get; set; }

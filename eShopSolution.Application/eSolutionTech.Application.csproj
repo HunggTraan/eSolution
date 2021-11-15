@@ -21,4 +21,8 @@
     <ProjectReference Include="..\eSolutionTech.Data\eSolutionTech.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Catalog\TimeOffRequests\" />
+  </ItemGroup>
+
 </Project>

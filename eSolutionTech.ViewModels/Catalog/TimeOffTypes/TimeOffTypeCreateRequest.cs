@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace eSolutionTech.Application.Catalog.TimeOffTypes.Dtos
+namespace eSolutionTech.ViewModels.Catalog.TimeOffTypes
 {
-    public class TimeOffTypeViewModel
+    public class TimeOffTypeCreateRequest
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Code { get; set; }

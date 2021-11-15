@@ -87,10 +87,6 @@ namespace eSolutionTech.Application.Catalog.Shifts
                     Activity = x.shift.Activity,
                     Comment = x.shift.Comment,
                     Date = x.shift.Date,
-                    StartIn = x.shift.StartIn,
-                    StartOut = x.shift.StartOut,
-                    EndIn = x.shift.EndIn,
-                    EndOut = x.shift.EndOut,
                     WorkingHours = x.shift.WorkingHours
                 }).ToListAsync();
 
@@ -129,10 +125,6 @@ namespace eSolutionTech.Application.Catalog.Shifts
             shift.Activity = request.Activity;
             shift.Comment = request.Comment;
             shift.Date = request.Date;
-            shift.StartIn = request.StartIn;
-            shift.StartOut = request.StartOut;
-            shift.EndIn = request.EndIn;
-            shift.EndOut = request.EndOut;
             shift.WorkingHours = request.WorkingHours;
 
             return await _context.SaveChangesAsync();

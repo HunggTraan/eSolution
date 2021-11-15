@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace eSolutionTech.Application.Catalog.Projects.Dtos
+namespace eSolutionTech.ViewModels.Catalog.Projects
 {
-    public class ProjectUpdateRequest
+    public class ProjectViewModel
     {
         public int Id { get; set; }
         public string Name { get; set; }

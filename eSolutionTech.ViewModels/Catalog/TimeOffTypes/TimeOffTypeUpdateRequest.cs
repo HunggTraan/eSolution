@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace eSolutionTech.Application.Catalog.TimeOffTypes.Dtos
+namespace eSolutionTech.ViewModels.Catalog.TimeOffTypes
 {
     public class TimeOffTypeUpdateRequest
     {

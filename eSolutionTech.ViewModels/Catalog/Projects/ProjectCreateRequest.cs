@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace eSolutionTech.Application.Catalog.Projects
+namespace eSolutionTech.ViewModels.Catalog.Projects
 {
-    public class ProjectViewModel
+    public class ProjectCreateRequest
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
         public string Description { get; set; }
@@ -18,5 +17,6 @@ namespace eSolutionTech.Application.Catalog.Projects
         public DateTime EndIn { get; set; }
         public DateTime StartOut { get; set; }
         public DateTime EndOut { get; set; }
+        public string[] UserIds { get; set; }
     }
 }

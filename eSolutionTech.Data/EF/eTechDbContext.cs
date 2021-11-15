@@ -20,9 +20,7 @@ namespace eSolutionTech.Data.EF
             modelBuilder.ApplyConfiguration(new TimeOffTypeConfiguration());
             modelBuilder.ApplyConfiguration(new TimeOffRequestConfiguration());
             modelBuilder.ApplyConfiguration(new ShiftConfiguration());
-            modelBuilder.ApplyConfiguration(new ShiftTypeConfiguration());
             modelBuilder.ApplyConfiguration(new MemberInProjectConfiguration());
-
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new RoleConfiguration());
 

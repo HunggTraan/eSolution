@@ -19,7 +19,6 @@
   <ItemGroup>
     <ProjectReference Include="..\eSolution.Utilities\eSolution.Utilities.csproj" />
     <ProjectReference Include="..\eSolutionTech.Data\eSolutionTech.Data.csproj" />
-    <ProjectReference Include="..\eStolutionTech.Data\eSolutionTech.Data.csproj" />
   </ItemGroup>
 
 </Project>

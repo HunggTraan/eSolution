@@ -16,9 +16,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eSolution.Utilities", "eSol
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eSolutionTech.Data", "eSolutionTech.Data\eSolutionTech.Data.csproj", "{4980D54F-0BD3-4B7C-B4B5-656D719EDEAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eSolutionTech.ViewModels", "eSolutionTech.ViewModels\eSolutionTech.ViewModels.csproj", "{747A11BB-DABB-44F8-9083-BB03C1ABD2AD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eSolutionTech.ViewModels", "eSolutionTech.ViewModels\eSolutionTech.ViewModels.csproj", "{747A11BB-DABB-44F8-9083-BB03C1ABD2AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eSolutionTech.BackendApi", "eSolutionTech.BackendApi\eSolutionTech.BackendApi.csproj", "{80ABEF63-17BF-4BB4-B2CE-923B7E76500E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "eSolutionTech.BackendApi", "eSolutionTech.BackendApi\eSolutionTech.BackendApi.csproj", "{80ABEF63-17BF-4BB4-B2CE-923B7E76500E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{B1E863E7-1A8C-4172-81B0-ACF77B88BCF5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{67FC0E28-A72B-40D1-BD15-033E9376D334}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Hosts", "Hosts", "{42308F9C-BA07-4934-AEC8-C90CA1EA9715}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +59,14 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4E626B7F-7DA3-4B2D-8617-B31973912B7C} = {42308F9C-BA07-4934-AEC8-C90CA1EA9715}
+		{6A69B6CC-D91E-4F47-829E-0484A035B2EF} = {67FC0E28-A72B-40D1-BD15-033E9376D334}
+		{72A352EF-EF78-4AB2-A57A-D19BAB8B0D1C} = {B1E863E7-1A8C-4172-81B0-ACF77B88BCF5}
+		{4980D54F-0BD3-4B7C-B4B5-656D719EDEAE} = {67FC0E28-A72B-40D1-BD15-033E9376D334}
+		{747A11BB-DABB-44F8-9083-BB03C1ABD2AD} = {B1E863E7-1A8C-4172-81B0-ACF77B88BCF5}
+		{80ABEF63-17BF-4BB4-B2CE-923B7E76500E} = {42308F9C-BA07-4934-AEC8-C90CA1EA9715}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9D68E6C9-435C-4FF0-93F3-C76BD84CB330}

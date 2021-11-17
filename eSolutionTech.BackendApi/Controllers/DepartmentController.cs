@@ -32,5 +32,76 @@ namespace eSolutionTech.BackendApi.Controllers
                 return Ok("Fail");
             }
         }
+
+        [HttpGet("paging")]
+        public async Task<IActionResult> GetAllPaging([FromQuery] GetDepartmentPagingRequest request)
+        {
+            try
+            {
+                var departments = await _departmentService.GetAllPaging(request);
+                if (departments != null)
+                    return Ok(departments);
+                else
+                    return Ok("Fail");
+            }
+            catch (eTechException ex)
+            {
+                return Ok("Fail");
+            }
+
+        }
+
+        [HttpGet("{departmentId}")]
+        public async Task<IActionResult> GetById(int departmentId)
+        {
+            try
+            {
+                var department = await _departmentService.GetById(departmentId);
+                if (department == null)
+                    return BadRequest("Cannot find department");
+                return Ok(department);
+            }
+            catch (eTechException ex)
+            {
+                return Ok("Fail");
+            }
+        }
+
+        [HttpPost]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Create([FromForm] DepartmentCreateRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var departmentId = await _departmentService.Create(request);
+            if (departmentId == 0)
+                return BadRequest();
+            var department = await _departmentService.GetById(departmentId);
+            return CreatedAtAction(nameof(GetById), new { id = departmentId }, department);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update([FromForm] DepartmentUpdateRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var affectedResult = await _departmentService.Update(request);
+            if (affectedResult == 0)
+                return BadRequest();
+            return Ok();
+        }
+
+        [HttpDelete("{departmentId}")]
+        public async Task<IActionResult> Delete(int departmentId)
+        {
+            var affectedResult = await _departmentService.Delete(departmentId);
+            if (affectedResult == 0)
+                return BadRequest();
+            return Ok();
+        }
     }
 }

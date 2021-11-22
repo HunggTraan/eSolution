@@ -6,6 +6,9 @@ using eSolutionTech.ViewModels.Catalog.Departments;
 using eSolutionTech.ViewModels.Catalog.JobTitles;
 using eSolutionTech.ViewModels.Catalog.Projects;
 using eSolutionTech.ViewModels.Catalog.TimeOffTypes;
+using eSolutionTech.ViewModels.System.Users;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -54,7 +57,10 @@ namespace eSolutionTech.BackendApi
 
             //services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IUserService, UserService>();
-            services.AddControllers();
+            services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();
+            services.AddTransient<IValidator<CreateUserRequest>, AddUserValidator>();
+            services.AddControllers()
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());
 
             services.AddSwaggerGen(c =>
             {

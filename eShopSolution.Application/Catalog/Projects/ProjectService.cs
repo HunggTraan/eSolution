@@ -72,7 +72,7 @@ namespace eSolutionTech.ViewModels.Catalog.Projects
                 }
                 else
                 {
-                    throw new eTechException($"Không tìm thấy ca làm việc với id là {projectId}");
+                    throw new eTechException($"Không tìm thấy dự án với id là {projectId}");
                 }
             }
             catch(Exception ex)

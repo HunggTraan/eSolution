@@ -1,6 +1,7 @@
 ﻿using eShopSolution.Utilities.Exceptions;
 using eSolutionTech.ViewModels.Catalog.TimeOffTypes;
 using eSolutionTech.ViewModels.Catalog.TimeOffTypes.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,6 +13,7 @@ namespace eSolutionTech.BackendApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TimeOffTypeController : ControllerBase
     {
         private readonly ITimeOffTypeService _timeOffTypeService;

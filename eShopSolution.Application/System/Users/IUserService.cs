@@ -1,4 +1,5 @@
-﻿using eSolutionTech.ViewModels.System.Users;
+﻿using eSolutionTech.ViewModels.Common;
+using eSolutionTech.ViewModels.System.Users;
 using System.Threading.Tasks;
 
 namespace eSolutionTech.Application.System.Users
@@ -7,5 +8,7 @@ namespace eSolutionTech.Application.System.Users
     {
         Task<string> Authencate(LoginRequest request);
         Task<bool> CreateUser(CreateUserRequest request);
+
+        Task<PagedResult<UserViewModel>> GetUsersPaging(GetUserPagingRequest request);
     }
 }

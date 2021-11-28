@@ -22,7 +22,7 @@ namespace eSolutionTech.BackendApi.Controllers
 
         [HttpPost("authenticate")]
         [AllowAnonymous]
-        public async Task<IActionResult> Authenticate([FromForm]LoginRequest request)
+        public async Task<IActionResult> Authenticate([FromBody] LoginRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -31,12 +31,12 @@ namespace eSolutionTech.BackendApi.Controllers
             {
                 return BadRequest("Sai tên đăng nhập hoặc mật khẩu!");
             }
-            return Ok(new { Token = resultToken });
+            return Ok(resultToken);
         }
 
         [HttpPost("adduser")]
         [AllowAnonymous]
-        public async Task<IActionResult> CreateUser([FromForm] CreateUserRequest request)
+        public async Task<IActionResult> CreateUser([FromBody] CreateUserRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

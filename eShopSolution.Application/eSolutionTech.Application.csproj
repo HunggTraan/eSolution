@@ -23,8 +23,4 @@
     <ProjectReference Include="..\eSolutionTech.ViewModels\eSolutionTech.ViewModels.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Catalog\TimeOffRequests\" />
-  </ItemGroup>
-
 </Project>

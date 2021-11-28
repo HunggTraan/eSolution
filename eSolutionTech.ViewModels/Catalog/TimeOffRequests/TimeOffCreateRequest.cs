@@ -1,30 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace eSolutionTech.Data.Entities
+namespace eSolutionTech.ViewModels.Catalog.TimeOffRequests
 {
-    [Table("TimeOffRequests")]
-    public class TimeOffRequest
+    public class TimeOffCreateRequest
     {
-        public int Id { get; set; }
-        [Required]
         public string Name { get; set; }
-        [Required]
         public string Description { get; set; }
-        [Required]
         public int TimeOffType { get; set; }
-        [Required]
         public Guid UserId { get; set; }
-        [Required]
-        public int DepartmentId{ get; set; }
-        [Required]
-        public int JobTitleId{ get; set; }
-        [Required]
+        public int DepartmentId { get; set; }
+        public int JobTitleId { get; set; }
         public DateTime FromDate { get; set; }
-        [Required]
         public DateTime ToDate { get; set; }
         public string AdminNote { get; set; }
         public string Duration { get; set; }
@@ -32,6 +20,9 @@ namespace eSolutionTech.Data.Entities
         public DateTime ToHour { get; set; }
         public string RequestUnit { get; set; }
         public string Status { get; set; }
-        public User User { get; set; }
+        public string FromDateStr { get; set; }
+        public string ToDateStr { get; set; }
+        public string FromHourStr { get; set; }
+        public string ToHourStr { get; set; }
     }
 }

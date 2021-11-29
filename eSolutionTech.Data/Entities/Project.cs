@@ -19,14 +19,6 @@ namespace eSolutionTech.Data.Entities
         public string ManagerId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public string Status { get; set; }
-        [Required]
-        public DateTime StartIn { get; set; }
-        [Required]
-        public DateTime EndIn { get; set; }
-        [Required]
-        public DateTime StartOut { get; set; }
-        [Required]
-        public DateTime EndOut { get; set; }
+        public int Status { get; set; }
     }
 }

@@ -7,7 +7,7 @@ namespace eSolutionTech.ViewModels.Catalog.Shifts
     public class ShiftViewModel
     {
         public int Id { get; set; }
-        public string ProjectId { get; set; }
+        public int ProjectId { get; set; }
         public Guid UserId { get; set; }
         public DateTime Date { get; set; }
         public string WorkingHours { get; set; }

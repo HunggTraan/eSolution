@@ -11,5 +11,7 @@ namespace eSolutionTech.Manager.Constants
         public const string BaseAddress = "https://localhost:5002";
         public const string ManagerUserLink = "/api/users/authenticate";
 
+        public const string BASEADDRESS_API = "BaseAddress";
+
     }
 }

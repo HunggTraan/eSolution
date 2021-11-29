@@ -1,6 +1,7 @@
 ﻿using eShopSolution.Utilities.Exceptions;
 using eSolutionTech.Data.EF;
 using eSolutionTech.Data.Entities;
+using eSolutionTech.ViewModels.Catalog.Projects;
 using eSolutionTech.ViewModels.Common;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,12 +14,25 @@ namespace eSolutionTech.ViewModels.Catalog.Shifts
     public class ShiftService : IShiftService
     {
         private readonly eTechDbContext _context;
-        public ShiftService(eTechDbContext context)
+        private readonly IProjectService _projectService;
+        public ShiftService(eTechDbContext context, IProjectService projectService)
         {
             _context = context;
+            _projectService = projectService;
         }
         public async Task<int> Create(ShiftCreateRequest request)
         {
+            var projectInfo = _projectService.GetById(request.ProjectId);
+
+            if (projectInfo.Result.StartDate < DateTime.Now)
+            {
+                throw new eTechException($"Chưa đến thời điểm chấm công cho dự án này!");
+            }
+            else if (projectInfo.Result.EndDate < DateTime.Now)
+            {
+                throw new eTechException($"Hết thời hạn chấm công cho dự án này!");
+            }
+
             var shift = new Shift()
             {
                 ProjectId = request.ProjectId,
@@ -63,14 +77,14 @@ namespace eSolutionTech.ViewModels.Catalog.Shifts
             //if (!string.IsNullOrEmpty(request.KeyWord))
             //    query = query.Where(x => x.shift.Code.Contains(request.KeyWord) || x.jobTitle.Name.Contains(request.KeyWord));
 
-            if(request.UserId != null || request.UserId != Guid.Empty)
+            if (request.UserId != null || request.UserId != Guid.Empty)
             {
                 query = query.Where(x => x.shift.UserId == request.UserId);
             }
 
-            if(request.ProjectId > 0)
+            if (request.ProjectId > 0)
             {
-                query = query.Where(x => x.shift.ProjectId == request.UserId.ToString());
+                query = query.Where(x => x.shift.ProjectId == request.ProjectId);
             }
 
             int totalRow = await query.CountAsync();

@@ -12,6 +12,7 @@ namespace eSolutionTech.BackendApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -35,7 +36,6 @@ namespace eSolutionTech.BackendApi.Controllers
         }
 
         [HttpPost("adduser")]
-        [AllowAnonymous]
         public async Task<IActionResult> CreateUser([FromBody] CreateUserRequest request)
         {
             if (!ModelState.IsValid)

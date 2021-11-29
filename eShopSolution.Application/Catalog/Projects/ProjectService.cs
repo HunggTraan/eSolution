@@ -29,10 +29,6 @@ namespace eSolutionTech.ViewModels.Catalog.Projects
                     ManagerId = request.ManagerId,
                     StartDate = request.StartDate,
                     EndDate = request.EndDate,
-                    StartIn = request.StartIn,
-                    StartOut = request.StartOut,
-                    EndIn = request.EndIn,
-                    EndOut = request.EndOut,
                     Status = request.Status
                 };
                 _context.Projects.Add(project);
@@ -108,11 +104,7 @@ namespace eSolutionTech.ViewModels.Catalog.Projects
                     ManagerId = x.project.ManagerId,
                     StartDate = x.project.StartDate,
                     EndDate = x.project.EndDate,
-                    StartIn = x.project.StartIn,
-                    StartOut = x.project.StartOut,
-                    EndIn = x.project.EndIn,
-                    EndOut = x.project.EndOut,
-                    Status = x.project.Status,
+                    Status = x.project.Status
                 }).ToListAsync();
 
             var pagedResult = new PagedResult<ProjectViewModel>()
@@ -136,10 +128,6 @@ namespace eSolutionTech.ViewModels.Catalog.Projects
                 ManagerId = project.ManagerId,
                 StartDate = project.StartDate,
                 EndDate = project.EndDate,
-                StartIn = project.StartIn,
-                StartOut = project.StartOut,
-                EndIn = project.EndIn,
-                EndOut = project.EndOut,
                 Status = project.Status
             };
             return projectViewModel;
@@ -156,10 +144,6 @@ namespace eSolutionTech.ViewModels.Catalog.Projects
             project.ManagerId = request.ManagerId;
             project.StartDate = request.StartDate;
             project.EndDate = request.EndDate;
-            project.StartIn = request.StartIn;
-            project.StartOut = request.StartOut;
-            project.EndIn = request.EndIn;
-            project.EndOut = request.EndOut;
             project.Status = request.Status;
 
             return await _context.SaveChangesAsync();

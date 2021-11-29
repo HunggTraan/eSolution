@@ -111,7 +111,8 @@ namespace eSolutionTech.Application.System.Users
                     FullName = x.users.FullName,
                     Id = x.users.Id,
                     JobTitle = x.jobTitle.Name,
-                    Department = x.department.Name
+                    Department = x.department.Name,
+                    Dob = x.users.DoB
                 }).ToListAsync();
 
             //4. Select and projection

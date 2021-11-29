@@ -12,11 +12,7 @@ namespace eSolutionTech.ViewModels.Catalog.Projects
         public string ManagerId { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public string Status { get; set; }
-        public DateTime StartIn { get; set; }
-        public DateTime EndIn { get; set; }
-        public DateTime StartOut { get; set; }
-        public DateTime EndOut { get; set; }
+        public int Status { get; set; }
         public string[] UserIds { get; set; }
     }
 }

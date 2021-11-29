@@ -11,7 +11,7 @@ namespace eSolutionTech.Data.Entities
     {
         public int Id { get; set; }
         [Required]
-        public string ProjectId { get; set; }
+        public int ProjectId { get; set; }
         [Required]
         public Guid UserId { get; set; }
         [Required]
@@ -21,5 +21,6 @@ namespace eSolutionTech.Data.Entities
         [Required]
         public string Comment { get; set; }
         public string Activity { get; set; }
+        public int Status { get; set; }
     }
 }

@@ -109,7 +109,7 @@ namespace eSolutionTech.ViewModels.Catalog.Projects
 
             var pagedResult = new PagedResult<ProjectViewModel>()
             {
-                TotalRecord = totalRow,
+                TotalRecords = totalRow,
                 Items = data
             };
             return pagedResult;

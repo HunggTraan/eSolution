@@ -104,7 +104,7 @@ namespace eSolutionTech.ViewModels.Catalog.Shifts
 
             var pagedResult = new PagedResult<ShiftViewModel>()
             {
-                TotalRecord = totalRow,
+                TotalRecords = totalRow,
                 Items = data
             };
             return pagedResult;

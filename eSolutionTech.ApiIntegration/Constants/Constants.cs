@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace eSolutionTech.Manager.Constants
+namespace eSolutionTech.ApiIntegration.Constants
 {
     public class Constants
     {
@@ -12,6 +12,7 @@ namespace eSolutionTech.Manager.Constants
         public const string ManagerUserLink = "/api/users/authenticate";
 
         public const string BASEADDRESS_API = "BaseAddress";
-
+        public const string Token = "Token";
+        public const string Bearer = "Bearer";
     }
 }

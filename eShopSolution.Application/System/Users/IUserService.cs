@@ -1,14 +1,25 @@
 ﻿using eSolutionTech.ViewModels.Common;
 using eSolutionTech.ViewModels.System.Users;
+using System;
 using System.Threading.Tasks;
 
 namespace eSolutionTech.Application.System.Users
 {
     public interface IUserService
     {
-        Task<string> Authencate(LoginRequest request);
-        Task<bool> CreateUser(CreateUserRequest request);
 
-        Task<PagedResult<UserViewModel>> GetUsersPaging(GetUserPagingRequest request);
+        Task<ApiResult<string>> Authencate(LoginRequest request);
+
+        Task<ApiResult<bool>> CreateUser(CreateUserRequest request);
+
+        Task<ApiResult<bool>> Update(Guid id, UserUpdateRequest request);
+
+        Task<ApiResult<PagedResult<UserViewModel>>> GetUsersPaging(GetUserPagingRequest request);
+
+        Task<ApiResult<UserViewModel>> GetById(Guid id);
+
+        Task<ApiResult<bool>> Delete(Guid id);
+
+        //Task<ApiResult<bool>> RoleAssign(Guid id, RoleAssignRequest request);
     }
 }

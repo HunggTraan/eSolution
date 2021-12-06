@@ -123,7 +123,7 @@ namespace eSolutionTech.Application.Catalog.TimeOffRequests
 
                 var pagedResult = new PagedResult<TimeOffViewModel>()
                 {
-                    TotalRecord = totalRow,
+                    TotalRecords = totalRow,
                     Items = data
                 };
                 return pagedResult;

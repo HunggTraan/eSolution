@@ -17,6 +17,8 @@ namespace eSolutionTech.ViewModels.System.Users
 
         [Display(Name = "Tài khoản")]
         public string UserName { get; set; }
+        [Display(Name = "Mã nhân viên")]
+        public string Code { get; set; }
 
         [Display(Name = "Email")]
         public string Email { get; set; }

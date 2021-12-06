@@ -76,7 +76,7 @@ namespace eSolutionTech.ViewModels.Catalog.Departments
 
             var pagedResult = new PagedResult<DepartmentViewModel>()
             {
-                TotalRecord = totalRow,
+                TotalRecords = totalRow,
                 Items = data
             };
             return pagedResult;

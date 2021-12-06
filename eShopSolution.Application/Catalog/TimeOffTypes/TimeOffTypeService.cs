@@ -73,7 +73,7 @@ namespace eSolutionTech.ViewModels.Catalog.TimeOffTypes
 
             var pagedResult = new PagedResult<TimeOffTypeViewModel>()
             {
-                TotalRecord = totalRow,
+                TotalRecords = totalRow,
                 Items = data
             };
             return pagedResult;

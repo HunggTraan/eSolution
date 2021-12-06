@@ -65,7 +65,7 @@ namespace eSolutionTech.ViewModels.Catalog.JobTitles
 
             var pagedResult = new PagedResult<JobTitleViewModel>()
             {
-                TotalRecord = totalRow,
+                TotalRecords = totalRow,
                 Items = data
             };
             return pagedResult;

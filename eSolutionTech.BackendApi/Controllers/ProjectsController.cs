@@ -9,10 +9,10 @@ namespace eSolutionTech.BackendApi.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class ProjectController : ControllerBase
+    public class ProjectsController : ControllerBase
     {
         private readonly IProjectService _projectService;
-        public ProjectController(IProjectService projectService)
+        public ProjectsController(IProjectService projectService)
         {
             _projectService = projectService;
         }

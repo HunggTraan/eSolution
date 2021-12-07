@@ -1,23 +1,23 @@
-﻿@using eSolutionTech.ViewModels.Common;
+﻿@using eSolutionTech.ViewModels.Common
 
-@model PagedResult<eSolutionTech.ViewModels.System.Users.UserViewModel>
+@model PagedResult<eSolutionTech.ViewModels.Catalog.Departments.DepartmentViewModel>
 
 @{
-    ViewData["Title"] = "Danh sách người dùng";
+    ViewData["Title"] = "Danh sách phòng ban";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="container-fluid">
-    <h1 class="mt-4">Danh sách người dùng</h1>
+    <h1 class="mt-4">Danh sách phòng ban</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
-        <li class="breadcrumb-item active">Danh sách người dùng</li>
+        <li class="breadcrumb-item active">Danh sách sản phẩm</li>
     </ol>
     <div class="card mb-12">
         <div class="card-header">
             <div class="row">
                 <div class="col-md-6 col-xs-12">
-                    <a class="btn btn-success" asp-action="Create" asp-controller="User">Tạo mới</a>
+                    <a class="btn btn-success" asp-action="Create" asp-controller="Department">Tạo mới</a>
                 </div>
                 <div class="col-md-6 col-xs-12">
                     <form asp-action="Index" method="get">
@@ -27,13 +27,14 @@
                             </div>
                             <div class="col-md-4">
                                 <button type="submit" class="btn btn-primary">Tìm</button>
-                                <button type="button" onclick="window.location.href='/User/Index'" class="btn btn-secondary">Đặt lại</button>
+                                <button type="button" onclick="window.location.href='/Department/Index'" class="btn btn-secondary">Đặt lại</button>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
+
         <div class="card-body">
             <div class="row">
                 @if (ViewBag.SuccessMsg != null)
@@ -49,19 +50,13 @@
                     <thead>
                         <tr>
                             <th class="text-center">
-                                Họ và tên
+                                Mã phòng ban
                             </th>
                             <th class="text-center">
-                                Tên tài khoản
+                                Tên
                             </th>
                             <th class="text-center">
-                                Ngày sinh
-                            </th>
-                            <th class="text-center">
-                                Chức vụ
-                            </th>
-                            <th class="text-center">
-                                Phòng ban
+                                Mô tả
                             </th>
                             <th class="text-center">Hành động</th>
                         </tr>
@@ -71,19 +66,13 @@
                         {
                             <tr>
                                 <td class="text-center">
-                                    @Html.DisplayFor(modelItem => item.FullName)
+                                    @Html.DisplayFor(modelItem => item.Code)
                                 </td>
-                                <td class="text-center">
-                                    @Html.DisplayFor(modelItem => item.UserName)
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
                                 </td>
-                                <td class="text-center">
-                                    @Convert.ToDateTime(item.Dob).ToString("dd/MM/yyyy")
-                                </td>
-                                <td class="text-center">
-                                    @Html.DisplayFor(modelItem => item.JobTitle)
-                                </td>
-                                <td class="text-center">
-                                    @Html.DisplayFor(modelItem => item.Department)
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Description)
                                 </td>
                                 <td class="text-center">
                                     <a href="@Url.Action("Edit", new { id = item.Id })" name="Sửa">
@@ -103,35 +92,14 @@
                     </tbody>
                 </table>
             </div>
-            @*//@await Component.InvokeAsync("Pager", Model)*@
         </div>
     </div>
 </div>
 
-@section Scripts{
-    <script>
+@section Scripts{ 
+<script type="text/javascript">
     $(document).ready(function () {
         $('#dataTable').DataTable();
     });
-    var table = $('#example').DataTable();
-
-
-    function remove(id) {
-      JqueryConfirm(
-        "Bạn có muốn xóa bản ghi này!",
-        () => {
-          JqueryPostJSON(
-            '@Url.Action("Remove")',
-            JSON.stringify({
-              Id: id
-            }),
-            (response) => {
-              if (response.Succeeded) window.location.href = '@Url.Action("Index")';
-              else JqueryAlert("Xoá bản ghi!", response.Message, false);
-            }
-          );
-        }
-      );
-    }
-    </script>
+</script>
 }

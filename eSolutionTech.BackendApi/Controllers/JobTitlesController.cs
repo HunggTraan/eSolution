@@ -10,10 +10,10 @@ namespace eSolutionTech.BackendApi.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class JobTitleController : ControllerBase
+    public class JobTitlesController : ControllerBase
     {
         private readonly IJobTitleService _jobTitleService;
-        public JobTitleController(IJobTitleService jobTitleService)
+        public JobTitlesController(IJobTitleService jobTitleService)
         {
             _jobTitleService = jobTitleService;
         }

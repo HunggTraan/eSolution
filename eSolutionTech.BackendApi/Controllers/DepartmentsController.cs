@@ -13,15 +13,15 @@ namespace eSolutionTech.BackendApi.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class DepartmentController : ControllerBase
+    public class DepartmentsController : ControllerBase
     {
         private readonly IDepartmentService _departmentService;
-        public DepartmentController(IDepartmentService departmentService)
+        public DepartmentsController(IDepartmentService departmentService)
         {
             _departmentService = departmentService;
         }
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetAll()
         {
             try
             {
@@ -73,24 +73,36 @@ namespace eSolutionTech.BackendApi.Controllers
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> Create([FromForm] DepartmentCreateRequest request)
         {
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                var departmentId = await _departmentService.Create(request);
+                if (departmentId == 0)
+                    return BadRequest();
+                var department = await _departmentService.GetById(departmentId);
+                return CreatedAtAction(nameof(GetById), new { id = departmentId }, department);
             }
-            var departmentId = await _departmentService.Create(request);
-            if (departmentId == 0)
-                return BadRequest();
-            var department = await _departmentService.GetById(departmentId);
-            return CreatedAtAction(nameof(GetById), new { id = departmentId }, department);
+            catch (eTechException ex)
+            {
+                return Ok("Fail");
+            }
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update([FromForm] DepartmentUpdateRequest request)
+        [HttpPut("{departmentId}")]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Update([FromRoute] int departmentId, [FromForm] DepartmentUpdateRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
+            if(departmentId > 0)
+                request.Id = departmentId;
+
             var affectedResult = await _departmentService.Update(request);
             if (affectedResult == 0)
                 return BadRequest();

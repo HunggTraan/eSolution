@@ -11,7 +11,7 @@ namespace eSolutionTech.BackendApi.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class TimeOffRequestController : ControllerBase
+    public class TimeOffRequestsController : ControllerBase
     {
     }
 }

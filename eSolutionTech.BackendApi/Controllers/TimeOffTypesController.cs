@@ -14,10 +14,10 @@ namespace eSolutionTech.BackendApi.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class TimeOffTypeController : ControllerBase
+    public class TimeOffTypesController : ControllerBase
     {
         private readonly ITimeOffTypeService _timeOffTypeService;
-        public TimeOffTypeController(ITimeOffTypeService timeOffTypeService)
+        public TimeOffTypesController(ITimeOffTypeService timeOffTypeService)
         {
             _timeOffTypeService = timeOffTypeService;
         }

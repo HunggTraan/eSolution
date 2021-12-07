@@ -49,6 +49,7 @@ namespace eSolutionTech.Manager
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddTransient<IUserApiClient, UserApiClient>();
+            services.AddTransient<IDepartmentApiClient, DepartmentApiClient>();
 
             IMvcBuilder builder = services.AddRazorPages();
 

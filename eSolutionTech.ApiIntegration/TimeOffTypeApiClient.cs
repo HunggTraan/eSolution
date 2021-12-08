@@ -1,4 +1,5 @@
-﻿using eSolutionTech.ViewModels.Catalog.Departments;
+﻿using eSolutionTech.ViewModels.Catalog.TimeOffTypes;
+using eSolutionTech.ViewModels.Catalog.TimeOffTypes.Dtos;
 using eSolutionTech.ViewModels.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -11,18 +12,17 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace eSolutionTech.ApiIntegration
 {
-    public class DepartmentApiClient : BaseApiClient, IDepartmentApiClient
+    public class TimeOffTypeApiClient : BaseApiClient, ITimeOffTypeApiClient
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
 
-        public DepartmentApiClient(IHttpClientFactory httpClientFactory,
+        public TimeOffTypeApiClient(IHttpClientFactory httpClientFactory,
            IHttpContextAccessor httpContextAccessor,
-            IConfiguration configuration): base(httpClientFactory,
+            IConfiguration configuration) : base(httpClientFactory,
                httpContextAccessor,
                configuration)
         {
@@ -30,7 +30,7 @@ namespace eSolutionTech.ApiIntegration
             _configuration = configuration;
             _httpClientFactory = httpClientFactory;
         }
-        public async Task<bool> CreateDepartment(DepartmentCreateRequest request)
+        public async Task<bool> CreateTimeOffType(TimeOffTypeCreateRequest request)
         {
             var sessions = _httpContextAccessor
                             .HttpContext
@@ -47,42 +47,46 @@ namespace eSolutionTech.ApiIntegration
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Name) ? "" : request.Name.ToString()), "name");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Code) ? "" : request.Code.ToString()), "code");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Description) ? "" : request.Description.ToString()), "description");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.RequestUnit) ? "" : request.RequestUnit.ToString()), "requestUnit");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.StartDateStr) ? "" : request.StartDateStr.ToString()), "startDate");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.EndDateStr) ? "" : request.EndDateStr.ToString()), "endDate");
+            requestContent.Add(new StringContent(request.Unpaid.ToString()), "unpaid");
 
-            var response = await client.PostAsync($"/api/departments/", requestContent);
+            var response = await client.PostAsync($"/api/timeOffTypes/", requestContent);
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> DeleteDepartment(int id)
+        public async Task<bool> DeleteTimeOffType(int id)
         {
-            return await Delete($"/api/departments/" + id);
+            return await Delete($"/api/timeOffTypes/" + id);
         }
 
-        public async Task<List<DepartmentViewModel>> GetAll()
+        public async Task<List<TimeOffTypeViewModel>> GetAll()
         {
-            var data = await GetAsync<List<DepartmentViewModel>>(
-                    $"/api/departments");
+            var data = await GetAsync<List<TimeOffTypeViewModel>>(
+                    $"/api/timeOffTypes");
 
             return data;
         }
 
-        public async Task<DepartmentViewModel> GetById(int id)
+        public async Task<TimeOffTypeViewModel> GetById(int id)
         {
-            var data = await GetAsync<DepartmentViewModel>($"/api/departments/{id}");
+            var data = await GetAsync<TimeOffTypeViewModel>($"/api/timeOffTypes/{id}");
 
             return data;
         }
 
-        public async Task<PagedResult<DepartmentViewModel>> GetPagings(GetDepartmentPagingRequest request)
+        public async Task<PagedResult<TimeOffTypeViewModel>> GetPagings(GetTimeOffTypePagingRequest request)
         {
-            var data = await GetAsync<PagedResult<DepartmentViewModel>>(
-                        $"/api/departments/paging?pageIndex={request.PageIndex}" +
+            var data = await GetAsync<PagedResult<TimeOffTypeViewModel>>(
+                        $"/api/timeOffTypes/paging?pageIndex={request.PageIndex}" +
                         $"&pageSize={request.PageSize}" +
                         $"&keyword={request.KeyWord}");
 
             return data;
         }
 
-        public async Task<bool> UpdateDepartment(DepartmentUpdateRequest request)
+        public async Task<bool> UpdateTimeOffType(TimeOffTypeUpdateRequest request)
         {
             var sessions = _httpContextAccessor
                 .HttpContext
@@ -98,8 +102,12 @@ namespace eSolutionTech.ApiIntegration
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Name) ? "" : request.Name.ToString()), "name");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Code) ? "" : request.Code.ToString()), "code");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Description) ? "" : request.Description.ToString()), "description");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.RequestUnit) ? "" : request.RequestUnit.ToString()), "requestUnit");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.StartDateStr) ? "" : request.StartDateStr.ToString()), "startDate");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.EndDateStr) ? "" : request.EndDateStr.ToString()), "endDate");
+            requestContent.Add(new StringContent(request.Unpaid.ToString()), "unpaid");
 
-            var response = await client.PutAsync($"/api/departments/" + request.Id, requestContent);
+            var response = await client.PutAsync($"/api/timeOffTypes/" + request.Id, requestContent);
             return response.IsSuccessStatusCode;
         }
     }

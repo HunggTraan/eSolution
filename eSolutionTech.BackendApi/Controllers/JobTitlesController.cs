@@ -18,7 +18,7 @@ namespace eSolutionTech.BackendApi.Controllers
             _jobTitleService = jobTitleService;
         }
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetAll()
         {
             try
             {
@@ -82,12 +82,17 @@ namespace eSolutionTech.BackendApi.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> Update([FromForm] JobTitleUpdateRequest request)
+        [HttpPut("{departmentId}")]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Update([FromRoute] int jobTitleId, [FromForm] JobTitleUpdateRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            if (jobTitleId > 0)
+                request.Id = jobTitleId;
+
             var affectedResult = await _jobTitleService.Update(request);
             if (affectedResult == 0)
                 return BadRequest();

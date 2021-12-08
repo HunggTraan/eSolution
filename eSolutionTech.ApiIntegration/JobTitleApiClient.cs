@@ -1,4 +1,5 @@
-﻿using eSolutionTech.ViewModels.Catalog.Departments;
+﻿using eSolutionTech.ViewModels.Catalog.JobTitles;
+using eSolutionTech.ViewModels.Catalog.JobTitles.Dtos;
 using eSolutionTech.ViewModels.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -14,15 +15,15 @@ using System.Threading.Tasks;
 
 namespace eSolutionTech.ApiIntegration
 {
-    public class DepartmentApiClient : BaseApiClient, IDepartmentApiClient
+    public class JobTitleApiClient : BaseApiClient, IJobTitleApiClient
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
 
-        public DepartmentApiClient(IHttpClientFactory httpClientFactory,
+        public JobTitleApiClient(IHttpClientFactory httpClientFactory,
            IHttpContextAccessor httpContextAccessor,
-            IConfiguration configuration): base(httpClientFactory,
+            IConfiguration configuration) : base(httpClientFactory,
                httpContextAccessor,
                configuration)
         {
@@ -30,7 +31,7 @@ namespace eSolutionTech.ApiIntegration
             _configuration = configuration;
             _httpClientFactory = httpClientFactory;
         }
-        public async Task<bool> CreateDepartment(DepartmentCreateRequest request)
+        public async Task<bool> CreateJobTitle(JobTitleCreateRequest request)
         {
             var sessions = _httpContextAccessor
                             .HttpContext
@@ -48,41 +49,41 @@ namespace eSolutionTech.ApiIntegration
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Code) ? "" : request.Code.ToString()), "code");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Description) ? "" : request.Description.ToString()), "description");
 
-            var response = await client.PostAsync($"/api/departments/", requestContent);
+            var response = await client.PostAsync($"/api/jobTitles/", requestContent);
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> DeleteDepartment(int id)
+        public async Task<bool> DeleteJobTitle(int id)
         {
-            return await Delete($"/api/departments/" + id);
+            return await Delete($"/api/jobTitles/" + id);
         }
 
-        public async Task<List<DepartmentViewModel>> GetAll()
+        public async Task<List<JobTitleViewModel>> GetAll()
         {
-            var data = await GetAsync<List<DepartmentViewModel>>(
-                    $"/api/departments");
+            var data = await GetAsync<List<JobTitleViewModel>>(
+                    $"/api/jobTitles");
 
             return data;
         }
 
-        public async Task<DepartmentViewModel> GetById(int id)
+        public async Task<JobTitleViewModel> GetById(int id)
         {
-            var data = await GetAsync<DepartmentViewModel>($"/api/departments/{id}");
+            var data = await GetAsync<JobTitleViewModel>($"/api/jobTitles/{id}");
 
             return data;
         }
 
-        public async Task<PagedResult<DepartmentViewModel>> GetPagings(GetDepartmentPagingRequest request)
+        public async Task<PagedResult<JobTitleViewModel>> GetPagings(GetJobTitlePagingRequest request)
         {
-            var data = await GetAsync<PagedResult<DepartmentViewModel>>(
-                        $"/api/departments/paging?pageIndex={request.PageIndex}" +
+            var data = await GetAsync<PagedResult<JobTitleViewModel>>(
+                        $"/api/jobTitles/paging?pageIndex={request.PageIndex}" +
                         $"&pageSize={request.PageSize}" +
                         $"&keyword={request.KeyWord}");
 
             return data;
         }
 
-        public async Task<bool> UpdateDepartment(DepartmentUpdateRequest request)
+        public async Task<bool> UpdateJobTitle(JobTitleUpdateRequest request)
         {
             var sessions = _httpContextAccessor
                 .HttpContext
@@ -99,7 +100,7 @@ namespace eSolutionTech.ApiIntegration
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Code) ? "" : request.Code.ToString()), "code");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Description) ? "" : request.Description.ToString()), "description");
 
-            var response = await client.PutAsync($"/api/departments/" + request.Id, requestContent);
+            var response = await client.PutAsync($"/api/jobTitles/" + request.Id, requestContent);
             return response.IsSuccessStatusCode;
         }
     }

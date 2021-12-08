@@ -10,7 +10,7 @@ namespace eSolutionTech.ApiIntegration
     public interface IDepartmentApiClient
     {
         Task<PagedResult<DepartmentViewModel>> GetPagings(GetDepartmentPagingRequest request);
-        Task<List<DepartmentViewModel>> GetAll(GetDepartmentPagingRequest request);
+        Task<List<DepartmentViewModel>> GetAll();
 
         Task<bool> CreateDepartment(DepartmentCreateRequest request);
 

@@ -92,14 +92,17 @@
                     </tbody>
                 </table>
             </div>
+            @await Component.InvokeAsync("Pager", Model)
         </div>
     </div>
 </div>
 
-@section Scripts{ 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#dataTable').DataTable();
-    });
-</script>
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#dataTable').DataTable(
+                "paging": false
+            );
+        });
+    </script>
 }

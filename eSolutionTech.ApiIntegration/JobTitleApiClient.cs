@@ -1,16 +1,11 @@
 ﻿using eSolutionTech.ViewModels.Catalog.JobTitles;
-using eSolutionTech.ViewModels.Catalog.JobTitles.Dtos;
 using eSolutionTech.ViewModels.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace eSolutionTech.ApiIntegration

@@ -1,7 +1,6 @@
 ﻿using eShopSolution.Utilities.Exceptions;
 using eSolutionTech.Data.EF;
 using eSolutionTech.Data.Entities;
-using eSolutionTech.ViewModels.Catalog.JobTitles.Dtos;
 using eSolutionTech.ViewModels.Common;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -66,6 +65,8 @@ namespace eSolutionTech.ViewModels.Catalog.JobTitles
             var pagedResult = new PagedResult<JobTitleViewModel>()
             {
                 TotalRecords = totalRow,
+                PageSize = request.PageSize,
+                PageIndex = request.PageIndex,
                 Items = data
             };
             return pagedResult;

@@ -1,6 +1,5 @@
 ﻿using eShopSolution.Utilities.Exceptions;
 using eSolutionTech.ViewModels.Catalog.JobTitles;
-using eSolutionTech.ViewModels.Catalog.JobTitles.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;

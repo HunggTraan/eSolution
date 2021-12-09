@@ -1,6 +1,4 @@
-﻿
-using eSolutionTech.ViewModels.Catalog.JobTitles.Dtos;
-using eSolutionTech.ViewModels.Common;
+﻿using eSolutionTech.ViewModels.Common;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

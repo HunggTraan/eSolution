@@ -1,5 +1,5 @@
 ﻿using eSolutionTech.ApiIntegration;
-using eSolutionTech.ViewModels.Catalog.Departments;
+using eSolutionTech.ViewModels.Catalog.JobTitles;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -9,28 +9,28 @@ using System.Threading.Tasks;
 
 namespace eSolutionTech.Manager.Controllers
 {
-    public class DepartmentController : Controller
+    public class JobTitleController : Controller
     {
-        private readonly IDepartmentApiClient _departmentApiClient;
+        private readonly IJobTitleApiClient _jobTitleApiClient;
         private readonly IConfiguration _configuration;
 
-        public DepartmentController(IDepartmentApiClient departmentApiClient,
+        public JobTitleController(IJobTitleApiClient jobTitleApiClient,
             IConfiguration configuration)
         {
             _configuration = configuration;
-            _departmentApiClient = departmentApiClient;
+            _jobTitleApiClient = jobTitleApiClient;
         }
 
         public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 10)
         {
-            var request = new GetDepartmentPagingRequest()
+            var request = new GetJobTitlePagingRequest()
             {
                 KeyWord = keyword,
                 PageIndex = pageIndex,
                 PageSize = pageSize
             };
 
-            var data = await _departmentApiClient.GetPagings(request);
+            var data = await _jobTitleApiClient.GetPagings(request);
             ViewBag.Keyword = keyword;
 
             if (TempData["result"] != null)
@@ -48,19 +48,19 @@ namespace eSolutionTech.Manager.Controllers
 
         [HttpPost]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> Create([FromForm] DepartmentCreateRequest request)
+        public async Task<IActionResult> Create([FromForm] JobTitleCreateRequest request)
         {
             if (!ModelState.IsValid)
                 return View(request);
 
-            var result = await _departmentApiClient.CreateDepartment(request);
+            var result = await _jobTitleApiClient.CreateJobTitle(request);
             if (result)
             {
-                TempData["result"] = "Thêm mới phòng ban thành công";
+                TempData["result"] = "Thêm mới chức vụ thành công";
                 return RedirectToAction("Index");
             }
 
-            ModelState.AddModelError("", "Thêm phòng ban thất bại");
+            ModelState.AddModelError("", "Thêm chức vụ thất bại");
             return View(request);
         }
 
@@ -68,59 +68,66 @@ namespace eSolutionTech.Manager.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var department = await _departmentApiClient.GetById(id);
-            var editVm = new DepartmentUpdateRequest()
+            var JobTitle = await _jobTitleApiClient.GetById(id);
+            var editVm = new JobTitleUpdateRequest()
             {
-                Id = department.Id,
-                Description = department.Description,
-                Name = department.Name,
-                Code = department.Code
+                Id = JobTitle.Id,
+                Description = JobTitle.Description,
+                Name = JobTitle.Name,
+                Code = JobTitle.Code
             };
             return View(editVm);
         }
 
         [HttpPost]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> Edit([FromForm] DepartmentUpdateRequest request)
+        public async Task<IActionResult> Edit([FromForm] JobTitleUpdateRequest request)
         {
             if (!ModelState.IsValid)
                 return View(request);
 
-            var result = await _departmentApiClient.UpdateDepartment(request);
+            var result = await _jobTitleApiClient.UpdateJobTitle(request);
             if (result)
             {
-                TempData["result"] = "Cập nhật phòng ban thành công";
+                TempData["result"] = "Cập nhật chức vụ thành công";
                 return RedirectToAction("Index");
             }
 
-            ModelState.AddModelError("", "Cập nhật phòng ban thất bại");
+            ModelState.AddModelError("", "Cập nhật chức vụ thất bại");
             return View(request);
         }
 
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            return View(new DepartmentDeleteRequest()
+            return View(new JobTitleDeleteRequest()
             {
                 Id = id
             });
         }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(DepartmentDeleteRequest request)
+        public async Task<IActionResult> Delete(JobTitleDeleteRequest request)
         {
             if (!ModelState.IsValid)
                 return View();
 
-            var result = await _departmentApiClient.DeleteDepartment(request.Id);
+            var result = await _jobTitleApiClient.DeleteJobTitle(request.Id);
             if (result)
             {
-                TempData["result"] = "Xóa sản phẩm thành công";
+                TempData["result"] = "Xóa chức vụ thành công";
                 return RedirectToAction("Index");
             }
 
             ModelState.AddModelError("", "Xóa không thành công");
             return View(request);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var result = await _jobTitleApiClient.GetById(id);
+            return View(result);
         }
     }
 }

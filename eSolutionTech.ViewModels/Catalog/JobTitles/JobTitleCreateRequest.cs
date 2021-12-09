@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace eSolutionTech.ViewModels.Catalog.JobTitles.Dtos
+namespace eSolutionTech.ViewModels.Catalog.JobTitles
 {
     public class JobTitleCreateRequest
     {

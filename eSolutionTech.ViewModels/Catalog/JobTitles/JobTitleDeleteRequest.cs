@@ -4,11 +4,8 @@ using System.Text;
 
 namespace eSolutionTech.ViewModels.Catalog.JobTitles
 {
-    public class JobTitleUpdateRequest
+    public class JobTitleDeleteRequest
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Code { get; set; }
-        public string Description { get; set; }
     }
 }

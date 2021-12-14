@@ -1,0 +1,150 @@
+﻿@using eSolutionTech.ViewModels.Common
+
+@model PagedResult<eSolutionTech.ViewModels.Catalog.TimeOffTypes.TimeOffTypeViewModel>
+@{
+    ViewData["Title"] = "Danh sách loại ngày nghỉ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="mt-4">Danh sách loại ngày nghỉ</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Danh sách loại ngày nghỉ</li>
+    </ol>
+    <div class="card mb-12">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-6 col-xs-12">
+                    <a class="btn btn-success" asp-action="Create" asp-controller="TimeOffType">Tạo mới</a>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <form asp-action="Index" method="get">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <input type="text" value="@ViewBag.Keyword" name="keyword" class="form-control" />
+                            </div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-primary">Tìm</button>
+                                <button type="button" onclick="window.location.href='/TimeOffType/Index'" class="btn btn-secondary">Đặt lại</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                @if (ViewBag.SuccessMsg != null)
+                {
+                    <div id="msgAlert" class="alert alert-success" role="alert">
+                        @ViewBag.SuccessMsg
+                    </div>
+                }
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered" width="100%" id="dataTable">
+                    <thead>
+                        <tr>
+                            <th class="text-center">
+                                Mã loại ngày nghỉ
+                            </th>
+                            <th class="text-center">
+                                Tên
+                            </th>
+                            <th class="text-center">
+                                Mô tả
+                            </th>
+                            <th class="text-center">
+                                Ngày bắt đầu
+                            </th>
+                            <th class="text-center">
+                                Ngày kết thúc
+                            </th>
+                            <th class="text-center">
+                                Nghỉ theo
+                            </th>
+                            <th class="text-center">
+                                Có trả lương
+                            </th>
+                            <th class="text-center">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Items)
+                        {
+                            <tr>
+                                <td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.Code)
+                                </td>
+                                <td class="text-center">
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td class="text-center"> 
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td class="text-center">
+                                    @Convert.ToDateTime(item.StartDate).ToString("dd/MM/yyyy")
+                                </td>
+                                <td class="text-center">
+                                    @Convert.ToDateTime(item.EndDate).ToString("dd/MM/yyyy")
+                                </td>
+                                @switch (item.RequestUnit)
+                                {
+                                    case "1":
+                                        <td class="text-center">Ngày</td>
+                                        break;
+                                    case "2":
+                                        <td class="text-center">Nửa ngày</td>
+                                        break;
+                                    case "3":
+                                        <td class="text-center">Giờ</td>
+                                        break;
+                                }
+                                @if (item.Unpaid == true)
+                                {
+                                    <td class="text-center">
+                                        Có
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td class="text-center">
+                                        Không
+                                    </td>
+                                }
+                                <td class="text-center">
+                                    <a href="@Url.Action("Edit", new { id = item.Id })" name="Sửa">
+                                        Sửa
+                                    </a>
+                                    &ensp;
+                                    <a href="@Url.Action("Details", new { id = item.Id })" name="Chi tiết">
+                                        Chi tiết
+                                    </a>
+                                    &ensp;
+                                    <a href="@Url.Action("Delete", new { id = item.Id })" name="Xoá">
+                                        Xoá
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @await Component.InvokeAsync("Pager", Model)
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#dataTable').DataTable(
+                "paging": false
+            );
+        });
+    </script>
+}
+

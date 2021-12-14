@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace eSolutionTech.ViewModels.Catalog.TimeOffTypes
 {
@@ -11,8 +12,6 @@ namespace eSolutionTech.ViewModels.Catalog.TimeOffTypes
         public string RequestUnit { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
-        public string StartDateStr { get; set; }
-        public string EndDateStr { get; set; }
         public bool Unpaid { get; set; }
     }
 }

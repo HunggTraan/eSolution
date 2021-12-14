@@ -81,7 +81,7 @@ namespace eSolutionTech.BackendApi.Controllers
         }
 
         [HttpPut]
-        [HttpPut("{departmentId}")]
+        [HttpPut("{jobTitleId}")]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> Update([FromRoute] int jobTitleId, [FromForm] JobTitleUpdateRequest request)
         {

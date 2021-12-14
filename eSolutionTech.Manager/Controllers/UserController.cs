@@ -7,6 +7,8 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Threading.Tasks;
 using eSolutionTech.ApiIntegration;
+using System.Linq;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace eSolutionTech.Manager.Controllers
 {
@@ -14,17 +16,41 @@ namespace eSolutionTech.Manager.Controllers
     {
         private readonly IUserApiClient _userApiClient;
         private readonly IConfiguration _configuration;
-        //private readonly IJobTitleApiClient _jobTitleService;
-        //private readonly IDepartmentApiClient _departmentApiClient;
-        public UserController(IUserApiClient userApiClient, IConfiguration configuration)
+        private readonly IJobTitleApiClient _jobTitleApiClient;
+        private readonly IDepartmentApiClient _departmentApiClient;
+        public UserController(IUserApiClient userApiClient,
+            IConfiguration configuration,
+            IJobTitleApiClient jobTitleApiClient,
+            IDepartmentApiClient departmentApiClient)
         {
             _userApiClient = userApiClient;
             _configuration = configuration;
+            _jobTitleApiClient = jobTitleApiClient;
+            _departmentApiClient = departmentApiClient;
         }
 
         protected void GetDataForCreateOrEdit()
         {
+            try
+            {
+                var department = _departmentApiClient.GetAll();
+                ViewBag.Department = department.Result.Select(x => new SelectListItem()
+                {
+                    Text = x.Name,
+                    Value = x.Id.ToString()
+                });
 
+                var jobTitle = _jobTitleApiClient.GetAll();
+                ViewBag.JobTitle = jobTitle.Result.Select(x => new SelectListItem()
+                {
+                    Text = x.Description,
+                    Value = x.Id.ToString()
+                });
+            }
+            catch(Exception ex)
+            {
+                return;
+            }
         }
 
         public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 10)
@@ -56,6 +82,7 @@ namespace eSolutionTech.Manager.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            GetDataForCreateOrEdit();
             return View();
         }
 
@@ -80,12 +107,14 @@ namespace eSolutionTech.Manager.Controllers
             }
 
             ModelState.AddModelError("", result.Message);
-            return View(request);
+
+            return View();
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
+            GetDataForCreateOrEdit();
             var result = await _userApiClient.GetById(id);
             if (result.IsSuccessed)
             {

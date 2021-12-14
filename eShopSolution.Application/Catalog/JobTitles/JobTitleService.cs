@@ -38,9 +38,21 @@ namespace eSolutionTech.ViewModels.Catalog.JobTitles
             return await _context.SaveChangesAsync();
         }
 
-        public Task<List<JobTitleViewModel>> GetAll()
+        public async Task<List<JobTitleViewModel>> GetAll()
         {
-            throw new NotImplementedException();
+            var query = from jobTitle in _context.JobTitles
+                        select new { jobTitle };
+            var data = await query.Select(x => new JobTitleViewModel()
+            {
+                Id = x.jobTitle.Id,
+                Code = x.jobTitle.Code,
+                Name = x.jobTitle.Name,
+                Description = x.jobTitle.Description
+            }).ToListAsync();
+
+            if (data != null)
+                return data;
+            else return new List<JobTitleViewModel>();
         }
 
         public async Task<PagedResult<JobTitleViewModel>> GetAllPaging(GetJobTitlePagingRequest request)

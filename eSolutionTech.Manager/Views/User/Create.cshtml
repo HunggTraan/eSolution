@@ -31,14 +31,14 @@
                     </div>
                     <hr />
                     <div class="form-group">
-                        <label asp-for="DepartmentId" class="control-label">Mã nhân viên</label>
-                        <input asp-for="DepartmentId" class="form-control" />
+                        <label asp-for="DepartmentId" class="control-label">Phòng ban</label>
+                        <select asp-for="DepartmentId" asp-items="@ViewBag.Department" class="form-control"></select>
                         <span asp-validation-for="DepartmentId" class="text-danger"></span>
                     </div>
                     <hr />
                     <div class="form-group">
-                        <label asp-for="JobTitleId" class="control-label">Mã nhân viên</label>
-                        <input asp-for="JobTitleId" class="form-control" />
+                        <label asp-for="JobTitleId" class="control-label">Chức danh</label>
+                        <select asp-for="JobTitleId" asp-items="@ViewBag.JobTitle" class="form-control"></select>
                         <span asp-validation-for="JobTitleId" class="text-danger"></span>
                     </div>
                     <hr />
@@ -49,9 +49,9 @@
                     </div>
                     <hr />
                     <div class="form-group">
-                        <label asp-for="Dob" class="control-label">Ngày tháng năm sinh</label>
-                        <input asp-for="Dob" class="form-control" type="date" />
-                        <span asp-validation-for="Dob" class="text-danger"></span>
+                        <label asp-for="DobString" class="control-label">Ngày tháng năm sinh</label>
+                        <input data-val="true" asp-for="DobString" class="form-control" type="date"/>
+                        <span asp-validation-for="DobString" class="text-danger"></span>
                     </div>
                     <hr />
                     <div class="form-group">
@@ -86,3 +86,15 @@
         </div>
     </div>
 </div>
+
+@section Styles {
+    <link href="/libs/daterangepicker/daterangepicker.css" rel="stylesheet" />
+    <link href="/libs/sweetalert/dist/sweetalert.css" rel="stylesheet" />
+    <link href="/libs/clockpicker/clockpicker.css" rel="stylesheet" />
+}
+@section Scripts{
+    <script src="/libs/moment/min/moment-with-locales.min.js" type="text/javascript"></script>
+    <script src="/libs/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+    <script src="/libs/sweetalert/dist/sweetalert.min.js" type="text/javascript"></script>
+    <script src="/libs/clockpicker/clockpicker.js" type="text/javascript"></script>
+}

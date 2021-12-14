@@ -95,6 +95,10 @@ namespace eSolutionTech.Application.System.Users
                     return new ApiErrorResult<bool>(Constants.Message.EMAILEXIST);
                 }
 
+                request.Dob = !String.IsNullOrEmpty(request.DobString)
+                ? DateTime.ParseExact(request.DobString, "dd/MM/yyyy", null)
+                : DateTime.Now;
+
                 user = new User()
                 {
                     Code = request.Code,

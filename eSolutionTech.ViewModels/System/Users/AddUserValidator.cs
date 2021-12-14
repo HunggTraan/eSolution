@@ -10,7 +10,7 @@ namespace eSolutionTech.ViewModels.System.Users
         public AddUserValidator()
         {
             RuleFor(x => x.UserName).NotEmpty().WithMessage("Không được để trống tên đăng nhập");
-            RuleFor(x => x.Password).NotEmpty().WithMessage("Không được để trống tên mật khẩu")
+            RuleFor(x => x.Password).NotEmpty().WithMessage("Không được để trống mật khẩu")
                 .MinimumLength(6).WithMessage("Mật khẩu phải dài ít nhất 6 ký tự.")
                 .MaximumLength(30).WithMessage("Mật khẩu chỉ được tối đa 30 ký tự");
             RuleFor(x => x.DepartmentId).NotEmpty().WithMessage("Không được để trống phòng ban");

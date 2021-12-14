@@ -48,8 +48,8 @@ namespace eSolutionTech.ApiIntegration
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Code) ? "" : request.Code.ToString()), "code");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Description) ? "" : request.Description.ToString()), "description");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.RequestUnit) ? "" : request.RequestUnit.ToString()), "requestUnit");
-            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.StartDateStr) ? "" : request.StartDateStr.ToString()), "startDate");
-            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.EndDateStr) ? "" : request.EndDateStr.ToString()), "endDate");
+            requestContent.Add(new StringContent(request.StartDate.ToString()), "startDate");
+            requestContent.Add(new StringContent(request.EndDate.ToString()), "endDate");
             requestContent.Add(new StringContent(request.Unpaid.ToString()), "unpaid");
 
             var response = await client.PostAsync($"/api/timeOffTypes/", requestContent);
@@ -103,8 +103,8 @@ namespace eSolutionTech.ApiIntegration
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Code) ? "" : request.Code.ToString()), "code");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Description) ? "" : request.Description.ToString()), "description");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.RequestUnit) ? "" : request.RequestUnit.ToString()), "requestUnit");
-            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.StartDateStr) ? "" : request.StartDateStr.ToString()), "startDate");
-            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.EndDateStr) ? "" : request.EndDateStr.ToString()), "endDate");
+            requestContent.Add(new StringContent(request.StartDate.ToString("MM/dd/yyyy")), "startDate");
+            requestContent.Add(new StringContent(request.EndDate.ToString("MM/dd/yyyy")), "endDate");
             requestContent.Add(new StringContent(request.Unpaid.ToString()), "unpaid");
 
             var response = await client.PutAsync($"/api/timeOffTypes/" + request.Id, requestContent);

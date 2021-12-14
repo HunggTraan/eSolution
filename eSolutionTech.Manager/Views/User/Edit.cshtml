@@ -58,13 +58,13 @@
                     <hr />
                     <div class="form-group">
                         <label asp-for="DepartmentId" class="control-label">Phòng ban</label>
-                        <input asp-for="DepartmentId" class="form-control" />
+                        <select asp-for="DepartmentId" asp-items="@ViewBag.Department" class="form-control"></select>
                         <span asp-validation-for="DepartmentId" class="text-danger"></span>
                     </div>
                     <hr />
                     <div class="form-group">
                         <label asp-for="JobTitleId" class="control-label">Chức danh</label>
-                        <input asp-for="JobTitleId" class="form-control" />
+                        <select asp-for="JobTitleId" asp-items="@ViewBag.JobTitle" class="form-control"></select>
                         <span asp-validation-for="JobTitleId" class="text-danger"></span>
                     </div>
                     <hr />

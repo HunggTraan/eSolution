@@ -85,13 +85,17 @@ namespace eSolutionTech.BackendApi.Controllers
             return CreatedAtAction(nameof(GetById), new { id = timeOffTypeId }, timeOffType);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Update([FromForm] TimeOffTypeUpdateRequest request)
+        [HttpPut("{timeOffTypeId}")]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Update([FromRoute] int timeOffTypeId, [FromForm] TimeOffTypeUpdateRequest request)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
+            request.Id = timeOffTypeId;
+
             var affectedResult = await _timeOffTypeService.Update(request);
             if (affectedResult == 0)
                 return BadRequest();

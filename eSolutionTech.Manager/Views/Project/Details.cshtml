@@ -1,0 +1,82 @@
+﻿@model eSolutionTech.ViewModels.Catalog.Projects.ProjectViewModel
+@using eSolutionTech.ViewModels.System.Users
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var user = ViewData["User"] as List<UserViewModel>;
+    var manager = ViewData["Manager"] as UserViewModel;
+}
+
+<div class="container-fluid">
+    <h1 class="mt-4">Chi tiết</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Chi tiết</li>
+    </ol>
+    <div class="card mb-4">
+        <div class="card-header">
+            <a class="btn btn-success" asp-action="Index" asp-controller="Project">Về danh sách</a>
+        </div>
+        <div class="card-body">
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <dl class="row">
+                        <dt class="col-sm-3">
+                            Mã
+                        </dt>
+                        <dd class="col-sm-9">
+                            &ensp; &ensp; @Html.DisplayFor(model => model.Code)
+                        </dd>
+                        <dt class="col-sm-3 mt-2">
+                            Tên
+                        </dt>
+                        <dd class="col-sm-9 mt-2">
+                            &ensp; &ensp; @Html.DisplayFor(model => model.Name)
+                        </dd>
+                        <dt class="col-sm-3 mt-2">
+                            Mô tả
+                        </dt>
+                        <dd class="col-sm-9 mt-2">
+                            &ensp; &ensp; @Html.DisplayFor(model => model.Description)
+                        </dd>
+                        <dt class="col-sm-3 mt-2">
+                            Ngày bắt đầu
+                        </dt>
+                        <dd class="col-sm-9 mt-2">
+                            &ensp; &ensp; @Convert.ToDateTime(Model.StartDate).ToString("dd/MM/yyyy")
+                        </dd>
+                        <dt class="col-sm-3 mt-2">
+                            Ngày kết thúc
+                        </dt>
+                        <dd class="col-sm-9 mt-2">
+                            &ensp; &ensp; @Convert.ToDateTime(Model.EndDate).ToString("dd/MM/yyyy")
+                        </dd>
+                        <dt class="col-sm-3 mt-2">
+                            Quản lý
+                        </dt>
+                        <dd class="col-sm-9 mt-2">
+                            &ensp; &ensp; <a href="@Url.Action("Details", "User", new { id = manager.Id })" name="Chi tiết">
+                                @manager.FullName
+                            </a>
+                        </dd>
+                        <dt class="col-sm-3 mt-2">
+                            Thành viên
+                        </dt>
+                        <dd class="col-sm-9 mt-2">
+                            <ul style="list-style-type:none ">
+                                @foreach (var item in user)
+                                {
+                                <li>
+                                    <a href="@Url.Action("Details", "User", new { id = item.Id })" name="Chi tiết">
+                                        @item.FullName
+                                    </a>
+                                </li>
+                                }
+                            </ul>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

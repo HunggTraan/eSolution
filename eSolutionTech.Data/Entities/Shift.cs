@@ -21,6 +21,5 @@ namespace eSolutionTech.Data.Entities
         [Required]
         public string Comment { get; set; }
         public string Activity { get; set; }
-        public int Status { get; set; }
     }
 }

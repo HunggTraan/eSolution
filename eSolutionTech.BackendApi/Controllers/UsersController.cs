@@ -58,6 +58,13 @@ namespace eSolutionTech.BackendApi.Controllers
             return Ok(users);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var users = await _userService.GetUsers();
+            return Ok(users);
+        }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(Guid id, [FromBody] UserUpdateRequest request)
         {

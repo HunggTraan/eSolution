@@ -41,10 +41,6 @@ namespace eSolutionTech.ApiIntegration
 
             var requestContent = new MultipartFormDataContent();
 
-            if (request.UserIds != null || request.UserIds.Length > 0)
-            {
-                requestContent.Add(new StringContent(JsonConvert.SerializeObject(request.UserIds), Encoding.UTF8, "application/json"));
-            }
 
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Name) ? "" : request.Name.ToString()), "name");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Code) ? "" : request.Code.ToString()), "code");
@@ -52,6 +48,7 @@ namespace eSolutionTech.ApiIntegration
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.ManagerId) ? "" : request.ManagerId.ToString()), "managerId");
             requestContent.Add(new StringContent(request.StartDate.ToString()), "startDate");
             requestContent.Add(new StringContent(request.EndDate.ToString()), "endDate");
+            requestContent.Add(new StringContent(JsonConvert.SerializeObject(request.UserIds)), "userIds");
 
             var response = await client.PostAsync($"/api/projects/", requestContent);
             return response.IsSuccessStatusCode;
@@ -100,17 +97,13 @@ namespace eSolutionTech.ApiIntegration
 
             var requestContent = new MultipartFormDataContent();
 
-            if (request.UserIds != null || request.UserIds.Length > 0)
-            {
-                requestContent.Add(new StringContent(JsonConvert.SerializeObject(request.UserIds), Encoding.UTF8, "application/json"));
-            }
-
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Name) ? "" : request.Name.ToString()), "name");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Code) ? "" : request.Code.ToString()), "code");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Description) ? "" : request.Description.ToString()), "description");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.ManagerId) ? "" : request.ManagerId.ToString()), "managerId");
             requestContent.Add(new StringContent(request.StartDate.ToString()), "startDate");
             requestContent.Add(new StringContent(request.EndDate.ToString()), "endDate");
+            requestContent.Add(new StringContent(JsonConvert.SerializeObject(request.UserIds)), "userIds");
 
             var response = await client.PutAsync($"/api/projects/" + request.Id, requestContent);
             return response.IsSuccessStatusCode;

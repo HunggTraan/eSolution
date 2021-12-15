@@ -52,6 +52,7 @@ namespace eSolutionTech.Manager
             services.AddTransient<IDepartmentApiClient, DepartmentApiClient>();
             services.AddTransient<IJobTitleApiClient, JobTitleApiClient>();
             services.AddTransient<ITimeOffTypeApiClient, TimeOffTypeApiClient>();
+            services.AddTransient<IProjectApiClient, ProjectApiClient>();
 
             IMvcBuilder builder = services.AddRazorPages();
 

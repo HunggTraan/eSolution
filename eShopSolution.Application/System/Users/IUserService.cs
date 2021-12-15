@@ -1,6 +1,7 @@
 ﻿using eSolutionTech.ViewModels.Common;
 using eSolutionTech.ViewModels.System.Users;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace eSolutionTech.Application.System.Users
@@ -15,6 +16,7 @@ namespace eSolutionTech.Application.System.Users
         Task<ApiResult<bool>> Update(Guid id, UserUpdateRequest request);
 
         Task<ApiResult<PagedResult<UserViewModel>>> GetUsersPaging(GetUserPagingRequest request);
+        Task<ApiResult<List<UserViewModel>>> GetUsers();
 
         Task<ApiResult<UserViewModel>> GetById(Guid id);
 

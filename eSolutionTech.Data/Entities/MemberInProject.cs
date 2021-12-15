@@ -11,7 +11,7 @@ namespace eSolutionTech.Data.Entities
     {
         public int Id { get; set; }
         [Required]
-        public int MemberId { get; set; }
+        public string MemberId { get; set; }
         [Required]
         public int ProjectId { get; set; }
     }

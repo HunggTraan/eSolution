@@ -3,6 +3,7 @@ using eSolutionTech.Data.EF;
 using eSolutionTech.Data.Entities;
 using eSolutionTech.ViewModels.Common;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,12 @@ namespace eSolutionTech.ViewModels.Catalog.Projects
         {
             try
             {
+                string[] userIds = new string[0];
+                if(request.UserIds != null && request.UserIds.Length > 0)
+                {
+                    userIds = JsonConvert.DeserializeObject<string[]>(request.UserIds[0]);
+                }
+
                 var project = new Project()
                 {
                     Name = request.Name,
@@ -32,15 +39,19 @@ namespace eSolutionTech.ViewModels.Catalog.Projects
                     Status = request.Status
                 };
                 _context.Projects.Add(project);
+                await _context.SaveChangesAsync();
 
-                foreach (var userId in request.UserIds)
+                if(userIds != null && userIds.Length > 0)
                 {
-                    var memberInProject = new MemberInProject()
+                    foreach (var userId in userIds)
                     {
-                        MemberId = Int32.Parse(userId),
-                        ProjectId = project.Id
-                    };
-                    _context.MemberInProject.Add(memberInProject);
+                        var memberInProject = new MemberInProject()
+                        {
+                            MemberId = userId,
+                            ProjectId = project.Id
+                        };
+                        _context.MemberInProject.Add(memberInProject);
+                    }
                 }
                 return await _context.SaveChangesAsync();
             }
@@ -84,9 +95,12 @@ namespace eSolutionTech.ViewModels.Catalog.Projects
 
         public async Task<PagedResult<ProjectViewModel>> GetAllPaging(GetProjectPagingRequest request)
         {
-            var query = from project in _context.Projects 
-                        join memberInProject in _context.MemberInProject on project.Id equals memberInProject.ProjectId
-                        select new { project, memberInProject };
+            //var query = (from project in _context.Projects 
+            //            join memberInProject in _context.MemberInProject on project.Id equals memberInProject.ProjectId
+            //            select new { project, memberInProject }).Distinct();
+
+            var query = from project in _context.Projects
+                        select new { project };
 
             if (!string.IsNullOrEmpty(request.KeyWord))
                 query = query.Where(x => x.project.Code.Contains(request.KeyWord) || x.project.Name.Contains(request.KeyWord));
@@ -104,7 +118,7 @@ namespace eSolutionTech.ViewModels.Catalog.Projects
                     ManagerId = x.project.ManagerId,
                     StartDate = x.project.StartDate,
                     EndDate = x.project.EndDate,
-                    Status = x.project.Status
+                    Status = x.project.Status,
                 }).ToListAsync();
 
             var pagedResult = new PagedResult<ProjectViewModel>()
@@ -119,6 +133,10 @@ namespace eSolutionTech.ViewModels.Catalog.Projects
         {
             var project = await _context.Projects.FindAsync(projectId);
 
+            var memberInProject = _context.MemberInProject.Where(x => x.ProjectId == projectId).Select(x => x.MemberId).ToList();
+
+            string[] userId = memberInProject.ToArray();
+
             var projectViewModel = new ProjectViewModel()
             {
                 Id = project.Id,
@@ -128,7 +146,8 @@ namespace eSolutionTech.ViewModels.Catalog.Projects
                 ManagerId = project.ManagerId,
                 StartDate = project.StartDate,
                 EndDate = project.EndDate,
-                Status = project.Status
+                Status = project.Status,
+                UserIds = userId
             };
             return projectViewModel;
         }
@@ -138,6 +157,12 @@ namespace eSolutionTech.ViewModels.Catalog.Projects
             var project = await _context.Projects.FindAsync(request.Id);
             if (project == null) throw new eTechException($"Không tìm thấy dự án với id: {request.Id}");
 
+            string[] userIds = new string[0];
+            if (request.UserIds != null && request.UserIds.Length > 0)
+            {
+                userIds = JsonConvert.DeserializeObject<string[]>(request.UserIds[0]);
+            }
+
             project.Name = request.Name;
             project.Code = request.Code;
             project.Description = request.Description;
@@ -145,6 +170,34 @@ namespace eSolutionTech.ViewModels.Catalog.Projects
             project.StartDate = request.StartDate;
             project.EndDate = request.EndDate;
             project.Status = request.Status;
+
+            var memberInProjects = _context.MemberInProject.Where(x => x.ProjectId == request.Id).ToArray();
+
+            List<string> userIdFilter = new List<string>();
+            if (userIds != null && userIds.Length > 0)
+            {
+                foreach (var members in memberInProjects)
+                {
+                    if(Array.IndexOf(userIds, members.MemberId) > 0)
+                    {
+                        userIds.ToList().Remove(members.MemberId);
+                    }
+                    else
+                    {
+                        _context.MemberInProject.Remove(members);
+                    }
+                }
+            }
+
+            foreach(var item in userIds)
+            {
+                var memberInProject = new MemberInProject()
+                {
+                    MemberId = item,
+                    ProjectId = project.Id
+                };
+                _context.MemberInProject.Add(memberInProject);
+            }
 
             return await _context.SaveChangesAsync();
         }

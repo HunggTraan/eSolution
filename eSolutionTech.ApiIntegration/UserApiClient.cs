@@ -71,6 +71,20 @@ namespace eSolutionTech.ApiIntegration
             return JsonConvert.DeserializeObject<ApiErrorResult<UserViewModel>>(body);
         }
 
+        public async Task<ApiResult<List<UserViewModel>>> GetAll()
+        {
+            var sessions = _httpContextAccessor.HttpContext.Session.GetString(Constants.Constants.Token);
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration[Constants.Constants.BASEADDRESS_API]);
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Constants.Constants.Bearer, sessions);
+            var response = await client.GetAsync($"/api/users");
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ApiSuccessResult<List<UserViewModel>>>(body);
+
+            return JsonConvert.DeserializeObject<ApiErrorResult<List<UserViewModel>>>(body);
+        }
+
         public async Task<ApiResult<PagedResult<UserViewModel>>> GetUsersPagings(GetUserPagingRequest request)
         {
             var client = _httpClientFactory.CreateClient();

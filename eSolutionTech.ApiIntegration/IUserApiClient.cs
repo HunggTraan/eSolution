@@ -1,6 +1,7 @@
 ﻿using eSolutionTech.ViewModels.Common;
 using eSolutionTech.ViewModels.System.Users;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace eSolutionTech.ApiIntegration
@@ -9,6 +10,7 @@ namespace eSolutionTech.ApiIntegration
     {
 
         Task<ApiResult<string>> Authenticate(LoginRequest request);
+        Task<ApiResult<List<UserViewModel>>> GetAll();
 
         Task<ApiResult<PagedResult<UserViewModel>>> GetUsersPagings(GetUserPagingRequest request);
 

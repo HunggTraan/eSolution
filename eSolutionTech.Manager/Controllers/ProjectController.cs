@@ -1,6 +1,9 @@
 ﻿using eSolutionTech.ApiIntegration;
 using eSolutionTech.ViewModels.Catalog.Projects;
+using eSolutionTech.ViewModels.Common;
+using eSolutionTech.ViewModels.System.Users;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -12,13 +15,33 @@ namespace eSolutionTech.Manager.Controllers
     public class ProjectController : Controller
     {
         private readonly IProjectApiClient _projectApiClient;
+        private readonly IUserApiClient _userApiClient;
         private readonly IConfiguration _configuration;
 
         public ProjectController(IProjectApiClient ProjectApiClient,
+            IUserApiClient userApiClient,
             IConfiguration configuration)
         {
             _configuration = configuration;
             _projectApiClient = ProjectApiClient;
+            _userApiClient = userApiClient;
+        }
+
+        protected void GetDataForCreateOrEdit()
+        {
+            try
+            {
+                var users = _userApiClient.GetAll();
+                ViewBag.Users = users.Result.ResultObj.Select(x => new SelectListItem()
+                {
+                    Text = x.FullName,
+                    Value = x.Id.ToString()
+                });
+            }
+            catch (Exception ex)
+            {
+                return;
+            }
         }
 
         public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 10)
@@ -43,6 +66,7 @@ namespace eSolutionTech.Manager.Controllers
         [HttpGet]
         public IActionResult Create()
         {
+            GetDataForCreateOrEdit();
             return View();
         }
 
@@ -61,6 +85,7 @@ namespace eSolutionTech.Manager.Controllers
             }
 
             ModelState.AddModelError("", "Thêm dự án thất bại");
+            GetDataForCreateOrEdit();
             return View(request);
         }
 
@@ -68,6 +93,7 @@ namespace eSolutionTech.Manager.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
+            GetDataForCreateOrEdit();
             var Project = await _projectApiClient.GetById(id);
             var editVm = new ProjectUpdateRequest()
             {
@@ -99,6 +125,7 @@ namespace eSolutionTech.Manager.Controllers
             }
 
             ModelState.AddModelError("", "Cập nhật dự án thất bại");
+            GetDataForCreateOrEdit();
             return View(request);
         }
 
@@ -132,6 +159,24 @@ namespace eSolutionTech.Manager.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var result = await _projectApiClient.GetById(id);
+
+            List<UserViewModel> userInfos = new List<UserViewModel>();
+            UserViewModel managerInfos = new UserViewModel();
+
+            var managerInfo = await _userApiClient.GetById(Guid.Parse(result.ManagerId));
+
+            managerInfos = managerInfo.ResultObj;
+
+            foreach (var item in result.UserIds)
+            {
+                var userInfo = await _userApiClient.GetById(Guid.Parse(item));
+                var userInfor = userInfo.ResultObj;
+                userInfos.Add(userInfor);
+            }
+
+            var user = ViewData["User"] = userInfos;
+            var manager = ViewData["Manager"] = managerInfos;
+
             return View(result);
         }
     }

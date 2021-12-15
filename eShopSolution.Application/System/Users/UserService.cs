@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -26,8 +27,8 @@ namespace eSolutionTech.Application.System.Users
         private readonly IJobTitleService _jobTitleService;
         private readonly eTechDbContext _context;
         private readonly IConfiguration _config;
-        public UserService(UserManager<User> userManager, 
-            SignInManager<User> signInManager, 
+        public UserService(UserManager<User> userManager,
+            SignInManager<User> signInManager,
             RoleManager<Role> roleManager,
             IDepartmentService departmentService,
             IJobTitleService jobTitleService,
@@ -75,7 +76,7 @@ namespace eSolutionTech.Application.System.Users
 
                 return new ApiSuccessResult<string>(new JwtSecurityTokenHandler().WriteToken(token));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return new ApiErrorResult<string>("Đăng nhập không thành công");
             }
@@ -94,10 +95,6 @@ namespace eSolutionTech.Application.System.Users
                 {
                     return new ApiErrorResult<bool>(Constants.Message.EMAILEXIST);
                 }
-
-                request.Dob = !String.IsNullOrEmpty(request.DobString)
-                ? DateTime.ParseExact(request.DobString, "dd/MM/yyyy", null)
-                : DateTime.Now;
 
                 user = new User()
                 {
@@ -141,7 +138,7 @@ namespace eSolutionTech.Application.System.Users
 
                 return new ApiErrorResult<bool>(Constants.Message.DELETENOTSUCCESS);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return new ApiErrorResult<bool>(Constants.Message.ERROR);
             }
@@ -178,10 +175,34 @@ namespace eSolutionTech.Application.System.Users
                 };
                 return new ApiSuccessResult<UserViewModel>(userVm);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return new ApiErrorResult<UserViewModel>(Constants.Message.ERROR);
             }
+        }
+
+        public async Task<ApiResult<List<UserViewModel>>> GetUsers()
+        {
+            var query = from users in _context.Users
+                        join jobTitle in _context.JobTitles on users.JobTitleId equals jobTitle.Id.ToString()
+                        join department in _context.Departments on users.DepartmentId equals department.Id.ToString()
+                        select new { users, jobTitle, department };
+
+            var data = await query.Select(x => new UserViewModel()
+                        {
+                            Email = x.users.Email,
+                            PhoneNumber = x.users.Phone,
+                            UserName = x.users.UserName,
+                            FullName = x.users.FullName,
+                            Id = x.users.Id,
+                            JobTitle = x.jobTitle.Name,
+                            Department = x.department.Name,
+                            Dob = x.users.DoB
+                        }).ToListAsync();
+
+            if (data != null)
+                return new ApiSuccessResult<List<UserViewModel>>(data);
+            else return new ApiErrorResult<List<UserViewModel>>(Constants.Message.ERROR);
         }
 
         public async Task<ApiResult<PagedResult<UserViewModel>>> GetUsersPaging(GetUserPagingRequest request)
@@ -227,7 +248,7 @@ namespace eSolutionTech.Application.System.Users
 
                 return new ApiSuccessResult<PagedResult<UserViewModel>>(pagedResult);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return new ApiErrorResult<PagedResult<UserViewModel>>(Constants.Message.ERROR);
             }

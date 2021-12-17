@@ -23,6 +23,7 @@ namespace eSolutionTech.Data.EF
             modelBuilder.ApplyConfiguration(new MemberInProjectConfiguration());
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new RoleConfiguration());
+            modelBuilder.ApplyConfiguration(new ShiftSettingConfiguration());
 
             modelBuilder.Entity<IdentityUserClaim<Guid>>().ToTable("UserClaims");
             modelBuilder.Entity<IdentityUserRole<Guid>>().ToTable("UserRoles").HasKey(x => new {x.UserId, x.RoleId }); ;
@@ -39,5 +40,6 @@ namespace eSolutionTech.Data.EF
         public DbSet<Shift> Shifts { get; set; }
         public DbSet<TimeOffType> TimeOffTypes { get; set; }
         public DbSet<MemberInProject> MemberInProject { get; set; }
+        public DbSet<ShiftSetting> ShiftSettings { get; set; }
     }
 }

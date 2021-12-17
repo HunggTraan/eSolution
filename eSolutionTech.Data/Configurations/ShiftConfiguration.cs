@@ -15,9 +15,6 @@ namespace eSolutionTech.Data.Configurations
             builder.HasKey(x => x.Id);
             builder.Property(x => x.ProjectId).IsRequired(true);
             builder.Property(x => x.UserId).IsRequired(true);
-            builder.Property(x => x.Date).IsRequired(true);
-            builder.Property(x => x.WorkingHours).IsRequired(true);
-            builder.Property(x => x.Comment).IsRequired(true);
         }
     }
 }

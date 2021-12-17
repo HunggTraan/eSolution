@@ -37,9 +37,6 @@ namespace eSolutionTech.ViewModels.Catalog.Shifts
             {
                 ProjectId = request.ProjectId,
                 UserId = request.UserId,
-                Activity = request.Activity,
-                Comment = request.Comment,
-                Date = request.Date,
                 WorkingHours = request.WorkingHours
             };
             _context.Shifts.Add(shift);
@@ -96,9 +93,6 @@ namespace eSolutionTech.ViewModels.Catalog.Shifts
                     Id = x.shift.Id,
                     ProjectId = x.shift.ProjectId,
                     UserId = x.shift.UserId,
-                    Activity = x.shift.Activity,
-                    Comment = x.shift.Comment,
-                    Date = x.shift.Date,
                     WorkingHours = x.shift.WorkingHours
                 }).ToListAsync();
 
@@ -119,9 +113,6 @@ namespace eSolutionTech.ViewModels.Catalog.Shifts
                 Id = shift.Id,
                 ProjectId = shift.ProjectId,
                 UserId = shift.UserId,
-                Activity = shift.Activity,
-                Comment = shift.Comment,
-                Date = shift.Date,
                 WorkingHours = shift.WorkingHours
             };
             return shiftViewModel;
@@ -134,9 +125,6 @@ namespace eSolutionTech.ViewModels.Catalog.Shifts
 
             shift.ProjectId = request.ProjectId;
             shift.UserId = request.UserId;
-            shift.Activity = request.Activity;
-            shift.Comment = request.Comment;
-            shift.Date = request.Date;
             shift.WorkingHours = request.WorkingHours;
 
             return await _context.SaveChangesAsync();

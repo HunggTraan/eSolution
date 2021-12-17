@@ -19,7 +19,6 @@ namespace eSolutionTech.Data.Configurations
             builder.Property(x => x.UserId).IsRequired(true);
             builder.Property(x => x.FromDate).IsRequired(true);
             builder.Property(x => x.ToDate).IsRequired(true);
-            builder.HasOne(x => x.User).WithMany(x => x.TimeOffRequests).HasForeignKey(x => x.UserId);
         }
     }
 }

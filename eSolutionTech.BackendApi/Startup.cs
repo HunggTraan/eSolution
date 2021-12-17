@@ -5,6 +5,7 @@ using eSolutionTech.Data.Entities;
 using eSolutionTech.ViewModels.Catalog.Departments;
 using eSolutionTech.ViewModels.Catalog.JobTitles;
 using eSolutionTech.ViewModels.Catalog.Projects;
+using eSolutionTech.ViewModels.Catalog.ShiftSettings;
 using eSolutionTech.ViewModels.Catalog.TimeOffTypes;
 using eSolutionTech.ViewModels.System.Users;
 using FluentValidation;
@@ -51,6 +52,7 @@ namespace eSolutionTech.BackendApi
             services.AddTransient<IJobTitleService, JobTitleService>();
             services.AddTransient<ITimeOffTypeService, TimeOffTypeService>();
             services.AddTransient<IProjectService, ProjectService>();
+            services.AddTransient<IShiftSettingService, ShiftSettingService>();
             services.AddTransient<UserManager<User>, UserManager<User>>();
             services.AddTransient<SignInManager<User>, SignInManager<User>>();
             services.AddTransient<RoleManager<Role>, RoleManager<Role>>();

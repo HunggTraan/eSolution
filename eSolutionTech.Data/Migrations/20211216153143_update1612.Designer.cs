@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eSolutionTech.Data.EF;
 
 namespace eSolutionTech.Data.Migrations
 {
     [DbContext(typeof(eTechDbContext))]
-    partial class eTechDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211216153143_update1612")]
+    partial class update1612
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -196,7 +198,7 @@ namespace eSolutionTech.Data.Migrations
                     b.Property<DateTime>("EndDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 12, 17, 14, 24, 51, 446, DateTimeKind.Local).AddTicks(2612));
+                        .HasDefaultValue(new DateTime(2021, 12, 16, 22, 31, 42, 625, DateTimeKind.Local).AddTicks(684));
 
                     b.Property<string>("ManagerId")
                         .HasColumnType("nvarchar(max)");
@@ -208,7 +210,7 @@ namespace eSolutionTech.Data.Migrations
                     b.Property<DateTime>("StartDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 12, 17, 14, 24, 51, 436, DateTimeKind.Local).AddTicks(5572));
+                        .HasDefaultValue(new DateTime(2021, 12, 16, 22, 31, 42, 615, DateTimeKind.Local).AddTicks(9287));
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -280,27 +282,17 @@ namespace eSolutionTech.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("ExceedTimeIn")
                         .HasColumnType("int");
 
                     b.Property<int>("ExceedTimeOut")
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("TimeIn")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("TimeIn")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TimeOut")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("TimeOut")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -367,7 +359,7 @@ namespace eSolutionTech.Data.Migrations
                     b.Property<DateTime>("EndDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 12, 17, 14, 24, 51, 447, DateTimeKind.Local).AddTicks(4660));
+                        .HasDefaultValue(new DateTime(2021, 12, 16, 22, 31, 42, 626, DateTimeKind.Local).AddTicks(2749));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -380,7 +372,7 @@ namespace eSolutionTech.Data.Migrations
                     b.Property<DateTime>("StartDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 12, 17, 14, 24, 51, 447, DateTimeKind.Local).AddTicks(5048));
+                        .HasDefaultValue(new DateTime(2021, 12, 16, 22, 31, 42, 626, DateTimeKind.Local).AddTicks(3141));
 
                     b.Property<bool>("Unpaid")
                         .ValueGeneratedOnAdd()
@@ -418,7 +410,7 @@ namespace eSolutionTech.Data.Migrations
                     b.Property<DateTime>("DoB")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 12, 17, 7, 24, 51, 452, DateTimeKind.Utc).AddTicks(4064));
+                        .HasDefaultValue(new DateTime(2021, 12, 16, 15, 31, 42, 630, DateTimeKind.Utc).AddTicks(3665));
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");

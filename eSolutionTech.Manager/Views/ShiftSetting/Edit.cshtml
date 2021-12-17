@@ -1,0 +1,61 @@
+﻿@model eSolutionTech.ViewModels.Catalog.ShiftSettings.ShiftSettingUpdateRequest
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+  <ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+    <li class="breadcrumb-item active">Cập nhật khai báo</li>
+  </ol>
+  <div class="card mb-4">
+    <div class="card-header">
+      <a class="btn btn-success" asp-action="Index" asp-controller="TimeOffType">Về danh sách</a>
+    </div>
+    <div class="card-body">
+      <div class="col-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data" method="post">
+          <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="Id" class="form-control" type="hidden"/>
+          <div class="form-group">
+            <label asp-for="Code" class="control-label">Mã loại khai báo</label>
+            <input asp-for="Code" class="form-control" />
+            <span asp-validation-for="Code" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+            <label asp-for="Name" class="control-label">Tên loại khai báo</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+            <label asp-for="TimeIn" class="control-label">Thời gian vào</label>
+            <input asp-for="TimeIn" class="form-control" />
+            <span asp-validation-for="TimeIn" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+            <label asp-for="ExceedTimeIn" class="control-label">Thời gian quá hạn vào</label>
+            <input asp-for="ExceedTimeIn" class="form-control" />
+            <span asp-validation-for="ExceedTimeIn" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+            <label asp-for="TimeOut" class="control-label">Thời gian ra</label>
+            <input asp-for="TimeOut" class="form-control" />
+            <span asp-validation-for="TimeOut" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+            <label asp-for="ExceedTimeOut" class="control-label">Thời gian quá hạn ra</label>
+            <input asp-for="ExceedTimeOut" class="form-control" />
+            <span asp-validation-for="ExceedTimeOut" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-primary" />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+

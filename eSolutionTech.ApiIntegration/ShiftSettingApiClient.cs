@@ -1,5 +1,4 @@
-﻿using eSolutionTech.ViewModels.Catalog.TimeOffTypes;
-using eSolutionTech.ViewModels.Catalog.TimeOffTypes.Dtos;
+﻿using eSolutionTech.ViewModels.Catalog.ShiftSettings;
 using eSolutionTech.ViewModels.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -12,15 +11,16 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+
 namespace eSolutionTech.ApiIntegration
 {
-  public class TimeOffTypeApiClient : BaseApiClient, ITimeOffTypeApiClient
+  public class ShiftSettingApiClient : BaseApiClient, IShiftSettingApiClient
   {
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly IConfiguration _configuration;
 
-    public TimeOffTypeApiClient(IHttpClientFactory httpClientFactory,
+    public ShiftSettingApiClient(IHttpClientFactory httpClientFactory,
        IHttpContextAccessor httpContextAccessor,
         IConfiguration configuration) : base(httpClientFactory,
            httpContextAccessor,
@@ -30,7 +30,7 @@ namespace eSolutionTech.ApiIntegration
       _configuration = configuration;
       _httpClientFactory = httpClientFactory;
     }
-    public async Task<bool> CreateTimeOffType(TimeOffTypeCreateRequest request)
+    public async Task<bool> CreateShiftSetting(ShiftSettingCreateRequest request)
     {
       var sessions = _httpContextAccessor
                       .HttpContext
@@ -46,47 +46,46 @@ namespace eSolutionTech.ApiIntegration
 
       requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Name) ? "" : request.Name.ToString()), "name");
       requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Code) ? "" : request.Code.ToString()), "code");
-      requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Description) ? "" : request.Description.ToString()), "description");
-      requestContent.Add(new StringContent(string.IsNullOrEmpty(request.RequestUnit) ? "" : request.RequestUnit.ToString()), "requestUnit");
-      requestContent.Add(new StringContent(request.StartDate.ToString()), "startDate");
-      requestContent.Add(new StringContent(request.EndDate.ToString()), "endDate");
-      requestContent.Add(new StringContent(request.Unpaid.ToString()), "unpaid");
+      requestContent.Add(new StringContent(request.TimeIn.ToString()), "timeIn");
+      requestContent.Add(new StringContent(request.TimeOut.ToString()), "timeOut");
+      requestContent.Add(new StringContent(request.ExceedTimeIn.ToString()), "exceedTimeIn");
+      requestContent.Add(new StringContent(request.ExceedTimeOut.ToString()), "exceedTimeOut");
 
-      var response = await client.PostAsync($"/api/timeOffTypes/", requestContent);
+      var response = await client.PostAsync($"/api/shiftSettings/", requestContent);
       return response.IsSuccessStatusCode;
     }
 
-    public async Task<bool> DeleteTimeOffType(int id)
+    public async Task<bool> DeleteShiftSetting(int id)
     {
-      return await Delete($"/api/timeOffTypes/" + id);
+      return await Delete($"/api/shiftSettings/" + id);
     }
 
-    public async Task<List<TimeOffTypeViewModel>> GetAll()
+    public async Task<List<ShiftSettingViewModel>> GetAll()
     {
-      var data = await GetAsync<List<TimeOffTypeViewModel>>(
-              $"/api/timeOffTypes");
+      var data = await GetAsync<List<ShiftSettingViewModel>>(
+              $"/api/shiftSettings");
 
       return data;
     }
 
-    public async Task<TimeOffTypeViewModel> GetById(int id)
+    public async Task<ShiftSettingViewModel> GetById(int id)
     {
-      var data = await GetAsync<TimeOffTypeViewModel>($"/api/timeOffTypes/{id}");
+      var data = await GetAsync<ShiftSettingViewModel>($"/api/shiftSettings/{id}");
 
       return data;
     }
 
-    public async Task<PagedResult<TimeOffTypeViewModel>> GetPagings(GetTimeOffTypePagingRequest request)
+    public async Task<PagedResult<ShiftSettingViewModel>> GetPagings(GetShiftSettingPagingRequest request)
     {
-      var data = await GetAsync<PagedResult<TimeOffTypeViewModel>>(
-                  $"/api/timeOffTypes/paging?pageIndex={request.PageIndex}" +
+      var data = await GetAsync<PagedResult<ShiftSettingViewModel>>(
+                  $"/api/shiftSettings/paging?pageIndex={request.PageIndex}" +
                   $"&pageSize={request.PageSize}" +
                   $"&keyword={request.KeyWord}");
 
       return data;
     }
 
-    public async Task<bool> UpdateTimeOffType(TimeOffTypeUpdateRequest request)
+    public async Task<bool> UpdateShiftSetting(ShiftSettingUpdateRequest request)
     {
       var sessions = _httpContextAccessor
           .HttpContext
@@ -101,13 +100,12 @@ namespace eSolutionTech.ApiIntegration
 
       requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Name) ? "" : request.Name.ToString()), "name");
       requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Code) ? "" : request.Code.ToString()), "code");
-      requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Description) ? "" : request.Description.ToString()), "description");
-      requestContent.Add(new StringContent(string.IsNullOrEmpty(request.RequestUnit) ? "" : request.RequestUnit.ToString()), "requestUnit");
-      requestContent.Add(new StringContent(request.StartDate.ToString()), "startDate");
-      requestContent.Add(new StringContent(request.EndDate.ToString()), "endDate");
-      requestContent.Add(new StringContent(request.Unpaid.ToString()), "unpaid");
+      requestContent.Add(new StringContent(request.TimeIn.ToString()), "timeIn");
+      requestContent.Add(new StringContent(request.TimeOut.ToString()), "timeOut");
+      requestContent.Add(new StringContent(request.ExceedTimeIn.ToString()), "exceedTimeIn");
+      requestContent.Add(new StringContent(request.ExceedTimeOut.ToString()), "exceedTimeOut");
 
-      var response = await client.PutAsync($"/api/timeOffTypes/" + request.Id, requestContent);
+      var response = await client.PutAsync($"/api/shiftSettings/" + request.Id, requestContent);
       return response.IsSuccessStatusCode;
     }
   }

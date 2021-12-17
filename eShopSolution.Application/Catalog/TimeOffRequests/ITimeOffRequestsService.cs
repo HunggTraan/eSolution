@@ -13,7 +13,9 @@ namespace eSolutionTech.Application.Catalog.TimeOffRequests
         Task<int> Create(TimeOffCreateRequest request);
         Task<int> Update(TimeOffUpdateRequest request);
         Task<int> Delete(int timeOffRequestId);
-        Task<PagedResult<TimeOffViewModel>> GetAllPagingByUserId(TimeOffPagingRequest request);
+        Task<PagedResult<TimeOffViewModel>> GetAllPaging(TimeOffPagingRequest request);
+        Task<PagedResult<TimeOffViewModel>> GetAllPagingByUser(TimeOffPagingRequest request);
+        Task<List<TimeOffViewModel>> GetAll();
         Task<TimeOffViewModel> GetById(int timeOffId);
     }
 }

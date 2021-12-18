@@ -104,6 +104,7 @@ namespace eSolutionTech.Manager.Controllers
                 EndDate = Project.EndDate,
                 StartDate = Project.StartDate,
                 ManagerId = Project.ManagerId,
+                shiftSettingId = Project.shiftSettingId,
                 Status = Project.Status,
                 UserIds = Project.UserIds
             };

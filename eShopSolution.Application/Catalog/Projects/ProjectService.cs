@@ -34,6 +34,7 @@ namespace eSolutionTech.ViewModels.Catalog.Projects
                     Code = request.Code,
                     Description = request.Description,
                     ManagerId = request.ManagerId,
+                    shiftSettingId = request.shiftSettingId,
                     StartDate = request.StartDate,
                     EndDate = request.EndDate,
                     Status = request.Status
@@ -100,7 +101,8 @@ namespace eSolutionTech.ViewModels.Catalog.Projects
             //            select new { project, memberInProject }).Distinct();
 
             var query = from project in _context.Projects
-                        select new { project };
+                        join shiftSetting in _context.ShiftSettings on project.shiftSettingId equals shiftSetting.Id
+                        select new { project, shiftSetting };
 
             if (!string.IsNullOrEmpty(request.KeyWord))
                 query = query.Where(x => x.project.Code.Contains(request.KeyWord) || x.project.Name.Contains(request.KeyWord));
@@ -116,6 +118,7 @@ namespace eSolutionTech.ViewModels.Catalog.Projects
                     Code = x.project.Code,
                     Description = x.project.Description,
                     ManagerId = x.project.ManagerId,
+                    shiftSetting = x.shiftSetting.Name,
                     StartDate = x.project.StartDate,
                     EndDate = x.project.EndDate,
                     Status = x.project.Status,
@@ -144,6 +147,7 @@ namespace eSolutionTech.ViewModels.Catalog.Projects
                 Code = project.Code,
                 Description = project.Description,
                 ManagerId = project.ManagerId,
+                shiftSettingId = project.shiftSettingId,
                 StartDate = project.StartDate,
                 EndDate = project.EndDate,
                 Status = project.Status,
@@ -167,6 +171,7 @@ namespace eSolutionTech.ViewModels.Catalog.Projects
             project.Code = request.Code;
             project.Description = request.Description;
             project.ManagerId = request.ManagerId;
+            project.shiftSettingId = request.shiftSettingId;
             project.StartDate = request.StartDate;
             project.EndDate = request.EndDate;
             project.Status = request.Status;

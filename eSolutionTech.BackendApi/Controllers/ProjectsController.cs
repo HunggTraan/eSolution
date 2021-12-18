@@ -82,14 +82,14 @@ namespace eSolutionTech.BackendApi.Controllers
 
     [HttpPut("{projectId}")]
     [Consumes("multipart/form-data")]
-    public async Task<IActionResult> Update([FromRoute] int timeOffTypeId, [FromForm] ProjectUpdateRequest request)
+    public async Task<IActionResult> Update([FromRoute] int projectId, [FromForm] ProjectUpdateRequest request)
     {
       if (!ModelState.IsValid)
       {
         return BadRequest(ModelState);
       }
 
-      request.Id = timeOffTypeId;
+      request.Id = projectId;
 
       var affectedResult = await _projectService.Update(request);
       if (affectedResult == 0)

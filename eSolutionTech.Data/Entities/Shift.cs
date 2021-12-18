@@ -13,7 +13,7 @@ namespace eSolutionTech.Data.Entities
     [Required]
     public int ProjectId { get; set; }
     [Required]
-    public Guid UserId { get; set; }
+    public string UserId { get; set; }
     public DateTime TimeIn { get; set; }
     public DateTime TimeOut { get; set; }
     public string WorkingHours { get; set; }

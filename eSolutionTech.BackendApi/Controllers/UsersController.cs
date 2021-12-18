@@ -10,101 +10,101 @@ using System.Threading.Tasks;
 
 namespace eSolutionTech.BackendApi.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    [Authorize]
-    public class UsersController : ControllerBase
+  [Route("api/[controller]")]
+  [ApiController]
+  [Authorize]
+  public class UsersController : ControllerBase
+  {
+    private readonly IUserService _userService;
+    public UsersController(IUserService userService)
     {
-        private readonly IUserService _userService;
-        public UsersController(IUserService userService)
-        {
-            _userService = userService;
-        }
-
-        [HttpPost("authenticate")]
-        [AllowAnonymous]
-        public async Task<IActionResult> Authenticate([FromBody] LoginRequest request)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var result = await _userService.Authencate(request);
-
-            if (string.IsNullOrEmpty(result.ResultObj))
-            {
-                return BadRequest(result);
-            }
-            return Ok(result);
-        }
-
-        [HttpPost("adduser")]
-        public async Task<IActionResult> CreateUser([FromBody] CreateUserRequest request)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var result = await _userService.CreateUser(request);
-            if (!result.IsSuccessed)
-            {
-                return BadRequest(result);
-            }
-            return Ok(result);
-        }
-
-        [HttpGet("paging")]
-        public async Task<IActionResult> GetAllPaging([FromQuery] GetUserPagingRequest request)
-        {
-            var users = await _userService.GetUsersPaging(request);
-            return Ok(users);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
-        {
-            var users = await _userService.GetUsers();
-            return Ok(users);
-        }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Update(Guid id, [FromBody] UserUpdateRequest request)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
-            var result = await _userService.Update(id, request);
-            if (!result.IsSuccessed)
-            {
-                return BadRequest(result);
-            }
-            return Ok(result);
-        }
-
-        //[HttpPut("{id}/roles")]
-        //public async Task<IActionResult> RoleAssign(Guid id, [FromBody] RoleAssignRequest request)
-        //{
-        //    if (!ModelState.IsValid)
-        //        return BadRequest(ModelState);
-
-        //    var result = await _userService.RoleAssign(id, request);
-        //    if (!result.IsSuccessed)
-        //    {
-        //        return BadRequest(result);
-        //    }
-        //    return Ok(result);
-        //}
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(Guid id)
-        {
-            var user = await _userService.GetById(id);
-            return Ok(user);
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(Guid id)
-        {
-            var result = await _userService.Delete(id);
-            return Ok(result);
-        }
+      _userService = userService;
     }
+
+    [HttpPost("authenticate")]
+    [AllowAnonymous]
+    public async Task<IActionResult> Authenticate([FromBody] LoginRequest request)
+    {
+      if (!ModelState.IsValid)
+        return BadRequest(ModelState);
+
+      var result = await _userService.Authencate(request);
+
+      if (string.IsNullOrEmpty(result.ResultObj))
+      {
+        return BadRequest(result);
+      }
+      return Ok(result);
+    }
+
+    [HttpPost("adduser")]
+    public async Task<IActionResult> CreateUser([FromBody] CreateUserRequest request)
+    {
+      if (!ModelState.IsValid)
+        return BadRequest(ModelState);
+
+      var result = await _userService.CreateUser(request);
+      if (!result.IsSuccessed)
+      {
+        return BadRequest(result);
+      }
+      return Ok(result);
+    }
+
+    [HttpGet("paging")]
+    public async Task<IActionResult> GetAllPaging([FromQuery] GetUserPagingRequest request)
+    {
+      var users = await _userService.GetUsersPaging(request);
+      return Ok(users);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+      var users = await _userService.GetUsers();
+      return Ok(users);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(Guid id, [FromBody] UserUpdateRequest request)
+    {
+      if (!ModelState.IsValid)
+        return BadRequest(ModelState);
+
+      var result = await _userService.Update(id, request);
+      if (!result.IsSuccessed)
+      {
+        return BadRequest(result);
+      }
+      return Ok(result);
+    }
+
+    [HttpPut("{id}/roles")]
+    public async Task<IActionResult> RoleAssign(Guid id, [FromBody] RoleAssignRequest request)
+    {
+      if (!ModelState.IsValid)
+        return BadRequest(ModelState);
+
+      var result = await _userService.RoleAssign(id, request);
+      if (!result.IsSuccessed)
+      {
+        return BadRequest(result);
+      }
+      return Ok(result);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+      var user = await _userService.GetById(id);
+      return Ok(user);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+      var result = await _userService.Delete(id);
+      return Ok(result);
+    }
+  }
 }

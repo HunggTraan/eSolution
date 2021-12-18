@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eSolutionTech.Data.EF;
 
 namespace eSolutionTech.Data.Migrations
 {
     [DbContext(typeof(eTechDbContext))]
-    partial class eTechDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211217135950_17122")]
+    partial class _17122
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

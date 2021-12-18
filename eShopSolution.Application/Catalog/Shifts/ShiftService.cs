@@ -74,7 +74,7 @@ namespace eSolutionTech.ViewModels.Catalog.Shifts
             //if (!string.IsNullOrEmpty(request.KeyWord))
             //    query = query.Where(x => x.shift.Code.Contains(request.KeyWord) || x.jobTitle.Name.Contains(request.KeyWord));
 
-            if (request.UserId != null || request.UserId != Guid.Empty)
+            if (!string.IsNullOrEmpty(request.UserId))
             {
                 query = query.Where(x => x.shift.UserId == request.UserId);
             }

@@ -4,29 +4,32 @@ using System.Text;
 
 namespace eSolutionTech.ViewModels.Catalog.Projects
 {
-    public class ProjectViewModel
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Code { get; set; }
-        public string Description { get; set; }
-        public string ManagerId { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public int Status { get; set; }
-        public string[] UserIds { get; set; }
-    }
+  public class ProjectViewModel
+  {
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Code { get; set; }
+    public string Description { get; set; }
+    public string ManagerId { get; set; }
+    public string shiftSetting { get; set; }
+    public int shiftSettingId { get; set; }
+    public DateTime StartDate { get; set; }
+    public DateTime EndDate { get; set; }
+    public int Status { get; set; }
+    public string[] UserIds { get; set; }
+  }
 
-    public class ProjectVM
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Code { get; set; }
-        public string Description { get; set; }
-        public string ManagerId { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public int Status { get; set; }
-        public string[] UserIds { get; set; }
-    }
+  public class ProjectVM
+  {
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Code { get; set; }
+    public string Description { get; set; }
+    public string ManagerId { get; set; }
+    public int shiftSettingId { get; set; }
+    public DateTime StartDate { get; set; }
+    public DateTime EndDate { get; set; }
+    public int Status { get; set; }
+    public string[] UserIds { get; set; }
+  }
 }

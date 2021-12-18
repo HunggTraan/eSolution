@@ -7,6 +7,6 @@ namespace eSolutionTech.ViewModels.Catalog.Shifts
     {
         public string KeyWord { get; set; }
         public int ProjectId { get; set; }
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
     }
 }

@@ -196,7 +196,7 @@ namespace eSolutionTech.Data.Migrations
                     b.Property<DateTime>("EndDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 12, 17, 20, 59, 50, 404, DateTimeKind.Local).AddTicks(8599));
+                        .HasDefaultValue(new DateTime(2021, 12, 21, 14, 40, 30, 487, DateTimeKind.Local).AddTicks(532));
 
                     b.Property<string>("ManagerId")
                         .HasColumnType("nvarchar(max)");
@@ -208,7 +208,7 @@ namespace eSolutionTech.Data.Migrations
                     b.Property<DateTime>("StartDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 12, 17, 20, 59, 50, 394, DateTimeKind.Local).AddTicks(1764));
+                        .HasDefaultValue(new DateTime(2021, 12, 21, 14, 40, 30, 478, DateTimeKind.Local).AddTicks(1126));
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -267,15 +267,10 @@ namespace eSolutionTech.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("UserId1")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("WorkingHours")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId1");
 
                     b.ToTable("Shifts");
                 });
@@ -321,9 +316,6 @@ namespace eSolutionTech.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("AdminNote")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -334,25 +326,31 @@ namespace eSolutionTech.Data.Migrations
                     b.Property<DateTime>("FromDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("HalfDay")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RequestUnit")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TimeOffType")
-                        .HasColumnType("int");
+                    b.Property<string>("TimeOffType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ToDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("TimeOffRequests");
                 });
@@ -374,7 +372,7 @@ namespace eSolutionTech.Data.Migrations
                     b.Property<DateTime>("EndDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 12, 17, 20, 59, 50, 406, DateTimeKind.Local).AddTicks(546));
+                        .HasDefaultValue(new DateTime(2021, 12, 21, 14, 40, 30, 488, DateTimeKind.Local).AddTicks(1956));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -387,7 +385,7 @@ namespace eSolutionTech.Data.Migrations
                     b.Property<DateTime>("StartDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 12, 17, 20, 59, 50, 406, DateTimeKind.Local).AddTicks(922));
+                        .HasDefaultValue(new DateTime(2021, 12, 21, 14, 40, 30, 488, DateTimeKind.Local).AddTicks(2349));
 
                     b.Property<bool>("Unpaid")
                         .ValueGeneratedOnAdd()
@@ -425,7 +423,7 @@ namespace eSolutionTech.Data.Migrations
                     b.Property<DateTime>("DoB")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 12, 17, 13, 59, 50, 410, DateTimeKind.Utc).AddTicks(625));
+                        .HasDefaultValue(new DateTime(2021, 12, 21, 7, 40, 30, 492, DateTimeKind.Utc).AddTicks(2585));
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -483,29 +481,6 @@ namespace eSolutionTech.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("eSolutionTech.Data.Entities.Shift", b =>
-                {
-                    b.HasOne("eSolutionTech.Data.Entities.User", null)
-                        .WithMany("Shifts")
-                        .HasForeignKey("UserId1");
-                });
-
-            modelBuilder.Entity("eSolutionTech.Data.Entities.TimeOffRequest", b =>
-                {
-                    b.HasOne("eSolutionTech.Data.Entities.User", null)
-                        .WithMany("TimeOffRequests")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("eSolutionTech.Data.Entities.User", b =>
-                {
-                    b.Navigation("Shifts");
-
-                    b.Navigation("TimeOffRequests");
                 });
 #pragma warning restore 612, 618
         }

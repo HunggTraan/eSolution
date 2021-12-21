@@ -157,22 +157,13 @@ namespace eSolutionTech.Manager.Controllers
       return View(request);
     }
 
-    [HttpGet]
-    public IActionResult Delete(Guid id)
-    {
-      return View(new UserDeleteRequest()
-      {
-        Id = id
-      });
-    }
-
     [HttpPost]
-    public async Task<IActionResult> Delete(UserDeleteRequest request)
+    public async Task<IActionResult> Delete([FromBody] UserDeleteRequest request)
     {
       if (!ModelState.IsValid)
         return View();
 
-      var result = await _userApiClient.Delete(request.Id);
+      var result = await _userApiClient.Delete(Guid.Parse(request.Id));
       if (result.IsSuccessed)
       {
         TempData["result"] = "Xóa người dùng thành công";

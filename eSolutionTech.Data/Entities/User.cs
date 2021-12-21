@@ -18,7 +18,5 @@ namespace eSolutionTech.Data.Entities
         public string DepartmentId { get; set; }
         [Required]
         public string JobTitleId { get; set; }
-        public List<Shift> Shifts { get; set; }
-        public List<TimeOffRequest> TimeOffRequests { get; set; }
     }
 }

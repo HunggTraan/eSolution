@@ -6,6 +6,6 @@ namespace eSolutionTech.ViewModels.Catalog.ShiftSettings
 {
     public class ShiftSettingDeleteRequest
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
     }
 }

@@ -20,4 +20,9 @@
     <ProjectReference Include="..\eSolutionTech.ViewModels\eSolutionTech.ViewModels.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+    <Folder Include="wwwroot\libs\datetimepicker\" />
+  </ItemGroup>
+
 </Project>

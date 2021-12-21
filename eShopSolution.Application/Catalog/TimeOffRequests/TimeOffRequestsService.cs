@@ -2,40 +2,39 @@
 using eSolutionTech.Data.EF;
 using eSolutionTech.Data.Entities;
 using eSolutionTech.ViewModels.Catalog.TimeOffRequests;
-using eSolutionTech.ViewModels.Catalog.TimeOffRequests.Dtos;
+using eSolutionTech.ViewModels.Catalog.TimeOffTypes;
 using eSolutionTech.ViewModels.Common;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
-using System.Threading.Tasks;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
-
+using System.Threading.Tasks;
 namespace eSolutionTech.Application.Catalog.TimeOffRequests
 {
   public class TimeOffRequestsService : ITimeOffRequestsService
   {
     private readonly eTechDbContext _context;
-    public TimeOffRequestsService(eTechDbContext context)
+    private readonly ITimeOffTypeService _timeOffTypeService;
+    public TimeOffRequestsService(eTechDbContext context, ITimeOffTypeService timeOffTypeService)
     {
       _context = context;
+      _timeOffTypeService = timeOffTypeService;
     }
     public async Task<int> Create(TimeOffCreateRequest request)
     {
-      CultureInfo provider = CultureInfo.InvariantCulture;
-
       var timeOffRequest = new TimeOffRequest()
       {
         Name = request.Name,
         Description = request.Description,
-        TimeOffType = request.TimeOffType,
+        TimeOffType = request.TimeOffTypeId,
         UserId = request.UserId,
         FromDate = request.FromDate,
         ToDate = request.ToDate,
-        AdminNote = request.AdminNote,
         Duration = request.Duration,
-        Status = request.Status
+        Status = request.Status,
+        HalfDay = request.HalfDay,
+        RequestUnit = request.RequestUnit
       };
       _context.TimeOffRequests.Add(timeOffRequest);
       return await _context.SaveChangesAsync();
@@ -47,7 +46,7 @@ namespace eSolutionTech.Application.Catalog.TimeOffRequests
       {
         var timeOffRequest = await _context.TimeOffRequests.FindAsync(timeOffRequestId);
         if (timeOffRequest == null)
-          throw new eTechException($"Không tìm thấy ca làm việc với id là {timeOffRequestId}");
+          throw new eTechException($"Không tìm thấy lịch nghỉ với id là {timeOffRequestId}");
         _context.TimeOffRequests.Remove(timeOffRequest);
         return await _context.SaveChangesAsync();
       }
@@ -60,21 +59,23 @@ namespace eSolutionTech.Application.Catalog.TimeOffRequests
     public async Task<List<TimeOffViewModel>> GetAll()
     {
       var query = from timeOffRequest in _context.TimeOffRequests
-                  join timeOffType in _context.TimeOffTypes on timeOffRequest.TimeOffType equals timeOffType.Id
+                  join timeOffType in _context.TimeOffTypes on timeOffRequest.TimeOffType equals timeOffType.Id.ToString()
                   select new { timeOffRequest, timeOffType };
 
       var data = await query
         .Select(x => new TimeOffViewModel()
         {
+          Id = x.timeOffRequest.Id,
           Name = x.timeOffRequest.Name,
           Description = x.timeOffRequest.Description,
-          TimeOffType = x.timeOffType.Name,
+          TimeOffType = x.timeOffRequest.Name,
           UserId = x.timeOffRequest.UserId,
           FromDate = x.timeOffRequest.FromDate,
           ToDate = x.timeOffRequest.ToDate,
-          AdminNote = x.timeOffRequest.AdminNote,
           Duration = x.timeOffRequest.Duration,
-          Status = x.timeOffRequest.Status
+          Status = x.timeOffRequest.Status,
+          RequestUnit = x.timeOffRequest.RequestUnit,
+          HalfDay = x.timeOffRequest.HalfDay
         }).ToListAsync();
 
       if (data != null)
@@ -87,7 +88,7 @@ namespace eSolutionTech.Application.Catalog.TimeOffRequests
       try
       {
         var query = from timeOffRequest in _context.TimeOffRequests
-                    join timeOffType in _context.TimeOffTypes on timeOffRequest.TimeOffType equals timeOffType.Id
+                    join timeOffType in _context.TimeOffTypes on timeOffRequest.TimeOffType equals timeOffType.Id.ToString()
                     select new { timeOffRequest, timeOffType };
 
         DateTime FromDate = DateTime.Now;
@@ -98,12 +99,12 @@ namespace eSolutionTech.Application.Catalog.TimeOffRequests
         {
           FromDate = DateTime.ParseExact(request.FromDate, Constants.Constants.DateTimeFormatDate, provider);
           ToDate = DateTime.ParseExact(request.ToDate, Constants.Constants.DateTimeFormatDate, provider);
+
+          query = query.Where(x => x.timeOffRequest.FromDate >= FromDate && x.timeOffRequest.ToDate <= ToDate);
         }
 
-        if (request.UserId != null || request.UserId != Guid.Empty)
-          query = query.Where(x => x.timeOffRequest.UserId == request.UserId);
-
-        query = query.Where(x => x.timeOffRequest.FromDate >= FromDate && x.timeOffRequest.ToDate <= ToDate);
+        if (!string.IsNullOrEmpty(request.UserId))
+          query = query.Where(x => x.timeOffRequest.UserId == request.UserId.ToString());
 
         int totalRow = await query.CountAsync();
 
@@ -111,15 +112,17 @@ namespace eSolutionTech.Application.Catalog.TimeOffRequests
             .Take(request.PageSize)
             .Select(x => new TimeOffViewModel()
             {
+              Id = x.timeOffRequest.Id,
               Name = x.timeOffRequest.Name,
               Description = x.timeOffRequest.Description,
-              TimeOffType = x.timeOffType.Name,
+              TimeOffType = x.timeOffRequest.Name,
               UserId = x.timeOffRequest.UserId,
               FromDate = x.timeOffRequest.FromDate,
               ToDate = x.timeOffRequest.ToDate,
-              AdminNote = x.timeOffRequest.AdminNote,
               Duration = x.timeOffRequest.Duration,
-              Status = x.timeOffRequest.Status
+              Status = x.timeOffRequest.Status,
+              RequestUnit = x.timeOffRequest.RequestUnit,
+              HalfDay = x.timeOffRequest.HalfDay
             }).ToListAsync();
 
         var pagedResult = new PagedResult<TimeOffViewModel>()
@@ -140,7 +143,7 @@ namespace eSolutionTech.Application.Catalog.TimeOffRequests
       try
       {
         var query = from timeOffRequest in _context.TimeOffRequests
-                    join timeOffType in _context.TimeOffTypes on timeOffRequest.TimeOffType equals timeOffType.Id
+                    join timeOffType in _context.TimeOffTypes on timeOffRequest.TimeOffType equals timeOffType.Id.ToString()
                     select new { timeOffRequest, timeOffType };
 
         DateTime FromDate = DateTime.Now;
@@ -153,8 +156,8 @@ namespace eSolutionTech.Application.Catalog.TimeOffRequests
           ToDate = DateTime.ParseExact(request.ToDate, Constants.Constants.DateTimeFormatDate, provider);
         }
 
-        if (request.UserId != null || request.UserId != Guid.Empty)
-          query = query.Where(x => x.timeOffRequest.UserId == request.UserId);
+        if (string.IsNullOrEmpty(request.UserId))
+          query = query.Where(x => x.timeOffRequest.UserId == request.UserId.ToString());
 
         query = query.Where(x => x.timeOffRequest.FromDate >= FromDate && x.timeOffRequest.ToDate <= ToDate);
 
@@ -164,15 +167,17 @@ namespace eSolutionTech.Application.Catalog.TimeOffRequests
             .Take(request.PageSize)
             .Select(x => new TimeOffViewModel()
             {
+              Id = x.timeOffRequest.Id,
               Name = x.timeOffRequest.Name,
               Description = x.timeOffRequest.Description,
-              TimeOffType = x.timeOffType.Name,
+              TimeOffType = x.timeOffRequest.Name,
               UserId = x.timeOffRequest.UserId,
               FromDate = x.timeOffRequest.FromDate,
               ToDate = x.timeOffRequest.ToDate,
-              AdminNote = x.timeOffRequest.AdminNote,
               Duration = x.timeOffRequest.Duration,
-              Status = x.timeOffRequest.Status
+              Status = x.timeOffRequest.Status,
+              RequestUnit = x.timeOffRequest.RequestUnit,
+              HalfDay = x.timeOffRequest.HalfDay
             }).ToListAsync();
 
         var pagedResult = new PagedResult<TimeOffViewModel>()
@@ -193,19 +198,18 @@ namespace eSolutionTech.Application.Catalog.TimeOffRequests
 
       var timeOffRequest = await _context.TimeOffRequests.FindAsync(timeOffId);
 
-      var timeOffType = _context.TimeOffTypes.FindAsync(timeOffRequest.TimeOffType);
-
       var timeOffViewModel = new TimeOffViewModel()
       {
         Name = timeOffRequest.Name,
         Description = timeOffRequest.Description,
-        TimeOffType = timeOffType.Result.Name,
+        TimeOffType = timeOffRequest.TimeOffType,
         UserId = timeOffRequest.UserId,
         FromDate = timeOffRequest.FromDate,
         ToDate = timeOffRequest.ToDate,
-        AdminNote = timeOffRequest.AdminNote,
         Duration = timeOffRequest.Duration,
-        Status = timeOffRequest.Status
+        Status = timeOffRequest.Status,
+        RequestUnit = timeOffRequest.RequestUnit,
+        HalfDay = timeOffRequest.HalfDay
       };
       return timeOffViewModel;
     }
@@ -217,13 +221,24 @@ namespace eSolutionTech.Application.Catalog.TimeOffRequests
 
       timeOffRequest.Name = request.Name;
       timeOffRequest.Description = request.Description;
-      timeOffRequest.TimeOffType = request.TimeOffType;
+      timeOffRequest.TimeOffType = request.TimeOffTypeId;
       timeOffRequest.UserId = request.UserId;
       timeOffRequest.FromDate = request.FromDate;
       timeOffRequest.ToDate = request.ToDate;
-      timeOffRequest.AdminNote = request.AdminNote;
       timeOffRequest.Duration = request.Duration;
       timeOffRequest.Status = request.Status;
+      timeOffRequest.RequestUnit = request.RequestUnit;
+      timeOffRequest.HalfDay = request.HalfDay;
+
+      return await _context.SaveChangesAsync();
+    }
+
+    public async Task<int> Apply(int id, string status)
+    {
+      var timeOffRequest = await _context.TimeOffRequests.FindAsync(id);
+      if (timeOffRequest == null) throw new eTechException($"Không tìm thấy lịch nghỉ với id: {id}");
+
+      timeOffRequest.Status = status;
 
       return await _context.SaveChangesAsync();
     }

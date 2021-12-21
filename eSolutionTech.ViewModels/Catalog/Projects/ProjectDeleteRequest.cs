@@ -6,6 +6,6 @@ namespace eSolutionTech.ViewModels.Catalog.Projects
 {
     public class ProjectDeleteRequest
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
     }
 }

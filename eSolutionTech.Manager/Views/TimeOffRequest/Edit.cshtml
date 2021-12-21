@@ -1,0 +1,135 @@
+﻿@model eSolutionTech.ViewModels.Catalog.TimeOffRequests.TimeOffUpdateRequest
+
+@{
+  ViewData["Title"] = "Cập nhật ngày nghỉ";
+  Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+  <ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+    <li class="breadcrumb-item active">Cập nhật ngày nghỉ</li>
+  </ol>
+  <div class="card mb-4">
+    <div class="card-header">
+      <a class="btn btn-success" asp-action="Index" asp-controller="TimeOffRequest">Về danh sách</a>
+    </div>
+    <div class="card-body">
+      <div class="col-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data" method="post">
+          <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+          <div class="form-group hidden">
+            <input asp-for="Id" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label asp-for="Name" class="control-label">Tên</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+            <label asp-for="Description" class="control-label">Mô tả</label>
+            <input asp-for="Description" class="form-control" />
+            <span asp-validation-for="Description" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+            <label asp-for="TimeOffTypeId" class="control-label"></label>
+            <select asp-for="TimeOffTypeId" id="timeOffTypeId" asp-items="@ViewBag.TimeOffType" class="form-control"></select>
+            <span asp-validation-for="TimeOffTypeId" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+            <label asp-for="RequestUnit" class="control-label"></label>
+            <input asp-for="RequestUnit" id="requestUnitValue" readonly="readonly" class="form-control" />
+            <span asp-validation-for="RequestUnit" class="text-danger"></span>
+          </div>
+          <div class="form-group hidden">
+            <input asp-for="UserId" class="form-control" />
+          </div>
+          <div class="form-group hidden">
+            <label asp-for="FromDate" class="control-label"></label>
+            <input asp-for="FromDate" class="form-control" type="text" value="@DateTime.Today" />
+          </div>
+          <div class="form-group hidden">
+            <label asp-for="ToDate" class="control-label"></label>
+            <input asp-for="ToDate" class="form-control" type="text" value="@DateTime.Today" />
+          </div>
+          <div class="form-group">
+            <label asp-for="FromDateStr" class="control-label"></label>
+            <input asp-for="FromDateStr" id="fromDate" type="text" value="@Model.FromDate.ToString("dd/MM/yyyy")" class="form-control" />
+            <span asp-validation-for="FromDateStr" class="text-danger"></span>
+          </div>
+          <div class="form-group" id="isHalfDay">
+            <label asp-for="ToDateStr" class="control-label"></label>
+            <input asp-for="ToDateStr" id="toDate" type="text" value="@Model.ToDate.ToString("dd/MM/yyyy")" class="form-control" />
+            <span asp-validation-for="ToDateStr" class="text-danger"></span>
+          </div>
+          <div class="form-group hidden" id="halfDay">
+            <label asp-for="HalfDay" class="control-label"></label>
+            <select asp-for="HalfDay" id="select" class="form-control">
+              <option value="1">Buổi sáng</option>
+              <option value="2">Buổi chiều</option>
+            </select>
+            <span asp-validation-for="HalfDay" class="text-danger"></span>
+          </div>
+          <div class="form-group hidden">
+            <input asp-for="Duration" class="form-control" value="1" />
+          </div>
+          <div class="form-group hidden">
+            <input asp-for="Status" class="form-control" value="0" />
+          </div>
+          <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-primary" />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section Styles {
+  <link href="~/libs/datetimepicker/jquery.datetimepicker.css" rel="stylesheet" />
+}
+@section Scripts{
+  <script src="~/libs/datetimepicker/jquery.datetimepicker.full.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      var requestUnit = $('#timeOffTypeId').val().split('|')[1];
+      if (requestUnit == "1") {
+        $('#isHalfDay').removeClass('hidden');
+        $('#halfDay').addClass('hidden');
+        $('#requestUnitValue').val('Theo ngày');
+      }
+      else if (requestUnit == "2") {
+        $('#isHalfDay').addClass('hidden');
+        $('#halfDay').removeClass('hidden');
+        $('#requestUnitValue').val('Nửa ngày');
+      }
+    });
+
+
+    $('#fromDate').datetimepicker({
+      timepicker: false,
+      datepicker: true,
+      format: 'd/m/Y',
+    });
+    $('#toDate').datetimepicker({
+      timepicker: false,
+      datepicker: true,
+      format: 'd/m/Y',
+    });
+
+    $('#timeOffTypeId').on('change', function () {
+      var requestUnit = $('#timeOffTypeId').val().split('|')[1];
+
+      if (requestUnit == "1") {
+        $('#isHalfDay').removeClass('hidden');
+        $('#halfDay').addClass('hidden');
+        $('#requestUnitValue').val('Theo ngày');
+      }
+      else if (requestUnit == "2"){
+        $('#isHalfDay').addClass('hidden');
+        $('#halfDay').removeClass('hidden');
+        $('#requestUnitValue').val('Nửa ngày');
+      }
+    });
+  </script>
+}

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace eSolutionTech.Manager.Controllers
 {
-    public class ProjectController : Controller
+    public class ProjectController : BaseController
     {
         private readonly IProjectApiClient _projectApiClient;
         private readonly IUserApiClient _userApiClient;
@@ -130,22 +130,14 @@ namespace eSolutionTech.Manager.Controllers
             return View(request);
         }
 
-        [HttpGet]
-        public IActionResult Delete(int id)
-        {
-            return View(new ProjectDeleteRequest()
-            {
-                Id = id
-            });
-        }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(ProjectDeleteRequest request)
+        public async Task<IActionResult> Delete([FromBody] ProjectDeleteRequest request)
         {
             if (!ModelState.IsValid)
                 return View();
 
-            var result = await _projectApiClient.DeleteProject(request.Id);
+            var result = await _projectApiClient.DeleteProject(Int32.Parse(request.Id));
             if (result)
             {
                 TempData["result"] = "Xóa dự án thành công";

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace eSolutionTech.Manager.Controllers
 {
-  public class ShiftSettingController : Controller
+  public class ShiftSettingController : BaseController
   {
     private readonly IShiftSettingApiClient _shiftSettingApiClient;
     private readonly IConfiguration _configuration;
@@ -100,22 +100,13 @@ namespace eSolutionTech.Manager.Controllers
       return View(request);
     }
 
-    [HttpGet]
-    public IActionResult Delete(int id)
-    {
-      return View(new ShiftSettingDeleteRequest()
-      {
-        Id = id
-      });
-    }
-
     [HttpPost]
-    public async Task<IActionResult> Delete(ShiftSettingDeleteRequest request)
+    public async Task<IActionResult> Delete([FromBody] ShiftSettingDeleteRequest request)
     {
       if (!ModelState.IsValid)
         return View();
 
-      var result = await _shiftSettingApiClient.DeleteShiftSetting(request.Id);
+      var result = await _shiftSettingApiClient.DeleteShiftSetting(Int32.Parse(request.Id));
       if (result)
       {
         TempData["result"] = "Xóa loại khai báo thành công";

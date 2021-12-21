@@ -1,10 +1,13 @@
 using eSolution.Utilities.Constants;
+using eSolutionTech.Application.Catalog.TimeOffRequests;
+using eSolutionTech.Application.System.Roles;
 using eSolutionTech.Application.System.Users;
 using eSolutionTech.Data.EF;
 using eSolutionTech.Data.Entities;
 using eSolutionTech.ViewModels.Catalog.Departments;
 using eSolutionTech.ViewModels.Catalog.JobTitles;
 using eSolutionTech.ViewModels.Catalog.Projects;
+using eSolutionTech.ViewModels.Catalog.Shifts;
 using eSolutionTech.ViewModels.Catalog.ShiftSettings;
 using eSolutionTech.ViewModels.Catalog.TimeOffTypes;
 using eSolutionTech.ViewModels.System.Users;
@@ -53,11 +56,14 @@ namespace eSolutionTech.BackendApi
             services.AddTransient<ITimeOffTypeService, TimeOffTypeService>();
             services.AddTransient<IProjectService, ProjectService>();
             services.AddTransient<IShiftSettingService, ShiftSettingService>();
+            services.AddTransient<ITimeOffRequestsService, TimeOffRequestsService>();
+            services.AddTransient<IShiftSettingService, ShiftSettingService>();
+            services.AddTransient<IShiftService, ShiftService>();
             services.AddTransient<UserManager<User>, UserManager<User>>();
             services.AddTransient<SignInManager<User>, SignInManager<User>>();
             services.AddTransient<RoleManager<Role>, RoleManager<Role>>();
 
-            //services.AddTransient<IRoleService, RoleService>();
+            services.AddTransient<IRoleService, RoleService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IValidator<LoginRequest>, LoginRequestValidator>();
             services.AddTransient<IValidator<CreateUserRequest>, AddUserValidator>();

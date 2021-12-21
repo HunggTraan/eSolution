@@ -16,9 +16,6 @@ namespace eSolutionTech.Data.Configurations
             builder.Property(x => x.Name).IsRequired(true);
             builder.Property(x => x.Description).IsRequired(true);
             builder.Property(x => x.TimeOffType).IsRequired(true);
-            builder.Property(x => x.UserId).IsRequired(true);
-            builder.Property(x => x.FromDate).IsRequired(true);
-            builder.Property(x => x.ToDate).IsRequired(true);
         }
     }
 }

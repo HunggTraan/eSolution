@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace eSolutionTech.Manager.Controllers
 {
-    public class JobTitleController : Controller
+    public class JobTitleController : BaseController
     {
         private readonly IJobTitleApiClient _jobTitleApiClient;
         private readonly IConfiguration _configuration;
@@ -97,22 +97,14 @@ namespace eSolutionTech.Manager.Controllers
             return View(request);
         }
 
-        [HttpGet]
-        public IActionResult Delete(int id)
-        {
-            return View(new JobTitleDeleteRequest()
-            {
-                Id = id
-            });
-        }
 
         [HttpPost]
-        public async Task<IActionResult> Delete(JobTitleDeleteRequest request)
+        public async Task<IActionResult> Delete([FromBody] JobTitleDeleteRequest request)
         {
             if (!ModelState.IsValid)
                 return View();
 
-            var result = await _jobTitleApiClient.DeleteJobTitle(request.Id);
+            var result = await _jobTitleApiClient.DeleteJobTitle(Int32.Parse(request.Id));
             if (result)
             {
                 TempData["result"] = "Xóa chức vụ thành công";

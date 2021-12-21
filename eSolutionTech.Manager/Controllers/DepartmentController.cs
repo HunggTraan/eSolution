@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace eSolutionTech.Manager.Controllers
 {
-    public class DepartmentController : Controller
+    public class DepartmentController : BaseController
     {
         private readonly IDepartmentApiClient _departmentApiClient;
         private readonly IConfiguration _configuration;
@@ -97,22 +97,13 @@ namespace eSolutionTech.Manager.Controllers
             return View(request);
         }
 
-        [HttpGet]
-        public IActionResult Delete(int id)
-        {
-            return View(new DepartmentDeleteRequest()
-            {
-                Id = id
-            });
-        }
-
         [HttpPost]
-        public async Task<IActionResult> Delete(DepartmentDeleteRequest request)
+        public async Task<IActionResult> Delete([FromBody] DepartmentDeleteRequest request)
         {
             if (!ModelState.IsValid)
                 return View();
 
-            var result = await _departmentApiClient.DeleteDepartment(request.Id);
+            var result = await _departmentApiClient.DeleteDepartment(Int32.Parse(request.Id));
             if (result)
             {
                 TempData["result"] = "Xóa sản phẩm thành công";

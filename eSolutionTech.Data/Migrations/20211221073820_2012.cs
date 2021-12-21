@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace eSolutionTech.Data.Migrations
 {
-    public partial class Update1412 : Migration
+    public partial class _2012 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,58 +12,50 @@ namespace eSolutionTech.Data.Migrations
                 table: "Users",
                 type: "datetime2",
                 nullable: false,
-                defaultValue: new DateTime(2021, 12, 14, 6, 13, 7, 581, DateTimeKind.Utc).AddTicks(3191),
+                defaultValue: new DateTime(2021, 12, 21, 7, 38, 20, 88, DateTimeKind.Utc).AddTicks(7799),
                 oldClrType: typeof(DateTime),
                 oldType: "datetime2",
-                oldDefaultValue: new DateTime(2021, 12, 14, 6, 7, 43, 987, DateTimeKind.Utc).AddTicks(1148));
+                oldDefaultValue: new DateTime(2021, 12, 21, 7, 34, 3, 77, DateTimeKind.Utc).AddTicks(7390));
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "StartDate",
                 table: "TimeOffTypes",
                 type: "datetime2",
                 nullable: false,
-                defaultValue: new DateTime(2021, 12, 14, 13, 13, 7, 572, DateTimeKind.Local).AddTicks(8963),
+                defaultValue: new DateTime(2021, 12, 21, 14, 38, 20, 85, DateTimeKind.Local).AddTicks(4552),
                 oldClrType: typeof(DateTime),
                 oldType: "datetime2",
-                oldDefaultValue: new DateTime(2021, 12, 14, 13, 7, 43, 979, DateTimeKind.Local).AddTicks(8357));
+                oldDefaultValue: new DateTime(2021, 12, 21, 14, 34, 3, 73, DateTimeKind.Local).AddTicks(7776));
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "EndDate",
                 table: "TimeOffTypes",
                 type: "datetime2",
                 nullable: false,
-                defaultValue: new DateTime(2021, 12, 14, 13, 13, 7, 572, DateTimeKind.Local).AddTicks(8479),
+                defaultValue: new DateTime(2021, 12, 21, 14, 38, 20, 85, DateTimeKind.Local).AddTicks(4191),
                 oldClrType: typeof(DateTime),
                 oldType: "datetime2",
-                oldDefaultValue: new DateTime(2021, 12, 14, 13, 7, 43, 979, DateTimeKind.Local).AddTicks(7895));
+                oldDefaultValue: new DateTime(2021, 12, 21, 14, 34, 3, 73, DateTimeKind.Local).AddTicks(7114));
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "StartDate",
                 table: "Projects",
                 type: "datetime2",
                 nullable: false,
-                defaultValue: new DateTime(2021, 12, 14, 13, 13, 7, 562, DateTimeKind.Local).AddTicks(3779),
+                defaultValue: new DateTime(2021, 12, 21, 14, 38, 20, 75, DateTimeKind.Local).AddTicks(3100),
                 oldClrType: typeof(DateTime),
                 oldType: "datetime2",
-                oldDefaultValue: new DateTime(2021, 12, 14, 13, 7, 43, 969, DateTimeKind.Local).AddTicks(4835));
+                oldDefaultValue: new DateTime(2021, 12, 21, 14, 34, 3, 61, DateTimeKind.Local).AddTicks(1148));
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "EndDate",
                 table: "Projects",
                 type: "datetime2",
                 nullable: false,
-                defaultValue: new DateTime(2021, 12, 14, 13, 13, 7, 571, DateTimeKind.Local).AddTicks(4464),
+                defaultValue: new DateTime(2021, 12, 21, 14, 38, 20, 84, DateTimeKind.Local).AddTicks(2493),
                 oldClrType: typeof(DateTime),
                 oldType: "datetime2",
-                oldDefaultValue: new DateTime(2021, 12, 14, 13, 7, 43, 978, DateTimeKind.Local).AddTicks(4518));
-
-            migrationBuilder.AlterColumn<string>(
-                name: "MemberId",
-                table: "MemberInProject",
-                type: "nvarchar(max)",
-                nullable: false,
-                oldClrType: typeof(int),
-                oldType: "int");
+                oldDefaultValue: new DateTime(2021, 12, 21, 14, 34, 3, 71, DateTimeKind.Local).AddTicks(9620));
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -73,58 +65,50 @@ namespace eSolutionTech.Data.Migrations
                 table: "Users",
                 type: "datetime2",
                 nullable: false,
-                defaultValue: new DateTime(2021, 12, 14, 6, 7, 43, 987, DateTimeKind.Utc).AddTicks(1148),
+                defaultValue: new DateTime(2021, 12, 21, 7, 34, 3, 77, DateTimeKind.Utc).AddTicks(7390),
                 oldClrType: typeof(DateTime),
                 oldType: "datetime2",
-                oldDefaultValue: new DateTime(2021, 12, 14, 6, 13, 7, 581, DateTimeKind.Utc).AddTicks(3191));
+                oldDefaultValue: new DateTime(2021, 12, 21, 7, 38, 20, 88, DateTimeKind.Utc).AddTicks(7799));
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "StartDate",
                 table: "TimeOffTypes",
                 type: "datetime2",
                 nullable: false,
-                defaultValue: new DateTime(2021, 12, 14, 13, 7, 43, 979, DateTimeKind.Local).AddTicks(8357),
+                defaultValue: new DateTime(2021, 12, 21, 14, 34, 3, 73, DateTimeKind.Local).AddTicks(7776),
                 oldClrType: typeof(DateTime),
                 oldType: "datetime2",
-                oldDefaultValue: new DateTime(2021, 12, 14, 13, 13, 7, 572, DateTimeKind.Local).AddTicks(8963));
+                oldDefaultValue: new DateTime(2021, 12, 21, 14, 38, 20, 85, DateTimeKind.Local).AddTicks(4552));
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "EndDate",
                 table: "TimeOffTypes",
                 type: "datetime2",
                 nullable: false,
-                defaultValue: new DateTime(2021, 12, 14, 13, 7, 43, 979, DateTimeKind.Local).AddTicks(7895),
+                defaultValue: new DateTime(2021, 12, 21, 14, 34, 3, 73, DateTimeKind.Local).AddTicks(7114),
                 oldClrType: typeof(DateTime),
                 oldType: "datetime2",
-                oldDefaultValue: new DateTime(2021, 12, 14, 13, 13, 7, 572, DateTimeKind.Local).AddTicks(8479));
+                oldDefaultValue: new DateTime(2021, 12, 21, 14, 38, 20, 85, DateTimeKind.Local).AddTicks(4191));
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "StartDate",
                 table: "Projects",
                 type: "datetime2",
                 nullable: false,
-                defaultValue: new DateTime(2021, 12, 14, 13, 7, 43, 969, DateTimeKind.Local).AddTicks(4835),
+                defaultValue: new DateTime(2021, 12, 21, 14, 34, 3, 61, DateTimeKind.Local).AddTicks(1148),
                 oldClrType: typeof(DateTime),
                 oldType: "datetime2",
-                oldDefaultValue: new DateTime(2021, 12, 14, 13, 13, 7, 562, DateTimeKind.Local).AddTicks(3779));
+                oldDefaultValue: new DateTime(2021, 12, 21, 14, 38, 20, 75, DateTimeKind.Local).AddTicks(3100));
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "EndDate",
                 table: "Projects",
                 type: "datetime2",
                 nullable: false,
-                defaultValue: new DateTime(2021, 12, 14, 13, 7, 43, 978, DateTimeKind.Local).AddTicks(4518),
+                defaultValue: new DateTime(2021, 12, 21, 14, 34, 3, 71, DateTimeKind.Local).AddTicks(9620),
                 oldClrType: typeof(DateTime),
                 oldType: "datetime2",
-                oldDefaultValue: new DateTime(2021, 12, 14, 13, 13, 7, 571, DateTimeKind.Local).AddTicks(4464));
-
-            migrationBuilder.AlterColumn<int>(
-                name: "MemberId",
-                table: "MemberInProject",
-                type: "int",
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
+                oldDefaultValue: new DateTime(2021, 12, 21, 14, 38, 20, 84, DateTimeKind.Local).AddTicks(2493));
         }
     }
 }

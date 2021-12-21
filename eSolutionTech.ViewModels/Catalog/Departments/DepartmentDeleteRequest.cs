@@ -6,6 +6,6 @@ namespace eSolutionTech.ViewModels.Catalog.Departments
 {
     public class DepartmentDeleteRequest
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
     }
 }

@@ -10,8 +10,8 @@ using eSolutionTech.Data.EF;
 namespace eSolutionTech.Data.Migrations
 {
     [DbContext(typeof(eTechDbContext))]
-    [Migration("20211115150117_InitialDb")]
-    partial class InitialDb
+    [Migration("20211221074030_20121")]
+    partial class _20121
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -134,9 +134,6 @@ namespace eSolutionTech.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("status")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.ToTable("Departments");
@@ -160,9 +157,6 @@ namespace eSolutionTech.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("status")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.ToTable("JobTitles");
@@ -175,8 +169,9 @@ namespace eSolutionTech.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("MemberId")
-                        .HasColumnType("int");
+                    b.Property<string>("MemberId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ProjectId")
                         .HasColumnType("int");
@@ -203,17 +198,7 @@ namespace eSolutionTech.Data.Migrations
                     b.Property<DateTime>("EndDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 11, 15, 22, 1, 16, 727, DateTimeKind.Local).AddTicks(2958));
-
-                    b.Property<DateTime>("EndIn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 11, 15, 15, 1, 16, 727, DateTimeKind.Utc).AddTicks(4760));
-
-                    b.Property<DateTime>("EndOut")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 11, 15, 15, 1, 16, 727, DateTimeKind.Utc).AddTicks(4981));
+                        .HasDefaultValue(new DateTime(2021, 12, 21, 14, 40, 30, 487, DateTimeKind.Local).AddTicks(532));
 
                     b.Property<string>("ManagerId")
                         .HasColumnType("nvarchar(max)");
@@ -225,20 +210,13 @@ namespace eSolutionTech.Data.Migrations
                     b.Property<DateTime>("StartDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 11, 15, 22, 1, 16, 718, DateTimeKind.Local).AddTicks(1548));
+                        .HasDefaultValue(new DateTime(2021, 12, 21, 14, 40, 30, 478, DateTimeKind.Local).AddTicks(1126));
 
-                    b.Property<DateTime>("StartIn")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 11, 15, 15, 1, 16, 727, DateTimeKind.Utc).AddTicks(4127));
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("StartOut")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 11, 15, 15, 1, 16, 727, DateTimeKind.Utc).AddTicks(4510));
-
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("shiftSettingId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -278,32 +256,59 @@ namespace eSolutionTech.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Activity")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Comment")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Date")
+                    b.Property<DateTime>("TimeIn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("ProjectId")
+                    b.Property<DateTime>("TimeOut")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("WorkingHours")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Shifts");
+                });
+
+            modelBuilder.Entity("eSolutionTech.Data.Entities.ShiftSetting", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ExceedTimeIn")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ExceedTimeOut")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TimeIn")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TimeOut")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Shifts");
+                    b.ToTable("ShiftSettings");
                 });
 
             modelBuilder.Entity("eSolutionTech.Data.Entities.TimeOffRequest", b =>
@@ -313,9 +318,6 @@ namespace eSolutionTech.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("AdminNote")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -323,11 +325,10 @@ namespace eSolutionTech.Data.Migrations
                     b.Property<string>("Duration")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FromDate")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("FromDate")
+                        .HasColumnType("datetime2");
 
-                    b.Property<string>("FromHour")
+                    b.Property<string>("HalfDay")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -340,22 +341,18 @@ namespace eSolutionTech.Data.Migrations
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TimeOffType")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ToDate")
+                    b.Property<string>("TimeOffType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ToHour")
+                    b.Property<DateTime>("ToDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("TimeOffRequests");
                 });
@@ -377,7 +374,7 @@ namespace eSolutionTech.Data.Migrations
                     b.Property<DateTime>("EndDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 11, 15, 22, 1, 16, 728, DateTimeKind.Local).AddTicks(6260));
+                        .HasDefaultValue(new DateTime(2021, 12, 21, 14, 40, 30, 488, DateTimeKind.Local).AddTicks(1956));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -390,7 +387,7 @@ namespace eSolutionTech.Data.Migrations
                     b.Property<DateTime>("StartDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 11, 15, 22, 1, 16, 728, DateTimeKind.Local).AddTicks(6628));
+                        .HasDefaultValue(new DateTime(2021, 12, 21, 14, 40, 30, 488, DateTimeKind.Local).AddTicks(2349));
 
                     b.Property<bool>("Unpaid")
                         .ValueGeneratedOnAdd()
@@ -428,7 +425,7 @@ namespace eSolutionTech.Data.Migrations
                     b.Property<DateTime>("DoB")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 11, 15, 15, 1, 16, 735, DateTimeKind.Utc).AddTicks(8773));
+                        .HasDefaultValue(new DateTime(2021, 12, 21, 7, 40, 30, 492, DateTimeKind.Utc).AddTicks(2585));
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -486,33 +483,6 @@ namespace eSolutionTech.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("eSolutionTech.Data.Entities.Shift", b =>
-                {
-                    b.HasOne("eSolutionTech.Data.Entities.User", null)
-                        .WithMany("Shifts")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("eSolutionTech.Data.Entities.TimeOffRequest", b =>
-                {
-                    b.HasOne("eSolutionTech.Data.Entities.User", "User")
-                        .WithMany("TimeOffRequests")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("eSolutionTech.Data.Entities.User", b =>
-                {
-                    b.Navigation("Shifts");
-
-                    b.Navigation("TimeOffRequests");
                 });
 #pragma warning restore 612, 618
         }

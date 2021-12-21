@@ -100,9 +100,7 @@
                     Chi tiết
                   </a>
                   &ensp;
-                  <a href="@Url.Action("Delete", new { id = item.Id })" name="Xoá">
-                    Xoá
-                  </a>
+                  <a href="#" onclick="remove('@item.Id')">Xoá</a>
                 </td>
               </tr>
             }
@@ -117,10 +115,35 @@
 @section Scripts{
   <script type="text/javascript">
     $(document).ready(function () {
-      $('#dataTable').DataTable(
+      $('#dataTable').dataTable({
         "paging": false
-      );
+      });
     });
+    function remove(ids) {
+      if (!confirm("Bạn có chắc chắn muốn xoá bản ghi này?")) {
+        return false;
+      }
+      else {
+        var model = {};
+        model.Id = ids;
+
+        var items = JSON.stringify(model);
+
+         $.ajax({
+            type: "POST",
+            url: '@Url.Action("Delete")',
+            data: items,
+            //dataType: "text",
+            contentType: "application/json; charset=utf-8",
+            success: function () {
+              window.location.href = '/ShiftSetting/Index';
+            },
+            error: function () {
+                alert("Có lỗi xảy ra!");
+            }
+        });
+      }
+    };
   </script>
 }
 

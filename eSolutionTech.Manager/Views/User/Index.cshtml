@@ -86,17 +86,15 @@
                                     @Html.DisplayFor(modelItem => item.Department)
                                 </td>
                                 <td class="text-center">
-                                    <a href="@Url.Action("Edit", new { id = item.Id })" name="Sửa">
-                                        Sửa
-                                    </a>
-                                    &ensp;
-                                    <a href="@Url.Action("Details", new { id = item.Id })" name="Chi tiết">
-                                        Chi tiết
-                                    </a>
-                                    &ensp;
-                                    <a href="@Url.Action("Delete", new { id = item.Id })" name="Xoá">
-                                        Xoá
-                                    </a>
+                                  <a href="@Url.Action("Edit", new { id = item.Id })" name="Sửa">
+                                    Sửa
+                                  </a>
+                                  &ensp;
+                                  <a href="@Url.Action("Details", new { id = item.Id })" name="Chi tiết">
+                                    Chi tiết
+                                  </a>
+                                  &ensp;
+                                  <a href="#" onclick="remove('@item.Id')">Xoá</a>
                                 </td>
                             </tr>
                         }
@@ -109,29 +107,39 @@
 </div>
 
 @section Scripts{
-    <script>
+  <script>
     $(document).ready(function () {
-        $('#dataTable').DataTable("paging": false);
+      $('#dataTable').dataTable({
+        "paging": false
+      });
     });
     var table = $('#example').DataTable();
 
 
-    function remove(id) {
-      JqueryConfirm(
-        "Bạn có muốn xóa bản ghi này!",
-        () => {
-          JqueryPostJSON(
-            '@Url.Action("Remove")',
-            JSON.stringify({
-              Id: id
-            }),
-            (response) => {
-              if (response.Succeeded) window.location.href = '@Url.Action("Index")';
-              else JqueryAlert("Xoá bản ghi!", response.Message, false);
+          function remove(ids) {
+      if (!confirm("Bạn có chắc chắn muốn xoá bản ghi này?")) {
+        return false;
+      }
+      else {
+        var model = {};
+        model.Id = ids;
+
+        var items = JSON.stringify(model);
+
+         $.ajax({
+            type: "POST",
+            url: '@Url.Action("Delete")',
+            data: items,
+            //dataType: "text",
+            contentType: "application/json; charset=utf-8",
+            success: function () {
+              window.location.href = '/User/Index';
+            },
+            error: function () {
+                alert("Có lỗi xảy ra!");
             }
-          );
-        }
-      );
-    }
-    </script>
+        });
+      }
+    };
+  </script>
 }

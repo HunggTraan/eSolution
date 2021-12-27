@@ -196,7 +196,7 @@ namespace eSolutionTech.Data.Migrations
                     b.Property<DateTime>("EndDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 12, 21, 14, 40, 30, 487, DateTimeKind.Local).AddTicks(532));
+                        .HasDefaultValue(new DateTime(2021, 12, 22, 14, 12, 44, 980, DateTimeKind.Local).AddTicks(6114));
 
                     b.Property<string>("ManagerId")
                         .HasColumnType("nvarchar(max)");
@@ -208,7 +208,7 @@ namespace eSolutionTech.Data.Migrations
                     b.Property<DateTime>("StartDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 12, 21, 14, 40, 30, 478, DateTimeKind.Local).AddTicks(1126));
+                        .HasDefaultValue(new DateTime(2021, 12, 22, 14, 12, 44, 969, DateTimeKind.Local).AddTicks(6528));
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -269,6 +269,12 @@ namespace eSolutionTech.Data.Migrations
 
                     b.Property<string>("WorkingHours")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("isLate")
+                        .HasColumnType("int");
+
+                    b.Property<int>("isLogin")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -372,7 +378,7 @@ namespace eSolutionTech.Data.Migrations
                     b.Property<DateTime>("EndDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 12, 21, 14, 40, 30, 488, DateTimeKind.Local).AddTicks(1956));
+                        .HasDefaultValue(new DateTime(2021, 12, 22, 14, 12, 44, 981, DateTimeKind.Local).AddTicks(9795));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -385,7 +391,7 @@ namespace eSolutionTech.Data.Migrations
                     b.Property<DateTime>("StartDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 12, 21, 14, 40, 30, 488, DateTimeKind.Local).AddTicks(2349));
+                        .HasDefaultValue(new DateTime(2021, 12, 22, 14, 12, 44, 982, DateTimeKind.Local).AddTicks(215));
 
                     b.Property<bool>("Unpaid")
                         .ValueGeneratedOnAdd()
@@ -423,7 +429,7 @@ namespace eSolutionTech.Data.Migrations
                     b.Property<DateTime>("DoB")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 12, 21, 7, 40, 30, 492, DateTimeKind.Utc).AddTicks(2585));
+                        .HasDefaultValue(new DateTime(2021, 12, 22, 7, 12, 44, 985, DateTimeKind.Utc).AddTicks(8427));
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");

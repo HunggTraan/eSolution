@@ -10,6 +10,7 @@ namespace eSolutionTech.ApiIntegration
     public interface IProjectApiClient
     {
         Task<PagedResult<ProjectViewModel>> GetPagings(GetProjectPagingRequest request);
+        Task<PagedResult<ProjectViewModel>> GetPagingsUser(GetProjectPagingRequest request);
         Task<List<ProjectViewModel>> GetAll();
 
         Task<bool> CreateProject(ProjectCreateRequest request);

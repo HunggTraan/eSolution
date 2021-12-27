@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -223,7 +225,7 @@ namespace eSolutionTech.Manager.Controllers
     public async Task<IActionResult> Apply([FromBody] TimeOffApplyRequest request)
     {
       bool result = false;
-      if(request.Status == "1")
+      if (request.Status == "1")
       {
         result = await _timeOffApiClient.ApplyRequest(Int32.Parse(request.Id), 1);
       }
@@ -241,6 +243,41 @@ namespace eSolutionTech.Manager.Controllers
       ModelState.AddModelError("", "Duyệt ngày nghỉ thất bại");
       GetDataForCreateOrEdit();
       return View(request);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetTimeOffToCalendar()
+    {
+      List<Hashtable> result = new List<Hashtable>();
+
+      var data = await _timeOffApiClient.GetAll();
+      if (data == null) return Json(data);
+
+      List<TimeOffViewModel> timeOffRequestData = data.ToList();
+
+      foreach (TimeOffViewModel timeOffRequestCalendar in timeOffRequestData)
+      {
+        result.Add(
+          new Hashtable
+          {
+            { "id", timeOffRequestCalendar.Id },
+            { "title", $"{timeOffRequestCalendar.Name} - {timeOffRequestCalendar.Description}" },
+            { "start", timeOffRequestCalendar.FromDate.ToString("yyyy-MM-dd") },
+            { "end", timeOffRequestCalendar.ToDate.ToString("yyyy-MM-dd") },
+          }
+        );
+      }
+
+      return Json(result);
+    }
+
+    [HttpGet]
+    public async Task<JsonResult> GetEventById(
+      int id
+    )
+    {
+      var hrLeaveResult = await _timeOffApiClient.GetById(id);
+      return Json(hrLeaveResult);
     }
   }
 }

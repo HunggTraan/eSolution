@@ -17,5 +17,7 @@ namespace eSolutionTech.Data.Entities
     public DateTime TimeIn { get; set; }
     public DateTime TimeOut { get; set; }
     public string WorkingHours { get; set; }
+    public int Status { get; set; }
+    public int isLate { get; set; }
   }
 }

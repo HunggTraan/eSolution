@@ -1,7 +1,26 @@
 ﻿a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .hidden {
   display: none;
+}
+
+#notifications {
+  cursor: pointer;
+  position: fixed;
+  right: 0px;
+  z-index: 9999;
+  bottom: 0px;
+  margin-bottom: 22px;
+  margin-right: 15px;
+  max-width: 300px;
+}
+
+ul#menu li {
+  display: inline;
+}
+
+ul#menu li:not(:last-child):after {
+  content: ", ";
 }

@@ -1,11 +1,105 @@
 ﻿@{
-    ViewData["Title"] = "Trang chủ";
+  ViewData["Title"] = "Trang chủ";
 }
 
 <div class="container-fluid px-4">
-    <h1 class="mt-4">Tổng quan</h1>
-    <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item active">Dashboard</li>
-    </ol>
-
+  <h1 class="mt-4">Tổng quan</h1>
+  <ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item active">Tổng quan</li>
+  </ol>
+  <div id="calendarView">
+    <div id="calendarViewData"></div>
+  </div>
 </div>
+
+<div aria-hidden="true" class="inmodal modal" id="calendarModal" role="dialog" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="animated bounceInRight modal-content">
+      <div class="modal-header">
+        <button class="close" data-dismiss="modal" type="button">
+          <span aria-hidden="true">&times;</span>
+          <span class="sr-only">Close</span>
+        </button>
+        <h4 class="modal-title"></h4>
+        <small class="font-bold"></small>
+      </div>
+      <div class="modal-body">
+        <div class="form-group row">
+          <label class="col-form-label col-lg-2 font-bold">Name:</label>
+          <div class="col-lg-10">
+            <p class="form-control-plaintext lblName"></p>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-form-label col-lg-2 font-bold">From:</label>
+          <div class="col-lg-10">
+            <p class="form-control-plaintext lblFrom"></p>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-form-label col-lg-2 font-bold">To:</label>
+          <div class="col-lg-10">
+            <p class="form-control-plaintext lblTo"></p>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-form-label col-lg-2 font-bold">Employee:</label>
+          <div class="col-lg-10">
+            <p class="form-control-plaintext lblEmployee"></p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-white" data-dismiss="modal" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section Styles {
+  <link href="~/libs/fullcalendar/main.css" rel="stylesheet">
+}
+
+@section Scripts {
+  <!-- Full Calendar -->
+  <script src="~/libs/fullcalendar/main.js"></script>
+  <script src='~/libs/fullcalendar/locales/vi.js'></script>
+
+  <script type="text/javascript">
+      let calendarEl = document.getElementById('calendarViewData');
+      let calendar = new FullCalendar.Calendar(
+      calendarEl,
+      GetFullCalendarSetup({
+        events: {
+          url: '@Url.Action("GetTimeOffToCalendar", "TimeOffRequest")',
+          method: 'GET',
+          extraParams: () => {
+            return {
+            };
+          }
+        },
+        eventClick: (info) => {
+          info.jsEvent.preventDefault(); // don't let the browser navigate
+          if (info.event.id) {
+            $.get(
+              '@Url.Action("GetEventById", "TimeOffRequest")',
+              { id: info.event.id },
+              (response) => {
+                if (response.Data != null) {
+                  let d = response.Data;
+                  $('#calendarModal .modal-header .modal-title').html(d.Name);
+                  $('#calendarModal .modal-body .lblName').html(d.Description);
+                  $('#calendarModal .modal-body .lblFrom').html(d.FromDate);
+                  $('#calendarModal .modal-body .lblTo').html(d.ToDate);
+                  $('#calendarModal').modal('show');
+                }
+              }
+            )
+          }
+        }
+      })
+    );
+    calendar.render();
+
+  </script>
+}

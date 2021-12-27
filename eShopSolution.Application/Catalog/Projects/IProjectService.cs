@@ -11,6 +11,7 @@ namespace eSolutionTech.ViewModels.Catalog.Projects
         Task<int> Delete(int projectId);
         Task<List<ProjectViewModel>> GetAll();
         Task<PagedResult<ProjectViewModel>> GetAllPaging(GetProjectPagingRequest request);
+        Task<PagedResult<ProjectViewModel>> GetAllPagingByUser(GetProjectPagingRequest request);
         Task<ProjectViewModel> GetById(int projectId);
     }
 }

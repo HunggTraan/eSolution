@@ -46,7 +46,23 @@ namespace eSolutionTech.BackendApi.Controllers
       {
         return Ok("Fail");
       }
+    }
 
+    [HttpGet("paginguser")]
+    public async Task<IActionResult> GetAllPagingByUser([FromQuery] GetProjectPagingRequest request)
+    {
+      try
+      {
+        var projects = await _projectService.GetAllPagingByUser(request);
+        if (projects != null)
+          return Ok(projects);
+        else
+          return Ok("Fail");
+      }
+      catch (eTechException ex)
+      {
+        return Ok("Fail");
+      }
     }
 
     [HttpGet("{projectId}")]
@@ -76,8 +92,8 @@ namespace eSolutionTech.BackendApi.Controllers
       var projectId = await _projectService.Create(request);
       if (projectId == 0)
         return BadRequest();
-      var project = await _projectService.GetById(projectId);
-      return CreatedAtAction(nameof(GetById), new { id = projectId }, project);
+      var project = await _projectService.GetById(11);
+      return Ok();
     }
 
     [HttpPut("{projectId}")]

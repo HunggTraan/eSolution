@@ -95,6 +95,10 @@
                                   </a>
                                   &ensp;
                                   <a href="#" onclick="remove('@item.Id')">Xoá</a>
+                                  &ensp;
+                                  <a href="@Url.Action("RoleAssign", new { id = item.Id })" name="Chi tiết">
+                                    Phân quyền
+                                  </a>
                                 </td>
                             </tr>
                         }

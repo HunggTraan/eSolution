@@ -14,6 +14,8 @@
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
   <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="~/lib/fontawesome-iconpicker/css/fontawesome-iconpicker.min.css">
+  <link rel="stylesheet" href="~/css/notify.css">
+  <link rel="stylesheet" href="~/libs/Toastjs/toastr.min.css">
   <link rel="shortcut icon" href="#">
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
@@ -114,8 +116,7 @@
               </a>
               <div class="collapse" id="collapseLayoutUser" aria-labelledby="headingThree" data-bs-parent="#sidenavAccordion">
                 <nav class="sb-sidenav-menu-nested nav">
-                  <a class="nav-link" asp-controller="Shift" asp-action="IndexUser">Khai báo chấm công</a>
-                  <a class="nav-link" asp-controller="Shift" asp-action="Create">Thêm mới</a>
+                  <a class="nav-link" asp-controller="Project" asp-action="UserIndex">Khai báo chấm công</a>
                 </nav>
               </div>
               <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayoutTimeOff" aria-expanded="false" aria-controls="collapseLayouts">
@@ -161,8 +162,10 @@
   <script src="/js/custom.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="/libs/jquery/dist/jquery.min.js"></script>
   <script src="/js/jquery-confirm.js"></script>
+  <script src="/js/notify.min.js"></script>
+  <script src="/libs/Toastjs/toastr.min.js"></script>
   <script src="/lib/fontawesome-iconpicker/js/fontawesome-iconpicker.min.js"></script>
   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
   <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>

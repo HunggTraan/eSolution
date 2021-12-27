@@ -1,100 +1,106 @@
 ﻿@model eSolutionTech.ViewModels.Catalog.TimeOffTypes.TimeOffTypeViewModel
 
 @{
-    ViewData["Title"] = "Chi tiết";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+  ViewData["Title"] = "Chi tiết";
+  Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="container-fluid">
-    <h1 class="mt-4">Chi tiết</h1>
-    <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
-        <li class="breadcrumb-item active">Chi tiết</li>
-    </ol>
-    <div class="card mb-4">
-        <div class="card-header">
-            <a class="btn btn-success" asp-action="Index" asp-controller="TimeOffType">Về danh sách</a>
-        </div>
-        <div class="card-body">
-            <div class="col-md-12">
-                <dl class="row">
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.Name)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.Name)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.Description)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.Description)
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.Code)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Html.DisplayFor(model => model.Code)
-                    </dd>
-                    @switch (Model.RequestUnit)
-                    {
-                        case "1":
-                            <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.RequestUnit)
-                            </dt>
-                            <dd class="col-sm-10">
-                                Ngày
-                            </dd>
-                            break;
-                        case "2":
-                            <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.Code)
-                            </dt>
-                            <dd class="col-sm-10">
-                                Nửa ngày
-                            </dd>
-                            break;
-                        case "3":
-                            <dt class="col-sm-2">
-                                @Html.DisplayNameFor(model => model.Code)
-                            </dt>
-                            <dd class="col-sm-10">
-                                Giờ
-                            </dd>
-                            break;
-                    }
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.StartDate)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Convert.ToDateTime(Model.StartDate).ToString("dd/MM/yyyy")
-                    </dd>
-                    <dt class="col-sm-2">
-                        @Html.DisplayNameFor(model => model.EndDate)
-                    </dt>
-                    <dd class="col-sm-10">
-                        @Convert.ToDateTime(Model.EndDate).ToString("dd/MM/yyyy")
-                    </dd>
-                    @if (Model.Unpaid == false)
-                    {
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.Unpaid)
-                        </dt>
-                        <dd class="col-sm-10">
-                            Không
-                        </dd>
-                    }
-                    else
-                    {
-                        <dt class="col-sm-2">
-                            @Html.DisplayNameFor(model => model.Unpaid)
-                        </dt>
-                        <dd class="col-sm-10">
-                            Có
-                        </dd>
-                    }
-                </dl>
-            </div>
-        </div>
+  <h1 class="mt-4">Chi tiết</h1>
+  <ol class="breadcrumb mb-4">
+    <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+    <li class="breadcrumb-item active">Chi tiết</li>
+  </ol>
+  <div class="card mb-4">
+    <div class="card-header">
+      <a class="btn btn-success" asp-action="Index" asp-controller="TimeOffType">Về danh sách</a>
     </div>
+    <div class="card-body">
+      <div class="col-md-12">
+        <dl class="row">
+          <dt class="col-sm-4">
+            Mã loại ngày nghỉ
+          </dt>
+          <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Code)
+          </dd>
+          </br>
+          <dt class="col-sm-4">
+            Tên
+          </dt>
+          <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Name)
+          </dd>
+          </br>
+          <dt class="col-sm-4">
+            Mô tả
+          </dt>
+          <dd class="col-sm-8">
+            @Html.DisplayFor(model => model.Description)
+          </dd>
+          </br>
+          @switch (Model.RequestUnit)
+          {
+            case "1":
+              <dt class="col-sm-4">
+                Nghỉ theo
+              </dt>
+              <dd class="col-sm-8">
+                Ngày
+              </dd>
+              break;
+            case "2":
+              <dt class="col-sm-4">
+                Nghỉ theo
+              </dt>
+              <dd class="col-sm-8">
+                Nửa ngày
+              </dd>
+              break;
+            case "3":
+              <dt class="col-sm-4">
+                Nghỉ theo
+              </dt>
+              <dd class="col-sm-8">
+                Giờ
+              </dd>
+              break;
+          }
+          </br>
+          <dt class="col-sm-4">
+            Loại ngày nghỉ có hiệu lực bắt đầu từ
+          </dt>
+          <dd class="col-sm-8">
+            @Convert.ToDateTime(Model.StartDate).ToString("dd/MM/yyyy")
+          </dd>
+          </br>
+          <dt class="col-sm-4">
+            Loại ngày nghỉ có hiệu lực bắt đầu đến
+          </dt>
+          <dd class="col-sm-8">
+            @Convert.ToDateTime(Model.EndDate).ToString("dd/MM/yyyy")
+          </dd>
+          </br>
+          @if (Model.Unpaid == false)
+          {
+            <dt class="col-sm-4">
+              Có trả lương
+            </dt>
+            <dd class="col-sm-8">
+              Không
+            </dd>
+          }
+          else
+          {
+            <dt class="col-sm-4">
+              Có trả lương
+            </dt>
+            <dd class="col-sm-8">
+              Có
+            </dd>
+          }
+        </dl>
+      </div>
+    </div>
+  </div>
 </div>

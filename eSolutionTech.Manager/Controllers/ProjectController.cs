@@ -79,6 +79,11 @@ namespace eSolutionTech.Manager.Controllers
       var claimsIdentity = (ClaimsIdentity)this.User.Identity;
       var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
+      if (claim == null)
+      {
+        return RedirectToAction("Unauthorized", "Home");
+      }
+
       var request = new GetProjectPagingRequest()
       {
         KeyWord = keyword,

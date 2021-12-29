@@ -80,10 +80,16 @@ namespace eSolutionTech.ApiIntegration
       return await Delete($"/api/timeOffRequests/" + id);
     }
 
-    public async Task<List<TimeOffViewModel>> GetAll()
+    public async Task<List<TimeOffViewModel>> GetAll(string userId)
     {
-      var data = await GetAsync<List<TimeOffViewModel>>(
-        $"/api/timeOffRequests");
+      var url = $"/api/timeOffRequests/getall";
+
+      if (!string.IsNullOrEmpty(userId))
+      {
+        url += $"?userId={userId}";
+      }
+
+      var data = await GetAsync<List<TimeOffViewModel>>(url);
 
       return data;
     }
@@ -98,9 +104,9 @@ namespace eSolutionTech.ApiIntegration
     public async Task<PagedResult<TimeOffViewModel>> GetPagings(TimeOffPagingRequest request)
     {
       var url = $"/api/timeOffRequests/paging?pageIndex={request.PageIndex}" + $"&pageSize={request.PageSize}";
-      if (string.IsNullOrEmpty(request.UserId))
+      if (!string.IsNullOrEmpty(request.UserId))
       {
-        url += $"&keyword={request.UserId}";
+        url += $"&userId={request.UserId}";
       }
       var data = await GetAsync<PagedResult<TimeOffViewModel>>(url);
       return data;

@@ -41,9 +41,9 @@ namespace eSolutionTech.ApiIntegration
     public async Task<PagedResult<ShiftManageViewModel>> GetPagings(GetShiftPagingRequest request)
     {
       var url = $"/api/shifts/paging?pageIndex={request.PageIndex}" + $"&pageSize={request.PageSize}";
-      if (string.IsNullOrEmpty(request.UserId))
+      if (!string.IsNullOrEmpty(request.UserId))
       {
-        url += $"&keyword={request.UserId}";
+        url += $"&userId={request.UserId}";
       }
       var data = await GetAsync<PagedResult<ShiftManageViewModel>>(url);
       return data;

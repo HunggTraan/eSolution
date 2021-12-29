@@ -17,6 +17,7 @@ namespace eSolutionTech.ViewModels.Catalog.Shifts
     public string ProjectCode { get; set; }
     public string ProjectName { get; set; }
     public string UserName { get; set; }
+    public string UserCode { get; set; }
     public string DepartmentName { get; set; }
     public string DepartmentCode { get; set; }
     public string JobTitleName { get; set; }

@@ -29,12 +29,12 @@
             <span asp-validation-for="Description" class="text-danger"></span>
           </div>
           <div class="form-group">
-            <label asp-for="TimeOffTypeId" class="control-label"></label>
+            <label asp-for="TimeOffTypeId" class="control-label">Loại ngày nghỉ</label>
             <select asp-for="TimeOffTypeId" id="timeOffTypeId" asp-items="@ViewBag.TimeOffType" class="form-control"></select>
             <span asp-validation-for="TimeOffTypeId" class="text-danger"></span>
           </div>
           <div class="form-group">
-            <label asp-for="RequestUnit" class="control-label"></label>
+            <label asp-for="RequestUnit" class="control-label">Nghỉ theo</label>
             <input asp-for="RequestUnit" id="requestUnitValue" readonly="readonly" type="text" class="form-control" />
             <span asp-validation-for="RequestUnit" class="text-danger"></span>
           </div>
@@ -52,12 +52,12 @@
             <input asp-for="ToDate" class="form-control" type="text" value="@DateTime.Today"/>
           </div>
           <div class="form-group">
-            <label asp-for="FromDateStr" class="control-label"></label>
+            <label asp-for="FromDateStr" class="control-label">Ngày bắt đầu</label>
             <input asp-for="FromDateStr" id="fromDate" type="text" value="@DateTime.Now.ToString("dd/MM/yyyy")" class="form-control" />
             <span asp-validation-for="FromDateStr" class="text-danger"></span>
           </div>
           <div class="form-group" id="isHalfDay">
-            <label asp-for="ToDateStr" class="control-label"></label>
+            <label asp-for="ToDateStr" class="control-label">Ngày kết thúc</label>
             <input asp-for="ToDateStr" id="toDate" type="text" value="@DateTime.Now.ToString("dd/MM/yyyy")" class="form-control" />
             <span asp-validation-for="ToDateStr" class="text-danger"></span>
           </div>
@@ -76,7 +76,7 @@
             <input asp-for="Status" class="form-control" value="0" />
           </div>
           <div class="form-group">
-            <input type="submit" value="Create" class="btn btn-primary" />
+            <input type="submit" value="Tạo mới" class="btn btn-primary" />
           </div>
         </form>
       </div>
@@ -90,6 +90,19 @@
 @section Scripts{
   <script src="~/libs/datetimepicker/jquery.datetimepicker.full.js" type="text/javascript"></script>
   <script type="text/javascript">
+    $(document).ready(function () {
+      var requestUnit = $('#timeOffTypeId').val().split('|')[1];
+      if (requestUnit == "1") {
+        $('#isHalfDay').removeClass('hidden');
+        $('#halfDay').addClass('hidden');
+        $('#requestUnitValue').val('Theo ngày');
+      }
+      else if (requestUnit == "2") {
+        $('#isHalfDay').addClass('hidden');
+        $('#halfDay').removeClass('hidden');
+        $('#requestUnitValue').val('Nửa ngày');
+      }
+    });
 
     $('#fromDate').datetimepicker({
       timepicker: false,

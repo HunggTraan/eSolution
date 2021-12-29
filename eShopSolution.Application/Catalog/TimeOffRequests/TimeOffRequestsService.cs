@@ -56,11 +56,16 @@ namespace eSolutionTech.Application.Catalog.TimeOffRequests
       }
     }
 
-    public async Task<List<TimeOffViewModel>> GetAll()
+    public async Task<List<TimeOffViewModel>> GetAll(string userId)
     {
       var query = from timeOffRequest in _context.TimeOffRequests
                   join timeOffType in _context.TimeOffTypes on timeOffRequest.TimeOffType equals timeOffType.Id.ToString()
                   select new { timeOffRequest, timeOffType };
+
+      if (!string.IsNullOrEmpty(userId))
+      {
+        query = query.Where(x => x.timeOffRequest.UserId == userId);
+      }
 
       var data = await query
         .Select(x => new TimeOffViewModel()
@@ -197,6 +202,12 @@ namespace eSolutionTech.Application.Catalog.TimeOffRequests
     {
 
       var timeOffRequest = await _context.TimeOffRequests.FindAsync(timeOffId);
+      if (timeOffRequest == null)
+        return new TimeOffViewModel();
+
+      var user = await _context.Users.FindAsync(Guid.Parse(timeOffRequest.UserId));
+      if (user == null)
+        return new TimeOffViewModel();
 
       var timeOffViewModel = new TimeOffViewModel()
       {
@@ -209,7 +220,9 @@ namespace eSolutionTech.Application.Catalog.TimeOffRequests
         Duration = timeOffRequest.Duration,
         Status = timeOffRequest.Status,
         RequestUnit = timeOffRequest.RequestUnit,
-        HalfDay = timeOffRequest.HalfDay
+        HalfDay = timeOffRequest.HalfDay,
+        UserName = user.FullName,
+        UserCode = user.Code
       };
       return timeOffViewModel;
     }

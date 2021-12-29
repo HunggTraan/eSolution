@@ -21,6 +21,13 @@
           <div><div class='box green'></div>&nbsp; Màu xanh lá có nghĩa là đi đi đúng giờ</div>
         </div>
       </div>
+      <div class="row mt-2">
+        <div class="col-md-6 col-xs-12">
+          <b>Nhân viên: </b> @Model.Items[0].UserName - <b>Phòng ban: </b> @Model.Items[0].DepartmentName - <b>Chức vụ: </b> @Model.Items[0].JobTitleName
+        </div>
+        <div class="col-md-6 col-xs-12">
+        </div>
+      </div>
     </div>
 
     <div class="card-body">
@@ -53,54 +60,54 @@
                 Giờ ra
               </th>
               <th class="text-center">
-                Trạng thái
+                Vào muộn
               </th>
             </tr>
           </thead>
           <tbody>
             @foreach (var item in Model.Items)
             {
-              <tr>
-                <td class="text-center">
-                  @Html.DisplayFor(modelItem => item.UserCode)
-                </td>
-                <td class="text-center">
-                  <a href="@Url.Action("DetailsUser", new { userId = item.UserId })">@Html.DisplayFor(modelItem => item.UserName)</a>
-                </td>
-                <td class="text-center">
-                  @Html.DisplayFor(modelItem => item.ProjectName)
-                </td>
-                <td class="text-center">
-                  @Convert.ToDateTime(item.TimeIn).ToString("dd/MM/yyyy HH:mm")
-                </td>
-                <td class="text-center">
-                  @Convert.ToDateTime(item.TimeOut).ToString("dd/MM/yyyy HH:mm")
-                </td>
-                <td class="text-center" id="status">
-                  @if (item.isLate == 0)
+            <tr>
+              <td class="text-center">
+                @Html.DisplayFor(modelItem => item.UserCode)
+              </td>
+              <td class="text-center">
+                @Html.DisplayFor(modelItem => item.UserName)
+              </td>
+              <td class="text-center">
+                @Html.DisplayFor(modelItem => item.ProjectName)
+              </td>
+              <td class="text-center">
+                @Convert.ToDateTime(item.TimeIn).ToString("dd/MM/yyyy HH:mm")
+              </td>
+              <td class="text-center">
+                @Convert.ToDateTime(item.TimeOut).ToString("dd/MM/yyyy HH:mm")
+              </td>
+              <td class="text-center">
+                @if (item.isLate == 0)
+                {
+                  @if (item.Status == 1)
                   {
-                    @if (item.Status == 1)
-                    {
-                      <i>Đã chấm công vào</i>
-                    }
-                    else
-                    {
-                      <i>Đã chấm đủ công</i>
-                    }
+                    <i>Đã chấm công vào</i>
                   }
                   else
                   {
-                    @if (item.Status == 1)
-                    {
-                      <i style="color:red">Đã chấm công vào</i>
-                    }
-                    else
-                    {
-                      <i style="color:red">Đã chấm đủ công</i>
-                    }
+                    <i>Đã chấm đủ công</i>
                   }
-                </td>
-              </tr>
+                }
+                else
+                {
+                  @if (item.Status == 1)
+                  {
+                    <i style="color:red">Đã chấm công vào</i>
+                  }
+                  else
+                  {
+                    <i style="color:red">Đã chấm đủ công</i>
+                  }
+                }
+              </td>
+            </tr>
             }
           </tbody>
           <tfoot>
@@ -121,7 +128,7 @@
                 Giờ ra
               </th>
               <th class="text-center">
-                Trạng thái
+                Vào muộn
               </th>
             </tr>
           </tfoot>

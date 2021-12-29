@@ -7,7 +7,6 @@
 }
 
 <div class="container-fluid">
-  <h1 class="mt-4">Danh sách ngày nghỉ</h1>
   <ol class="breadcrumb mb-4">
     <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
     <li class="breadcrumb-item active">Danh sách ngày nghỉ</li>
@@ -94,21 +93,21 @@
                     <td class="text-center">Chờ duyệt</td>
                     break;
                   case "1":
-                    <td class="text-center">Duyệt</td>
+                    <td class="text-center" style="color:forestgreen"><b>Đã duyệt</b></td>
                     break;
                   case "2":
-                    <td class="text-center">Từ chối</td>
+                    <td class="text-center" style="color:red"><b>Từ chối</b></td>
                     break;
                 }
                 <td class="text-center">
-                  @if (item.Status != "1" || item.Status != "2")
+                  @if (item.Status != "1" && item.Status != "2")
                   {
                     <a href="@Url.Action("Edit", new { id = item.Id })" name="Sửa">
                       Sửa
                     </a>
                   }
                   &ensp;
-                  @if (item.Status != "1" || item.Status != "2")
+                  @if (item.Status != "1" && item.Status != "2")
                   {
                     <a href="#" onclick="remove('@item.Id')">Xoá</a>
                   }

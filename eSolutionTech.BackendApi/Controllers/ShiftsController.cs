@@ -64,14 +64,19 @@ namespace eSolutionTech.BackendApi.Controllers
         return BadRequest(ModelState);
       }
       var shiftId = await _shiftService.LoginShift(request);
-      if (shiftId == 0)
-        return Ok(new { Value = "Chấm công thất bại", Code = 0 });
-      else if(shiftId == 2)
+      switch (shiftId)
       {
-        return Ok(new { Value = "Đã chấm công vào ngày hôm nay!" , Code = 2});
+        case 0:
+          return Ok(new { Value = "Chấm công thất bại", Code = 0 });
+        case 1:
+          return Ok(new { Value = "Chấm công thành công", Code = 1 });
+        case 2:
+          return Ok(new { Value = "Đã chấm công vào ngày hôm nay!", Code = 2 });
+        case 3:
+          return Ok(new { Value = "Chưa đến giờ chấm công!", Code = 3 });
+        default:
+          return Ok(new { Value = "Chấm công thất bại", Code = 0 });
       }
-
-      return Ok(new { Value = "Chấm công thành công", Code = 1 });
     }
 
     [HttpPost("{logout}")]
@@ -84,18 +89,22 @@ namespace eSolutionTech.BackendApi.Controllers
       }
 
       var affectedResult = await _shiftService.LogoutShift(request);
-      if (affectedResult == 0)
-        return Ok(new { Value = "Chấm công thất bại", Code = 0 });
-      else if (affectedResult == 2)
-      {
-        return Ok(new { Value = "Chưa chấm công vào!", Code = 2 });
-      }
-      else if (affectedResult == 3)
-      {
-        return Ok(new { Value = "Chưa đến giờ chấm công ra!", Code = 3 });
-      }
 
-      return Ok(new { Value = "Chấm công thành công", Code = 1 });
+      switch (affectedResult)
+      {
+        case 0:
+          return Ok(new { Value = "Chấm công thất bại", Code = 0 });
+        case 1:
+          return Ok(new { Value = "Chấm công thành công", Code = 1 });
+        case 2:
+          return Ok(new { Value = "Chưa chấm công vào!", Code = 2 });
+        case 3:
+          return Ok(new { Value = "Chưa đến giờ chấm công ra!", Code = 3 });
+        case 4:
+          return Ok(new { Value = "Dự án chấm công ra sai so với dự án chấm công vào!", Code = 4 });
+        default:
+          return Ok(new { Value = "Chấm công thất bại", Code = 0 });
+      }
     }
 
     [HttpDelete("{shiftId}")]

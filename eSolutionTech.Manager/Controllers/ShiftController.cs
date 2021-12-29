@@ -45,6 +45,24 @@ namespace eSolutionTech.Manager.Controllers
       return View(data);
     }
 
+    public async Task<IActionResult> DetailsUser(string userId, int pageIndex = 1, int pageSize = 10)
+    {
+      var request = new GetShiftPagingRequest()
+      {
+        PageIndex = pageIndex,
+        UserId = userId,
+        PageSize = pageSize,
+      };
+
+      var data = await _shiftApiClient.GetPagings(request);
+
+      if (TempData["result"] != null)
+      {
+        ViewBag.SuccessMsg = TempData["result"];
+      }
+      return View(data);
+    }
+
     [HttpGet]
     public IActionResult Create()
     {

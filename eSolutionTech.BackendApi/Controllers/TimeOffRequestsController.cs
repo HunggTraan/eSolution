@@ -26,13 +26,13 @@ namespace eSolutionTech.BackendApi.Controllers
       _timeOffService = timeOffService;
       _userManager = userManager;
     }
-    [HttpGet]
-    public async Task<IActionResult> Get()
+    [HttpGet("getall")]
+    public async Task<IActionResult> Get([FromQuery] string userId)
     {
       try
       {
 
-        var timeOffRequests = await _timeOffService.GetAll();
+        var timeOffRequests = await _timeOffService.GetAll(userId);
         return Ok(timeOffRequests);
       }
       catch (eTechException ex)

@@ -48,6 +48,7 @@ namespace eSolutionTech.ApiIntegration
       requestContent.Add(new StringContent(string.IsNullOrEmpty(request.ManagerId) ? "" : request.ManagerId.ToString()), "managerId");
       requestContent.Add(new StringContent(request.StartDate.ToString()), "startDate");
       requestContent.Add(new StringContent(request.EndDate.ToString()), "endDate");
+      requestContent.Add(new StringContent(request.shiftSettingId.ToString()), "shiftSettingId");
       requestContent.Add(new StringContent(JsonConvert.SerializeObject(request.UserIds)), "userIds");
 
       var response = await client.PostAsync($"/api/projects/", requestContent);
@@ -114,6 +115,7 @@ namespace eSolutionTech.ApiIntegration
       requestContent.Add(new StringContent(string.IsNullOrEmpty(request.ManagerId) ? "" : request.ManagerId.ToString()), "managerId");
       requestContent.Add(new StringContent(request.StartDate.ToString()), "startDate");
       requestContent.Add(new StringContent(request.EndDate.ToString()), "endDate");
+      requestContent.Add(new StringContent(request.shiftSettingId.ToString()), "shiftSettingId");
       requestContent.Add(new StringContent(JsonConvert.SerializeObject(request.UserIds)), "userIds");
 
       var response = await client.PutAsync($"/api/projects/" + request.Id, requestContent);

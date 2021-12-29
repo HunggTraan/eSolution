@@ -9,7 +9,7 @@ namespace eSolutionTech.ApiIntegration
   {
     Task<PagedResult<TimeOffViewModel>> GetPagings(TimeOffPagingRequest request);
     Task<PagedResult<TimeOffViewModel>> GetPagingsByUser(TimeOffPagingRequest request);
-    Task<List<TimeOffViewModel>> GetAll();
+    Task<List<TimeOffViewModel>> GetAll(string userId);
 
     Task<bool> CreateTimeOff(TimeOffCreateRequest request);
 

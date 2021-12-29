@@ -218,8 +218,16 @@ namespace eSolutionTech.Application.System.Users
         if (!string.IsNullOrEmpty(request.Keyword))
         {
           query = query.Where(x => x.users.UserName.Contains(request.Keyword)
-           || x.users.PhoneNumber.Contains(request.Keyword) || x.users.FullName.Contains(request.Keyword));
+           || x.users.PhoneNumber.Contains(request.Keyword)
+           || x.users.FullName.Contains(request.Keyword)
+           || x.users.Code.Contains(request.Keyword)
+           || x.users.DoB.ToString().Contains(request.Keyword)
+           || x.department.Name.Contains(request.Keyword)
+           || x.jobTitle.Name.Contains(request.Keyword)
+           );
         }
+
+        query = query.OrderBy(x => x.users.Code);
 
         //3. Paging
         int totalRow = await query.CountAsync();
@@ -235,7 +243,8 @@ namespace eSolutionTech.Application.System.Users
               Id = x.users.Id,
               JobTitle = x.jobTitle.Name,
               Department = x.department.Name,
-              Dob = x.users.DoB
+              Dob = x.users.DoB,
+              Code = x.users.Code
             }).ToListAsync();
 
         //4. Select and projection

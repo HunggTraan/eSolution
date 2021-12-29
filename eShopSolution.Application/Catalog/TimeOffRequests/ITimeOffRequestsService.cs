@@ -12,7 +12,7 @@ namespace eSolutionTech.Application.Catalog.TimeOffRequests
     Task<int> Delete(int timeOffRequestId);
     Task<PagedResult<TimeOffViewModel>> GetAllPaging(TimeOffPagingRequest request);
     Task<PagedResult<TimeOffViewModel>> GetAllPagingByUser(TimeOffPagingRequest request);
-    Task<List<TimeOffViewModel>> GetAll();
+    Task<List<TimeOffViewModel>> GetAll(string userId);
     Task<TimeOffViewModel> GetById(int timeOffId);
     Task<int> Apply(int id, string status);
     }

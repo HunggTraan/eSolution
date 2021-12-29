@@ -30,22 +30,56 @@ namespace eSolutionTech.ViewModels.Catalog.Shifts
       var shiftSetting = await _shiftSettingService.GetById(projectInfo.shiftSettingId);
 
       var shift = GetAll(request.UserId);
+
       if (shift == null)
       {
         var dateCompare = DateTime.Now.ToString("yyyy-MM-dd");
         var dateInSettingExceed = string.Format("{0} {1}:00", dateCompare, shiftSetting.TimeIn);
         var dateInSetting = string.Format("{0} 00:00:00", dateCompare, shiftSetting.TimeIn);
-        //var dateOutSetting = string.Format("{0} {1}:00", dateCompare, shiftSetting.Result.TimeOut);
 
         DateTime TimeInSetting = DateTime.ParseExact(dateInSetting, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
         DateTime TimeInSettingExceed = DateTime.ParseExact(dateInSettingExceed, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
-        //DateTime TimeOutSetting = DateTime.ParseExact(dateOutSetting, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
 
         DateTime dateIn = DateTime.Now;
 
-        if (dateIn < TimeInSetting)
-          throw new eTechException($"Vui lòng thử lại sau!");
-        else if (TimeInSetting < dateIn && dateIn < TimeInSettingExceed)
+        if (shiftSetting.ExceedTimeIn > 0)
+        {
+          if (dateIn < TimeInSetting)
+            return 3; // Chưa đến giờ chấm công
+          else if (TimeInSetting < dateIn && dateIn < TimeInSettingExceed)
+          {
+            var shiftRequest = new Shift()
+            {
+              ProjectId = Int32.Parse(request.ProjectId),
+              UserId = request.UserId,
+              TimeIn = dateIn,
+              isLate = 0,
+              Status = 1,
+              TimeOut = dateIn,
+              WorkingHours = "0 giờ"
+            };
+
+            _context.Shifts.Add(shiftRequest);
+            return await _context.SaveChangesAsync();
+          }
+          else if (dateIn > TimeInSettingExceed)
+          {
+            var shiftRequest = new Shift()
+            {
+              ProjectId = Int32.Parse(request.ProjectId),
+              UserId = request.UserId,
+              TimeIn = dateIn,
+              isLate = 1,
+              Status = 1,
+              TimeOut = dateIn,
+              WorkingHours = "0 giờ"
+            };
+
+            _context.Shifts.Add(shiftRequest);
+            return await _context.SaveChangesAsync();
+          }
+        }
+        else
         {
           var shiftRequest = new Shift()
           {
@@ -57,23 +91,6 @@ namespace eSolutionTech.ViewModels.Catalog.Shifts
             TimeOut = dateIn,
             WorkingHours = "0 giờ"
           };
-
-          _context.Shifts.Add(shiftRequest);
-          return await _context.SaveChangesAsync();
-        }
-        else if (dateIn > TimeInSettingExceed)
-        {
-          var shiftRequest = new Shift()
-          {
-            ProjectId = Int32.Parse(request.ProjectId),
-            UserId = request.UserId,
-            TimeIn = dateIn,
-            isLate = 1,
-            Status = 1,
-            TimeOut = dateIn,
-            WorkingHours = "0 giờ"
-          };
-
           _context.Shifts.Add(shiftRequest);
           return await _context.SaveChangesAsync();
         }
@@ -114,8 +131,8 @@ namespace eSolutionTech.ViewModels.Catalog.Shifts
           isLate = x.shift.isLate,
           Status = x.shift.Status
         }).OrderByDescending(x => x.Id).FirstOrDefault();
-        
-        if(data != null)
+
+        if (data != null)
         {
           if (data.TimeIn.ToString("dd/MM/yyyy") == DateTime.Now.ToString("dd/MM/yyyy"))
           {
@@ -126,7 +143,7 @@ namespace eSolutionTech.ViewModels.Catalog.Shifts
         }
         return null;
       }
-      catch(Exception ex)
+      catch (Exception ex)
       {
         return null;
       }
@@ -139,7 +156,7 @@ namespace eSolutionTech.ViewModels.Catalog.Shifts
                   join user in _context.Users on shift.UserId equals user.Id.ToString()
                   join department in _context.Departments on user.DepartmentId equals department.Id.ToString()
                   join jobTitle in _context.JobTitles on user.JobTitleId equals jobTitle.Id.ToString()
-                  select new { shift, project, user , department , jobTitle };
+                  select new { shift, project, user, department, jobTitle };
 
       if (!string.IsNullOrEmpty(request.UserId))
       {
@@ -150,6 +167,8 @@ namespace eSolutionTech.ViewModels.Catalog.Shifts
       {
         query = query.Where(x => x.shift.ProjectId == request.ProjectId);
       }
+
+      query = query.OrderByDescending(x => x.shift.TimeIn);
 
       int totalRow = await query.CountAsync();
 
@@ -168,6 +187,7 @@ namespace eSolutionTech.ViewModels.Catalog.Shifts
             ProjectName = x.project.Name,
             ProjectCode = x.project.Code,
             UserName = x.user.FullName,
+            UserCode = x.user.Code,
             DepartmentCode = x.department.Code,
             JobTitleCode = x.jobTitle.Code,
             DepartmentName = x.department.Name,
@@ -207,6 +227,10 @@ namespace eSolutionTech.ViewModels.Catalog.Shifts
 
         if (shift != null)
         {
+          if (shift.ProjectId.ToString() != request.ProjectId)
+          {
+            return 4;// khác project
+          }
           var dateCompare = DateTime.Now.ToString("yyyy-MM-dd");
           var dateOutSetting = string.Format("{0} {1}:00", dateCompare, shiftSetting.TimeOut);
           DateTime TimeOutSetting = DateTime.ParseExact(dateOutSetting, "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
@@ -224,7 +248,7 @@ namespace eSolutionTech.ViewModels.Catalog.Shifts
         }
         return 2;
       }
-      catch(Exception ex)
+      catch (Exception ex)
       {
         return 0;
       }

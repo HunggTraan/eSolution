@@ -24,3 +24,97 @@ ul#menu li {
 ul#menu li:not(:last-child):after {
   content: ", ";
 }
+
+.box {
+  float: left;
+  height: 20px;
+  width: 20px;
+  margin-bottom: 15px;
+  border: 1px solid black;
+  clear: both;
+}
+
+.red {
+  background-color: red;
+}
+
+.green {
+  background-color: green;
+}
+
+.blue {
+  background-color: blue;
+}
+
+.groupFilter {
+  position: relative
+}
+
+@media (max-width: 767.98px) {
+  .groupFilter {
+    width: 100%
+  }
+}
+
+.groupFilter .collapse {
+  position: absolute !important;
+  right: 0;
+  width: 300px;
+  top: 100%;
+  display: none
+}
+
+  .groupFilter .collapse.show {
+    display: block
+  }
+
+
+.vcbFilterContent {
+  position: absolute;
+  padding-top: 10px;
+  right: 0;
+  top: 50%;
+  width: 330px;
+  background-color: #fff;
+  box-shadow: 0 0 30px rgba(0,0,0,0.3);
+  z-index: 100;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease-in-out 0s
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vcbFilterContent {
+    transition: none
+  }
+}
+
+@media (max-width: 575.98px) {
+  .vcbFilterContent {
+    width: 300px
+  }
+}
+
+.vcbFilterContent.active {
+  top: 100%;
+  opacity: 1;
+  visibility: visible
+}
+
+.vcbFilterContent-top {
+  top: auto;
+  bottom: 0
+}
+
+  .vcbFilterContent-top.active {
+    top: auto;
+    bottom: 100%
+  }
+
+.vcbFilterContent label {
+  font-weight: 700
+}
+
+.vcbFilterContent button {
+  font-size: 14px
+}

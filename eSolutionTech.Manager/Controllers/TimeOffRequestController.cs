@@ -100,6 +100,10 @@ namespace eSolutionTech.Manager.Controllers
 
       var claimsIdentity = (ClaimsIdentity)this.User.Identity;
       var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+      if (claim == null)
+      {
+        return RedirectToAction("Unauthorized", "Home");
+      }
       request.UserId = claim.Value;
 
       request.FromDate = !String.IsNullOrEmpty(request.FromDateStr) ? DateTime.ParseExact(request.FromDateStr, "dd/MM/yyyy", null) : DateTime.Now;
@@ -110,11 +114,11 @@ namespace eSolutionTech.Manager.Controllers
       {
         TimeSpan difference = request.ToDate.AddDays(1) - request.FromDate;
         double days = difference.TotalDays;
-        request.Duration = string.Format("{0} days", days);
+        request.Duration = string.Format("{0} ngày", days);
       }
       else
       {
-        request.Duration = "4 hours";
+        request.Duration = "4 giờ";
       }
 
       request.RequestUnit = splitData[1];
@@ -124,7 +128,7 @@ namespace eSolutionTech.Manager.Controllers
       if (result)
       {
         TempData["result"] = "Thêm mới ngày nghỉ thành công";
-        return RedirectToAction("Index");
+        return RedirectToAction("IndexUser");
       }
 
       ModelState.AddModelError("", "Thêm ngày nghỉ thất bại");
@@ -250,7 +254,25 @@ namespace eSolutionTech.Manager.Controllers
     {
       List<Hashtable> result = new List<Hashtable>();
 
-      var data = await _timeOffApiClient.GetAll();
+      var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+      ClaimsPrincipal currentUser = this.User;
+      bool isAdmin = currentUser.IsInRole("Administrator");
+      var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+
+      if (claim == null)
+      {
+        return RedirectToAction("Unauthorized", "Home");
+      }
+      List<TimeOffViewModel> data = new List<TimeOffViewModel>();
+      if (isAdmin)
+      {
+        data = await _timeOffApiClient.GetAll(string.Empty);
+      }
+      else
+      {
+        data = await _timeOffApiClient.GetAll(claim.Value);
+      }
+
       if (data == null) return Json(data);
 
       List<TimeOffViewModel> timeOffRequestData = data.ToList();

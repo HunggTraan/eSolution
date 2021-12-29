@@ -92,7 +92,6 @@ namespace eSolutionTech.BackendApi.Controllers
       var projectId = await _projectService.Create(request);
       if (projectId == 0)
         return BadRequest();
-      var project = await _projectService.GetById(11);
       return Ok();
     }
 

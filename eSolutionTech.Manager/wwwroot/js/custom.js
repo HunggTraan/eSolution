@@ -556,3 +556,87 @@ function popupFilter() {
         $(this).closest(".vcbFilterContent").prev().removeClass("active");
     });
 }
+
+function GetFullCalendarSetup(configs) {
+  let eventsFunc = () => { };
+  let eventClickFunc = () => { };
+
+  if (configs !== undefined) {
+    if (configs.events !== undefined && configs.events !== null) eventsFunc = configs.events;
+    if (configs.eventClick !== undefined && configs.eventClick !== null) eventClickFunc = configs.eventClick;
+  }
+
+  return {
+    locale: 'vi',
+    themeSystem: 'bootstrap',
+    height: 'auto',
+    expandRows: true,
+    headerToolbar: {
+      left: "prev,next today",
+      center: 'title',
+      right: 'dayGridMonth,timeGridWeek,timeGridDay listMonth'
+    },
+    initialView: 'dayGridMonth',
+    initialDate: new Date(),
+    navLinks: true, // can click day/week names to navigate views
+    editable: true,
+    selectable: true,
+    nowIndicator: true,
+    dayMaxEvents: true, // allow "more" link when too many events
+    events: eventsFunc,
+    eventClick: eventClickFunc
+  };
+}
+
+function initDataTable() {
+  $('#dataTable').dataTable({
+    "paging": false,
+    "searching": false,
+    "info": false,
+    "ordering": false,
+    "language": {
+      "zeroRecords": "Không có bản ghi",
+      "infoEmpty": "Không có bản ghi"
+    }
+  });
+}
+
+function deleteData(url, id, href) {
+  $.confirm({
+    title: 'Thông báo!',
+    content: 'Bạn có chắc chắn muốn xoá bản ghi này?',
+    buttons: {
+      confirm: {
+        text: 'Xác nhận',
+        keys: ['enter'],
+        action: function () {
+          var model = {};
+          model.Id = id;
+
+          var items = JSON.stringify(model);
+
+          $.ajax({
+            type: "POST",
+            url: url,
+            data: items,
+            //dataType: "text",
+            contentType: "application/json; charset=utf-8",
+            success: function () {
+              window.location.href = href;
+            },
+            error: function () {
+              $.alert({
+                title: 'Thông báo!',
+                content: 'Có lỗi xảy ra, vui lòng thử lại sau!',
+              });
+            }
+          });
+        }
+      },
+      cancel: {
+        text: 'Huỷ bỏ',
+        action: function () { }
+      }
+    }
+  });
+}

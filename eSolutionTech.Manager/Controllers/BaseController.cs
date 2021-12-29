@@ -21,7 +21,7 @@ namespace eSolutionTech.Manager.Controllers
       ViewBag.Role = getRole();
       if (sessions == null)
       {
-        context.Result = new RedirectToActionResult("Index", "Login", null);
+        context.Result = new RedirectToActionResult("Unauthorized", "Home", null);
       }
       base.OnActionExecuting(context);
     }

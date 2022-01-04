@@ -34,6 +34,11 @@ namespace eSolutionTech.Manager.Controllers
       return View();
     }
 
+    public IActionResult ErrorView()
+    {
+      return View();
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

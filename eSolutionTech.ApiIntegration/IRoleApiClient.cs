@@ -10,5 +10,13 @@ namespace eSolutionTech.ApiIntegration
   public interface IRoleApiClient
   {
     Task<ApiResult<List<RoleVm>>> GetAll();
+    Task<ApiResult<PagedResult<RoleVm>>> GetRolesPagings(RolePagingRequest request);
+
+    Task<ApiResult<bool>> Create(CreateRoleRequest request);
+
+    Task<ApiResult<bool>> Update(Guid id, RoleUpdateRequest request);
+
+    Task<ApiResult<bool>> Delete(string id);
+    Task<ApiResult<RoleVm>> GetById(Guid id);
   }
 }

@@ -264,7 +264,11 @@ namespace eSolutionTech.ViewModels.Catalog.Shifts
         Id = shift.Id,
         ProjectId = shift.ProjectId,
         UserId = shift.UserId.ToString(),
-        WorkingHours = shift.WorkingHours
+        WorkingHours = shift.WorkingHours,
+        TimeIn = shift.TimeIn,
+        TimeOut = shift.TimeOut,
+        Status = shift.Status,
+        isLate = shift.isLate
       };
       return shiftViewModel;
     }

@@ -20,12 +20,13 @@ namespace eSolutionTech.Manager.Controllers
     private readonly IJobTitleApiClient _jobTitleApiClient;
     private readonly IDepartmentApiClient _departmentApiClient;
     private readonly IProjectApiClient _projectApiClient;
+    private readonly IUserApiClient _userApiClient;
     private readonly IConfiguration _configuration;
 
     public ShiftController(ITimeOffApiClient TimeOffApiClient, ITimeOffTypeApiClient timeOffTypeApiClient,
       IShiftApiClient shiftApiClient, IJobTitleApiClient jobTitleApiClient,
       IDepartmentApiClient departmentApiClient, IProjectApiClient projectApiClient,
-      IConfiguration configuration)
+      IUserApiClient userApiClient, IConfiguration configuration)
     {
       _configuration = configuration;
       _timeOffApiClient = TimeOffApiClient;
@@ -34,6 +35,7 @@ namespace eSolutionTech.Manager.Controllers
       _jobTitleApiClient = jobTitleApiClient;
       _departmentApiClient = departmentApiClient;
       _projectApiClient = projectApiClient;
+      _userApiClient = userApiClient;
     }
 
     protected void GetDataForFilter()
@@ -176,6 +178,23 @@ namespace eSolutionTech.Manager.Controllers
     {
       var result = await _shiftApiClient.GetById(id);
       return View(result);
+    }
+    [HttpGet]
+    public async Task<JsonResult> GetRequestById(
+      string id
+    )
+    {
+      var result = await _shiftApiClient.GetById(Int32.Parse(id));
+
+      var user = await _userApiClient.GetById(Guid.Parse(result.UserId));
+
+      result.UserName = user.ResultObj.UserName;
+      result.UserCode = user.ResultObj.Code;
+      result.UserFullName = user.ResultObj.FullName;
+      result.Department = user.ResultObj.Department;
+      result.JobTitle = user.ResultObj.JobTitle;
+
+      return Json(result);
     }
   }
 }

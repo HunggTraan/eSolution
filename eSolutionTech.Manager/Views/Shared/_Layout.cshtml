@@ -60,6 +60,13 @@
             </a>
             @if (ViewBag.Role == "Admin")
             {
+              <a class="nav-link" href="@Url.Action("Index", "Role")">
+                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                Trang chủ
+              </a>
+            }
+            @if (ViewBag.Role == "Admin")
+            {
               <div class="sb-sidenav-menu-heading">Quản lý</div>
               <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>

@@ -38,6 +38,10 @@ namespace eSolutionTech.Manager
         options.AccessDeniedPath = "/User/Forbidden";
       });
 
+      services.ConfigureApplicationCookie(options => {
+        options.AccessDeniedPath = "/Login/Index";
+      });
+
 
       services.AddControllersWithViews()
           .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>());

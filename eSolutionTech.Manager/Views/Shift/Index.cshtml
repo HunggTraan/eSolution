@@ -157,6 +157,9 @@
                 Giờ ra
               </th>
               <th class="text-center">
+                Tổng thời gian làm việc
+              </th>
+              <th class="text-center">
                 Trạng thái
               </th>
             </tr>
@@ -164,47 +167,50 @@
           <tbody>
             @foreach (var item in Model.Items)
             {
-              <tr>
-                <td class="text-center">
-                  @Html.DisplayFor(modelItem => item.UserCode)
-                </td>
-                <td class="text-center">
-                  <a href="#" onclick="details('@item.Id')">@Html.DisplayFor(modelItem => item.UserName)</a>
-                </td>
-                <td class="text-center">
-                  @Html.DisplayFor(modelItem => item.ProjectName)
-                </td>
-                <td class="text-center">
-                  @Convert.ToDateTime(item.TimeIn).ToString("dd/MM/yyyy HH:mm")
-                </td>
-                <td class="text-center">
-                  @Convert.ToDateTime(item.TimeOut).ToString("dd/MM/yyyy HH:mm")
-                </td>
-                <td class="text-center" id="status">
-                  @if (item.isLate == 0)
+            <tr>
+              <td class="text-center">
+                @Html.DisplayFor(modelItem => item.UserCode)
+              </td>
+              <td class="text-center">
+                <a href="#" onclick="details('@item.Id')">@Html.DisplayFor(modelItem => item.UserName)</a>
+              </td>
+              <td class="text-center">
+                @Html.DisplayFor(modelItem => item.ProjectName)
+              </td>
+              <td class="text-center">
+                @Convert.ToDateTime(item.TimeIn).ToString("dd/MM/yyyy HH:mm")
+              </td>
+              <td class="text-center">
+                @Convert.ToDateTime(item.TimeOut).ToString("dd/MM/yyyy HH:mm")
+              </td>
+              <td class="text-center">
+                @Html.DisplayFor(modelItem => item.WorkingHours)
+              </td>
+              <td class="text-center" id="status">
+                @if (item.isLate == 0)
+                {
+                  @if (item.Status == 1)
                   {
-                    @if (item.Status == 1)
-                    {
-                      <i>Đã chấm công vào</i>
-                    }
-                    else
-                    {
-                      <i>Đã chấm đủ công</i>
-                    }
+                    <i>Đã chấm công vào</i>
                   }
                   else
                   {
-                    @if (item.Status == 1)
-                    {
-                      <i style="color:red">Đã chấm công vào</i>
-                    }
-                    else
-                    {
-                      <i style="color:red">Đã chấm đủ công</i>
-                    }
+                    <i>Đã chấm đủ công</i>
                   }
-                </td>
-              </tr>
+                }
+                else
+                {
+                  @if (item.Status == 1)
+                  {
+                    <i style="color:red">Đã chấm công vào</i>
+                  }
+                  else
+                  {
+                    <i style="color:red">Đã chấm đủ công</i>
+                  }
+                }
+              </td>
+            </tr>
             }
           </tbody>
         </table>
@@ -218,43 +224,55 @@
   <div class="modal-dialog">
     <div class="animated bounceInRight modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" style="margin-left:42%">Chi tiết</h4>
+        <h4 class="modal-title" style="margin-left:30%">Chi tiết nhân viên</h4>
       </div>
       <div class="modal-body">
         <div class="form-group row">
-          <label class="col-form-label col-lg-4 font-bold">Tên lịch xin nghỉ:</label>
-          <div class="col-lg-8">
+          <label class="col-form-label col-lg-5 font-bold">Mã nhân viên:</label>
+          <div class="col-lg-7">
             <p class="form-control-plaintext lblCode"></p>
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-form-label col-lg-4 font-bold">Mô tả:</label>
-          <div class="col-lg-8">
+          <label class="col-form-label col-lg-5 font-bold">Tên nhân viên:</label>
+          <div class="col-lg-7">
             <p class="form-control-plaintext lblFullName"></p>
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-form-label col-lg-4 font-bold">Từ ngày:</label>
-          <div class="col-lg-8">
+          <label class="col-form-label col-lg-5 font-bold">Tên đăng nhập:</label>
+          <div class="col-lg-7">
             <p class="form-control-plaintext lblUserName"></p>
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-form-label col-lg-4 font-bold">Đến ngày:</label>
-          <div class="col-lg-8">
-            <p class="form-control-plaintext lblJobTitle"></p>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label class="col-form-label col-lg-4 font-bold">Nhân viên:</label>
-          <div class="col-lg-8">
+          <label class="col-form-label col-lg-5 font-bold">Phòng ban:</label>
+          <div class="col-lg-7">
             <p class="form-control-plaintext lblDepartment"></p>
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-form-label col-lg-4 font-bold">Mã nhân viên:</label>
-          <div class="col-lg-8">
-            <p class="form-control-plaintext lblPhoneNumber"></p>
+          <label class="col-form-label col-lg-5 font-bold">Chức vụ:</label>
+          <div class="col-lg-7">
+            <p class="form-control-plaintext lblJobTitle"></p>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-form-label col-lg-5 font-bold">Ngày:</label>
+          <div class="col-lg-7">
+            <p class="form-control-plaintext lblDate"></p>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-form-label col-lg-5 font-bold">Trạng thái: </label>
+          <div class="col-lg-7">
+            <p class="form-control-plaintext lblStatus"></p>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-form-label col-lg-5 font-bold">Trạng thái chấm công:</label>
+          <div class="col-lg-7">
+            <p class="form-control-plaintext lblIsLate"></p>
           </div>
         </div>
       </div>
@@ -287,17 +305,21 @@
 
             function details(ids) {
       $.get(
-        '@Url.Action("GetRequestById", "TimeOffRequest")',
+        '@Url.Action("GetRequestById", "Shift")',
         { id: ids },
         (response) => {
+          console.log(response);
           if (response != null) {
             let d = response;
-            $('#userModel .modal-body .lblCode').html(d.name);
-            $('#userModel .modal-body .lblFullName').html(d.description);
-            $('#userModel .modal-body .lblUserName').html(d.fromDateText);
-            $('#userModel .modal-body .lblJobTitle').html(d.toDateText);
-            $('#userModel .modal-body .lblDepartment').html(d.userName);
-            $('#userModel .modal-body .lblPhoneNumber').html(d.userCode);
+            console.log(d);
+            $('#userModel .modal-body .lblCode').html(d.userCode);
+            $('#userModel .modal-body .lblFullName').html(d.userFullName);
+            $('#userModel .modal-body .lblUserName').html(d.userName);
+            $('#userModel .modal-body .lblJobTitle').html(d.jobTitle);
+            $('#userModel .modal-body .lblDepartment').html(d.department);
+            $('#userModel .modal-body .lblDate').html(d.time);
+            $('#userModel .modal-body .lblStatus').html(d.statusText);
+            $('#userModel .modal-body .lblIsLate').html(d.isLateText);
             $('#userModel').modal('show');
           }
         }

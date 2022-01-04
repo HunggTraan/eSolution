@@ -7,9 +7,10 @@ namespace eSolutionTech.ViewModels.Catalog.TimeOffRequests
 {
   public class TimeOffPagingRequest : PagingRequestBase
   {
-    public string UserId { get; set; }
+    public string Status { get; set; }
     public string FromDate { get; set; }
     public string ToDate { get; set; }
-    public bool IsAdmin { get; set; }
+    public string TimeOffTypeId { get; set; }
+    public string UserId { get; set; }
   }
 }

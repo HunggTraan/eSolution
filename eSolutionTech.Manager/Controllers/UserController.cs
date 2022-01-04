@@ -57,16 +57,53 @@ namespace eSolutionTech.Manager.Controllers
       }
     }
 
-    public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 10)
+    protected void GetDataForFilter()
     {
+      try
+      {
+        var department = _departmentApiClient.GetAll();
+
+        ViewBag.Department = department.Result.Select(x => new SelectListItem()
+        {
+          Text = x.Name,
+          Value = x.Id.ToString()
+        });
+
+
+
+        var jobTitle = _jobTitleApiClient.GetAll();
+        ViewBag.JobTitle = jobTitle.Result.Select(x => new SelectListItem()
+        {
+          Text = x.Description,
+          Value = x.Id.ToString()
+        });
+      }
+      catch (Exception ex)
+      {
+        return;
+      }
+    }
+
+    public async Task<IActionResult> Index(string code, string fullName, string jobTitleID, string departmentId, int pageIndex = 1, int pageSize = 10)
+    {
+      GetDataForCreateOrEdit();
       var request = new GetUserPagingRequest()
       {
-        Keyword = keyword,
+        Code = code,
+        FullName = fullName,
+        DepartmentId = departmentId,
+        JobTitleId = jobTitleID,
         PageIndex = pageIndex,
         PageSize = pageSize
       };
+
+      ViewBag.Code = code;
+      ViewBag.FullName = fullName;
+      ViewBag.JobTitles = jobTitleID;
+      ViewBag.Departments = departmentId;
+
       var data = await _userApiClient.GetUsersPagings(request);
-      ViewBag.Keyword = keyword;
+
       if (TempData["result"] != null)
       {
         ViewBag.SuccessMsg = TempData["result"];
@@ -216,6 +253,15 @@ namespace eSolutionTech.Manager.Controllers
         });
       }
       return roleAssignRequest;
+    }
+
+    [HttpGet]
+    public async Task<JsonResult> GetUserById(
+      string id
+    )
+    {
+      var user = await _userApiClient.GetById(Guid.Parse(id));
+      return Json(user);
     }
   }
 }

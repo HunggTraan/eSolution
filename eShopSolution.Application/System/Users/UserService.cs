@@ -103,8 +103,8 @@ namespace eSolutionTech.Application.System.Users
           UserName = request.UserName,
           DoB = request.Dob,
           Phone = request.Phone,
-          JobTitleId = request.JobTitleId,
-          DepartmentId = request.DepartmentId,
+          JobTitleId = Int32.Parse(request.JobTitleId),
+          DepartmentId = Int32.Parse(request.DepartmentId),
           FullName = request.FullName,
           Email = request.UserEmail
         };
@@ -149,10 +149,11 @@ namespace eSolutionTech.Application.System.Users
     {
       try
       {
-        var user = await _userManager.FindByIdAsync(id.ToString());
+        var userId = ReplacingGuid(id.ToString());
+        var user = await _userManager.FindByIdAsync(userId);
 
-        var department = await _departmentService.GetById(Int32.Parse(user.DepartmentId));
-        var jobTitle = await _jobTitleService.GetById(Int32.Parse(user.JobTitleId));
+        var department = await _departmentService.GetById(user.DepartmentId);
+        var jobTitle = await _jobTitleService.GetById(user.JobTitleId);
 
         if (user == null)
         {
@@ -185,8 +186,8 @@ namespace eSolutionTech.Application.System.Users
     public async Task<ApiResult<List<UserViewModel>>> GetUsers()
     {
       var query = from users in _context.Users
-                  join jobTitle in _context.JobTitles on users.JobTitleId equals jobTitle.Id.ToString()
-                  join department in _context.Departments on users.DepartmentId equals department.Id.ToString()
+                  join jobTitle in _context.JobTitles on users.JobTitleId equals jobTitle.Id
+                  join department in _context.Departments on users.DepartmentId equals department.Id
                   select new { users, jobTitle, department };
 
       var data = await query.Select(x => new UserViewModel()
@@ -211,20 +212,27 @@ namespace eSolutionTech.Application.System.Users
       try
       {
         var query = from users in _context.Users
-                    join jobTitle in _context.JobTitles on users.JobTitleId equals jobTitle.Id.ToString()
-                    join department in _context.Departments on users.DepartmentId equals department.Id.ToString()
+                    join jobTitle in _context.JobTitles on users.JobTitleId equals jobTitle.Id
+                    join department in _context.Departments on users.DepartmentId equals department.Id
                     select new { users, jobTitle, department };
 
-        if (!string.IsNullOrEmpty(request.Keyword))
+        if (!string.IsNullOrEmpty(request.Code))
         {
-          query = query.Where(x => x.users.UserName.Contains(request.Keyword)
-           || x.users.PhoneNumber.Contains(request.Keyword)
-           || x.users.FullName.Contains(request.Keyword)
-           || x.users.Code.Contains(request.Keyword)
-           || x.users.DoB.ToString().Contains(request.Keyword)
-           || x.department.Name.Contains(request.Keyword)
-           || x.jobTitle.Name.Contains(request.Keyword)
-           );
+          query = query.Where(x => x.users.Code.Contains(request.Code));
+        }
+
+        if (!string.IsNullOrEmpty(request.DepartmentId))
+        {
+          query = query.Where(x => x.users.DepartmentId == Int32.Parse(request.DepartmentId));
+        }
+
+        if (!string.IsNullOrEmpty(request.JobTitleId))
+        {
+          query = query.Where(x => x.users.JobTitleId == Int32.Parse(request.JobTitleId));
+        }
+        if (!string.IsNullOrEmpty(request.FullName))
+        {
+          query = query.Where(x => x.users.FullName.Contains(request.FullName));
         }
 
         query = query.OrderBy(x => x.users.Code);
@@ -278,8 +286,8 @@ namespace eSolutionTech.Application.System.Users
         user.Email = request.UserEmail;
         user.FullName = request.FullName;
         user.PhoneNumber = request.Phone;
-        user.DepartmentId = request.DepartmentId;
-        user.JobTitleId = request.JobTitleId;
+        user.DepartmentId = Int32.Parse(request.DepartmentId);
+        user.JobTitleId = Int32.Parse(request.JobTitleId);
 
         var result = await _userManager.UpdateAsync(user);
         if (result.Succeeded)
@@ -321,6 +329,16 @@ namespace eSolutionTech.Application.System.Users
       }
 
       return new ApiSuccessResult<bool>();
+    }
+
+    public string ReplacingGuid(string Guid)
+    {
+      var charsToRemove = new string[] { "{", "}"};
+      foreach (var c in charsToRemove)
+      {
+        Guid = Guid.Replace(c, string.Empty);
+      }
+      return Guid;
     }
   }
 }

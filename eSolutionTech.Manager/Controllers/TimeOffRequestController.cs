@@ -42,17 +42,22 @@ namespace eSolutionTech.Manager.Controllers
         return;
       }
     }
-    public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 10)
+    public async Task<IActionResult> Index(string fromDate, string toDate, string timeOffTypeId, string status, int pageIndex = 1, int pageSize = 10)
     {
+      GetDataForCreateOrEdit();
       var request = new TimeOffPagingRequest()
       {
-        IsAdmin = true,
+        FromDate = fromDate,
+        ToDate = toDate,
+        Status = status,
+        TimeOffTypeId = string.IsNullOrEmpty(timeOffTypeId) ? "" : timeOffTypeId.Split('|')[0],
         PageIndex = pageIndex,
         PageSize = pageSize
       };
 
       var data = await _timeOffApiClient.GetPagings(request);
-      ViewBag.Keyword = keyword;
+      ViewBag.FromDate = fromDate;
+      ViewBag.ToDate = toDate;
 
       if (TempData["result"] != null)
       {
@@ -61,21 +66,30 @@ namespace eSolutionTech.Manager.Controllers
       return View(data);
     }
 
-    public async Task<IActionResult> IndexUser(string keyword, int pageIndex = 1, int pageSize = 10)
+    public async Task<IActionResult> IndexUser(string fromDate, string toDate, string timeOffTypeId, string status, int pageIndex = 1, int pageSize = 10)
     {
       var claimsIdentity = (ClaimsIdentity)this.User.Identity;
       var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
 
+      if (claim == null)
+      {
+        return RedirectToAction("Unauthorized", "Home");
+      }
+
       var request = new TimeOffPagingRequest()
       {
-        IsAdmin = false,
+        FromDate = fromDate,
+        ToDate = toDate,
+        Status = status,
+        TimeOffTypeId = string.IsNullOrEmpty(timeOffTypeId) ? "" : timeOffTypeId.Split('|')[0],
         PageIndex = pageIndex,
         PageSize = pageSize,
         UserId = claim.Value
       };
 
       var data = await _timeOffApiClient.GetPagingsByUser(request);
-      ViewBag.Keyword = keyword;
+      ViewBag.FromDate = fromDate;
+      ViewBag.ToDate = toDate;
 
       if (TempData["result"] != null)
       {
@@ -263,6 +277,7 @@ namespace eSolutionTech.Manager.Controllers
       {
         return RedirectToAction("Unauthorized", "Home");
       }
+
       List<TimeOffViewModel> data = new List<TimeOffViewModel>();
       if (isAdmin)
       {
@@ -300,6 +315,15 @@ namespace eSolutionTech.Manager.Controllers
     {
       var hrLeaveResult = await _timeOffApiClient.GetById(id);
       return Json(hrLeaveResult);
+    }
+
+    [HttpGet]
+    public async Task<JsonResult> GetRequestById(
+      string id
+    )
+    {
+      var result = await _timeOffApiClient.GetById(Int32.Parse(id));
+      return Json(result);
     }
   }
 }

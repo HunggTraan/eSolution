@@ -8,9 +8,8 @@
 }
 
 <div class="container-fluid">
-    <h1 class="mt-4">Chi tiết</h1>
-    <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+    <ol class="breadcrumb mb-4 mt-4">
+        <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Trang chủ</a></li>
         <li class="breadcrumb-item active">Chi tiết</li>
     </ol>
     <div class="card mb-4">
@@ -55,7 +54,7 @@
                             Quản lý
                         </dt>
                         <dd class="col-sm-9 mt-2">
-                            &ensp; &ensp; <a href="@Url.Action("Details", "User", new { id = manager.Id })" name="Chi tiết">
+                            &ensp; &ensp; <a href="#" onclick="details('@manager.Id');" name="Chi tiết">
                                 @manager.FullName
                             </a>
                         </dd>
@@ -67,7 +66,7 @@
                                 @foreach (var item in user)
                                 {
                                 <li>
-                                    <a href="@Url.Action("Details", "User", new { id = item.Id })" name="Chi tiết">
+                                    <a href="#" onclick="details('@item.Id');" name="Chi tiết">
                                         @item.FullName
                                     </a>
                                 </li>
@@ -80,4 +79,92 @@
         </div>
     </div>
 </div>
+
+<div aria-hidden="true" class="inmodal modal" id="userModel" role="dialog" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="animated bounceInRight modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" style="margin-left:30%">Chi tiết nhân viên</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group row">
+          <label class="col-form-label col-lg-4 font-bold">Mã nhân viên:</label>
+          <div class="col-lg-8">
+            <p class="form-control-plaintext lblCode"></p>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-form-label col-lg-4 font-bold">Họ và tên đầy đủ:</label>
+          <div class="col-lg-8">
+            <p class="form-control-plaintext lblFullName"></p>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-form-label col-lg-4 font-bold">Tên đăng nhập:</label>
+          <div class="col-lg-8">
+            <p class="form-control-plaintext lblUserName"></p>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-form-label col-lg-4 font-bold">Chức danh:</label>
+          <div class="col-lg-8">
+            <p class="form-control-plaintext lblJobTitle"></p>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-form-label col-lg-4 font-bold">Phòng ban:</label>
+          <div class="col-lg-8">
+            <p class="form-control-plaintext lblDepartment"></p>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-form-label col-lg-4 font-bold">Số điện thoại:</label>
+          <div class="col-lg-8">
+            <p class="form-control-plaintext lblPhoneNumber"></p>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-form-label col-lg-4 font-bold">Thư điện tử:</label>
+          <div class="col-lg-8">
+            <p class="form-control-plaintext lblEmail"></p>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-form-label col-lg-4 font-bold">Vai trò:</label>
+          <div class="col-lg-8">
+            <p class="form-control-plaintext lblRole"></p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-white" data-bs-dismiss="modal" type="button">Đóng</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+@section Scripts{
+  <script>
+      function details(ids) {
+      $.get(
+        '@Url.Action("GetUserById", "User")',
+        { id: ids },
+        (response) => {
+          if (response.isSuccessed) {
+            let d = response.resultObj;
+            $('#userModel .modal-body .lblCode').html(d.code);
+            $('#userModel .modal-body .lblFullName').html(d.fullName);
+            $('#userModel .modal-body .lblUserName').html(d.userName);
+            $('#userModel .modal-body .lblJobTitle').html(d.jobTitle);
+            $('#userModel .modal-body .lblDepartment').html(d.department);
+            $('#userModel .modal-body .lblPhoneNumber').html(d.phoneNumber);
+            $('#userModel .modal-body .lblEmail').html(d.email);
+            $('#userModel .modal-body .lblRole').html(d.roles);
+            $('#userModel').modal('show');
+          }
+        }
+      )
+    }
+  </script>
+ }
 

@@ -15,8 +15,8 @@ namespace eSolutionTech.Data.Entities
         public DateTime DoB { get; set; }
         public string Code { get; set; }
         [Required]
-        public string DepartmentId { get; set; }
+        public int DepartmentId { get; set; }
         [Required]
-        public string JobTitleId { get; set; }
+        public int JobTitleId { get; set; }
     }
 }

@@ -9,7 +9,7 @@
 
 <div class="container-fluid">
   <ol class="breadcrumb mb-4 mt-4">
-    <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Trang chủ</a></li>
     <li class="breadcrumb-item active">Danh sách người dùng</li>
   </ol>
   <div class="card mb-12">
@@ -17,21 +17,9 @@
       <div class="row">
         <div class="col-md-6 col-xs-12">
           <a class="btn btn-success" asp-action="Create" asp-controller="User">Tạo mới</a>
+          <a class="btn btn-secondary" id="filter">Tìm kiếm</a>
         </div>
         <div class="col-md-6 col-xs-12">
-          <div class="row">
-            <form asp-action="Index" method="get">
-              <div class="row">
-                <div class="col-md-8">
-                  <input type="text" value="@ViewBag.Keyword" name="keyword" class="form-control" />
-                </div>
-                <div class="col-md-4">
-                  <button type="submit" class="btn btn-primary">Tìm</button>
-                  <button type="button" onclick="window.location.href='/User/Index'" class="btn btn-secondary">Đặt lại</button>
-                </div>
-              </div>
-            </form>
-          </div>
         </div>
       </div>
     </div>
@@ -43,6 +31,51 @@
             @ViewBag.SuccessMsg
           </div>
         }
+      </div>
+
+      <div class="card-header hidden" id="filterField">
+        <form asp-action="Index" method="get">
+          <div class="row">
+            <div class="col-md-10">
+              <div class="form-group row">
+                <div class="col-md-2">
+                  <label>Mã nhân viên</label>
+                </div>
+                <div class="col-md-4">
+                  <input type="text" value="@ViewBag.Code" name="code" class="form-control" />
+                </div>
+                <div class="col-md-2">
+                  <label>Họ và tên</label>
+                </div>
+                <div class="col-md-4">
+                  <input type="text" value="@ViewBag.FullName" name="fullname" class="form-control" />
+                </div>
+              </div>
+              <div class="form-group row mt-2">
+                <div class="col-md-2">
+                  <label>Chức vụ</label>
+                </div>
+                <div class="col-md-4">
+                  <select asp-items="@ViewBag.Department" name="departmentId" class="form-control">
+                    <option value="">Tất cả</option>
+                  </select>
+                </div>
+                <div class="col-md-2">
+                  <label>Phòng ban</label>
+                </div>
+                <div class="col-md-4">
+                  <select asp-items="@ViewBag.JobTitle" name="jobTitleId" class="form-control">
+                    <option value="">Tất cả</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <button type="submit" class="btn btn-primary">Tìm</button>
+              <button type="button" onclick="window.location.href='/User/Index'" class="btn btn-secondary">Đặt lại</button>
+            </div>
+          </div>
+        </form>
       </div>
 
       <div class="table-responsive">
@@ -96,7 +129,7 @@
                   <a class="btn btn-primary" href="@Url.Action("Edit", new { id = item.Id })" name="Sửa">
                     Sửa
                   </a>
-                  <a class="btn btn-primary" href="@Url.Action("Details", new { id = item.Id })" name="Chi tiết">
+                  <a class="btn btn-primary" href="#" onclick="details('@item.Id');" name="Chi tiết">
                     Chi tiết
                   </a>
                   <a href="#" class="btn btn-primary" onclick="remove('@item.Id');">Xoá</a>
@@ -107,9 +140,95 @@
               </tr>
             }
           </tbody>
+          <tfoot>
+            <tr>
+              <th class="text-center" width="10%">
+                Mã nhân viên
+              </th>
+              <th class="text-center" width="15%">
+                Họ và tên
+              </th>
+              <th class="text-center" width="10%">
+                Tên tài khoản
+              </th>
+              <th class="text-center" width="10%">
+                Ngày sinh
+              </th>
+              <th class="text-center" width="15%">
+                Chức vụ
+              </th>
+              <th class="text-center" width="15%">
+                Phòng ban
+              </th>
+              <th class="text-center" width="25%">Hành động</th>
+            </tr>
+          </tfoot>
         </table>
       </div>
       @await Component.InvokeAsync("Pager", Model)
+    </div>
+  </div>
+</div>
+
+<div aria-hidden="true" class="inmodal modal" id="userModel" role="dialog" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="animated bounceInRight modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" style="margin-left:30%">Chi tiết nhân viên</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group row">
+          <label class="col-form-label col-lg-4 font-bold">Mã nhân viên:</label>
+          <div class="col-lg-8">
+            <p class="form-control-plaintext lblCode"></p>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-form-label col-lg-4 font-bold">Họ và tên đầy đủ:</label>
+          <div class="col-lg-8">
+            <p class="form-control-plaintext lblFullName"></p>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-form-label col-lg-4 font-bold">Tên đăng nhập:</label>
+          <div class="col-lg-8">
+            <p class="form-control-plaintext lblUserName"></p>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-form-label col-lg-4 font-bold">Chức danh:</label>
+          <div class="col-lg-8">
+            <p class="form-control-plaintext lblJobTitle"></p>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-form-label col-lg-4 font-bold">Phòng ban:</label>
+          <div class="col-lg-8">
+            <p class="form-control-plaintext lblDepartment"></p>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-form-label col-lg-4 font-bold">Số điện thoại:</label>
+          <div class="col-lg-8">
+            <p class="form-control-plaintext lblPhoneNumber"></p>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-form-label col-lg-4 font-bold">Thư điện tử:</label>
+          <div class="col-lg-8">
+            <p class="form-control-plaintext lblEmail"></p>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-form-label col-lg-4 font-bold">Vai trò:</label>
+          <div class="col-lg-8">
+            <p class="form-control-plaintext lblRole"></p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-white" data-bs-dismiss="modal" type="button">Đóng</button>
+      </div>
     </div>
   </div>
 </div>
@@ -159,5 +278,34 @@
             }
         });
     };
+
+    function details(ids) {
+      $.get(
+        '@Url.Action("GetUserById", "User")',
+        { id: ids },
+        (response) => {
+          if (response.isSuccessed) {
+            let d = response.resultObj;
+            $('#userModel .modal-body .lblCode').html(d.code);
+            $('#userModel .modal-body .lblFullName').html(d.fullName);
+            $('#userModel .modal-body .lblUserName').html(d.userName);
+            $('#userModel .modal-body .lblJobTitle').html(d.jobTitle);
+            $('#userModel .modal-body .lblDepartment').html(d.department);
+            $('#userModel .modal-body .lblPhoneNumber').html(d.phoneNumber);
+            $('#userModel .modal-body .lblEmail').html(d.email);
+            $('#userModel .modal-body .lblRole').html(d.roles);
+            $('#userModel').modal('show');
+          }
+        }
+      )
+    }
+
+    $('#filter').on('click', function () {
+      if ($('#filterField').is(":visible")){
+        $('#filterField').addClass('hidden');
+      }
+      else
+        $('#filterField').removeClass('hidden');
+    });
   </script>
 }

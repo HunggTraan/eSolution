@@ -6,8 +6,8 @@
 }
 
 <div class="container-fluid">
-  <ol class="breadcrumb mb-4">
-    <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+  <ol class="breadcrumb mb-4 mt-4">
+    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Trang chủ</a></li>
     <li class="breadcrumb-item active">Tạo mới khai báo</li>
   </ol>
   <div class="card mb-4">
@@ -23,29 +23,35 @@
             <input asp-for="Code" class="form-control" />
             <span asp-validation-for="Code" class="text-danger"></span>
           </div>
+          <hr />
           <div class="form-group">
             <label asp-for="Name" class="control-label">Tên khai báo</label>
             <input asp-for="Name" class="form-control" />
             <span asp-validation-for="Name" class="text-danger"></span>
           </div>
+          <hr />
           <div class="form-group clockpicker">
             <label class="control-label">Thời gian vào</label>
             <input type="text" class="form-control" asp-for="TimeIn" value="@DateTime.Now.ToString("HH:mm")">
           </div>
+          <hr />
           <div class="form-group">
-            <label asp-for="ExceedTimeIn" class="control-label">Thời gian quá hạn ra</label>
+            <label asp-for="ExceedTimeIn" class="control-label">Thời gian muộn tối đa (phút)</label>
             <input asp-for="ExceedTimeIn" asp-format="" class="form-control" />
             <span asp-validation-for="ExceedTimeIn" class="text-danger"></span>
           </div>
+          <hr />
           <div class="form-group clockpicker">
             <label class="control-label">Thời gian ra</label>
             <input type="text" class="form-control" asp-for="TimeOut" value="@DateTime.Now.ToString("HH:mm")">
           </div>
+          <hr />
           <div class="form-group">
-            <label asp-for="ExceedTimeOut" class="control-label">Thời gian quá hạn ra</label>
-            <input asp-for="ExceedTimeOut" class="form-control" />
-            <span asp-validation-for="ExceedTimeOut" class="text-danger"></span>
+            <label asp-for="RestTime" class="control-label">Thời gian nghỉ</label>
+            <input asp-for="RestTime" class="form-control" />
+            <span asp-validation-for="RestTime" class="text-danger"></span>
           </div>
+          <hr />
           <div class="form-group">
             <input type="submit" value="Tạo" class="btn btn-primary" />
           </div>

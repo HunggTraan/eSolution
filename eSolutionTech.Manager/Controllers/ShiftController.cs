@@ -17,26 +17,82 @@ namespace eSolutionTech.Manager.Controllers
     private readonly ITimeOffApiClient _timeOffApiClient;
     private readonly ITimeOffTypeApiClient _timeOffTypeApiClient;
     private readonly IShiftApiClient _shiftApiClient;
+    private readonly IJobTitleApiClient _jobTitleApiClient;
+    private readonly IDepartmentApiClient _departmentApiClient;
+    private readonly IProjectApiClient _projectApiClient;
     private readonly IConfiguration _configuration;
 
     public ShiftController(ITimeOffApiClient TimeOffApiClient, ITimeOffTypeApiClient timeOffTypeApiClient,
-      IShiftApiClient shiftApiClient, IConfiguration configuration)
+      IShiftApiClient shiftApiClient, IJobTitleApiClient jobTitleApiClient,
+      IDepartmentApiClient departmentApiClient, IProjectApiClient projectApiClient,
+      IConfiguration configuration)
     {
       _configuration = configuration;
       _timeOffApiClient = TimeOffApiClient;
       _timeOffTypeApiClient = timeOffTypeApiClient;
       _shiftApiClient = shiftApiClient;
+      _jobTitleApiClient = jobTitleApiClient;
+      _departmentApiClient = departmentApiClient;
+      _projectApiClient = projectApiClient;
     }
-    public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 10)
+
+    protected void GetDataForFilter()
     {
+      try
+      {
+        var department = _departmentApiClient.GetAll();
+        ViewBag.Department = department.Result.Select(x => new SelectListItem()
+        {
+          Text = x.Name,
+          Value = x.Id.ToString()
+        });
+
+        var jobTitle = _jobTitleApiClient.GetAll();
+        ViewBag.JobTitle = jobTitle.Result.Select(x => new SelectListItem()
+        {
+          Text = x.Description,
+          Value = x.Id.ToString()
+        });
+
+        var project = _projectApiClient.GetAll();
+        ViewBag.Project = project.Result.Select(x => new SelectListItem()
+        {
+          Text = x.Name,
+          Value = x.Id.ToString()
+        });
+      }
+      catch (Exception ex)
+      {
+        return;
+      }
+    }
+
+    public async Task<IActionResult> Index(string code, string fullName, string jobTitleID, string departmentId, string projectId, string status,
+      string isLate, string fromDate, string toDate, int pageIndex = 1, int pageSize = 10)
+    {
+      GetDataForFilter();
       var request = new GetShiftPagingRequest()
       {
+        Code = code,
+        FullName = fullName,
+        DepartmentId = departmentId,
+        JobTitleId = jobTitleID,
+        IsLate = isLate,
+        ProjectId = projectId,
+        Status = status,
+        FromDate = fromDate,
+        ToDate = toDate,
         PageIndex = pageIndex,
         PageSize = pageSize
       };
 
+      ViewBag.FromDate = fromDate;
+      ViewBag.ToDate = toDate;
+      ViewBag.Code = code;
+      ViewBag.FullName = fullName;
+
+
       var data = await _shiftApiClient.GetPagings(request);
-      ViewBag.Keyword = keyword;
 
       if (TempData["result"] != null)
       {
@@ -45,7 +101,7 @@ namespace eSolutionTech.Manager.Controllers
       return View(data);
     }
 
-    public async Task<IActionResult> DetailsUser(string userId, int pageIndex = 1, int pageSize = 10)
+    public async Task<IActionResult> DetailsUser(string userId, string status, string isLate, string fromDate, string toDate, int pageIndex = 1, int pageSize = 10)
     {
       var request = new GetShiftPagingRequest()
       {

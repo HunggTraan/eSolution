@@ -70,8 +70,12 @@ namespace eSolutionTech.ViewModels.Catalog.TimeOffTypes
     {
       var query = from timeOffType in _context.TimeOffTypes
                   select new { timeOffType };
+
       if (!string.IsNullOrEmpty(request.KeyWord))
-        query = query.Where(x => x.timeOffType.Code.Contains(request.KeyWord) || x.timeOffType.Name.Contains(request.KeyWord));
+        query = query
+          .Where(x => x.timeOffType.Code.Contains(request.KeyWord) 
+                      || x.timeOffType.Name.Contains(request.KeyWord)
+                      );
 
       int totalRow = await query.CountAsync();
 

@@ -11,6 +11,6 @@ namespace eSolutionTech.ViewModels.Catalog.ShiftSettings
     public string TimeIn { get; set; }
     public int ExceedTimeIn { get; set; }
     public string TimeOut { get; set; }
-    public int ExceedTimeOut { get; set; }
+    public int RestTime { get; set; }
   }
 }

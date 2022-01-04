@@ -202,6 +202,7 @@ namespace eSolutionTech.Manager.Controllers
       foreach (var item in result.UserIds)
       {
         var userInfo = await _userApiClient.GetById(Guid.Parse(item));
+        if (!userInfo.IsSuccessed) continue;
         var userInfor = userInfo.ResultObj;
         userInfos.Add(userInfor);
       }

@@ -41,10 +41,52 @@ namespace eSolutionTech.ApiIntegration
     public async Task<PagedResult<ShiftManageViewModel>> GetPagings(GetShiftPagingRequest request)
     {
       var url = $"/api/shifts/paging?pageIndex={request.PageIndex}" + $"&pageSize={request.PageSize}";
+
       if (!string.IsNullOrEmpty(request.UserId))
       {
         url += $"&userId={request.UserId}";
       }
+
+      if (!string.IsNullOrEmpty(request.Code))
+      {
+        url += $"&code={request.Code}";
+      }
+
+      if (!string.IsNullOrEmpty(request.FullName))
+      {
+        url += $"&fullName={request.FullName}";
+      }
+
+      if (!string.IsNullOrEmpty(request.DepartmentId))
+      {
+        url += $"&departmentId={request.DepartmentId}";
+      }
+
+      if (!string.IsNullOrEmpty(request.JobTitleId))
+      {
+        url += $"&jobTitleId={request.JobTitleId}";
+      }
+
+      if (!string.IsNullOrEmpty(request.FromDate))
+      {
+        url += $"&fromDate={request.FromDate}";
+      }
+
+      if (!string.IsNullOrEmpty(request.ToDate))
+      {
+        url += $"&toDate={request.ToDate}";
+      }
+
+      if (!string.IsNullOrEmpty(request.Status))
+      {
+        url += $"&status={request.Status}";
+      }
+
+      if (!string.IsNullOrEmpty(request.IsLate))
+      {
+        url += $"&isLate={request.IsLate}";
+      }
+
       var data = await GetAsync<PagedResult<ShiftManageViewModel>>(url);
       return data;
     }

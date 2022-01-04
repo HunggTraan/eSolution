@@ -97,9 +97,26 @@ namespace eSolutionTech.ViewModels.Catalog.Projects
       }
     }
 
-    public Task<List<ProjectViewModel>> GetAll()
+    public async Task<List<ProjectViewModel>> GetAll()
     {
-      throw new NotImplementedException();
+      var query = from project in _context.Projects
+                  select new { project };
+      var data = await query.Select(x => new ProjectViewModel()
+      {
+        Id = x.project.Id,
+        Code = x.project.Code,
+        Name = x.project.Name,
+        Description = x.project.Description,
+        StartDate = x.project.StartDate,
+        EndDate = x.project.EndDate,
+        Status = x.project.Status,
+        shiftSettingId = x.project.shiftSettingId,
+        ManagerId = x.project.ManagerId
+      }).ToListAsync();
+
+      if (data != null)
+        return data;
+      else return new List<ProjectViewModel>();
     }
 
     public async Task<PagedResult<ProjectViewModel>> GetAllPaging(GetProjectPagingRequest request)

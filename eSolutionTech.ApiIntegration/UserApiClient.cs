@@ -92,8 +92,29 @@ namespace eSolutionTech.ApiIntegration
 
       client.BaseAddress = new Uri(_configuration[Constants.Constants.BASEADDRESS_API]);
       client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(Constants.Constants.Bearer, sessions);
-      var response = await client.GetAsync($"/api/users/paging?pageIndex=" +
-          $"{request.PageIndex}&pageSize={request.PageSize}&keyword={request.Keyword}");
+      string url = $"/api/users/paging?pageIndex={request.PageIndex}&pageSize={request.PageSize}";
+      if (!string.IsNullOrEmpty(request.Code))
+      {
+        url += $"&code={request.Code}";
+      }
+
+      if (!string.IsNullOrEmpty(request.FullName))
+      {
+        url += $"&fullName={request.FullName}";
+      }
+
+      if (!string.IsNullOrEmpty(request.DepartmentId))
+      {
+        url += $"&departmentId={request.DepartmentId}";
+      }
+
+      if (!string.IsNullOrEmpty(request.JobTitleId))
+      {
+        url += $"&jobTitleId={request.JobTitleId}";
+      }
+      var response = await client.GetAsync(url);
+
+
 
       var body = await response.Content.ReadAsStringAsync();
       var users = JsonConvert.DeserializeObject<ApiSuccessResult<PagedResult<UserViewModel>>>(body);

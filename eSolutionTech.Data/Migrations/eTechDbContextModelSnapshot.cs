@@ -196,7 +196,7 @@ namespace eSolutionTech.Data.Migrations
                     b.Property<DateTime>("EndDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 12, 27, 11, 47, 58, 357, DateTimeKind.Local).AddTicks(3918));
+                        .HasDefaultValue(new DateTime(2022, 1, 1, 14, 25, 34, 184, DateTimeKind.Local).AddTicks(3929));
 
                     b.Property<string>("ManagerId")
                         .HasColumnType("nvarchar(max)");
@@ -208,7 +208,7 @@ namespace eSolutionTech.Data.Migrations
                     b.Property<DateTime>("StartDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 12, 27, 11, 47, 58, 347, DateTimeKind.Local).AddTicks(8441));
+                        .HasDefaultValue(new DateTime(2022, 1, 1, 14, 25, 34, 175, DateTimeKind.Local).AddTicks(4775));
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -266,9 +266,8 @@ namespace eSolutionTech.Data.Migrations
                     b.Property<DateTime>("TimeOut")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("WorkingHours")
                         .HasColumnType("nvarchar(max)");
@@ -295,12 +294,12 @@ namespace eSolutionTech.Data.Migrations
                     b.Property<int>("ExceedTimeIn")
                         .HasColumnType("int");
 
-                    b.Property<int>("ExceedTimeOut")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RestTime")
+                        .HasColumnType("int");
 
                     b.Property<string>("TimeIn")
                         .IsRequired()
@@ -345,16 +344,14 @@ namespace eSolutionTech.Data.Migrations
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TimeOffType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("TimeOffType")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("ToDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -378,7 +375,7 @@ namespace eSolutionTech.Data.Migrations
                     b.Property<DateTime>("EndDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 12, 27, 11, 47, 58, 358, DateTimeKind.Local).AddTicks(6054));
+                        .HasDefaultValue(new DateTime(2022, 1, 1, 14, 25, 34, 185, DateTimeKind.Local).AddTicks(5640));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -391,7 +388,7 @@ namespace eSolutionTech.Data.Migrations
                     b.Property<DateTime>("StartDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 12, 27, 11, 47, 58, 358, DateTimeKind.Local).AddTicks(6432));
+                        .HasDefaultValue(new DateTime(2022, 1, 1, 14, 25, 34, 185, DateTimeKind.Local).AddTicks(6034));
 
                     b.Property<bool>("Unpaid")
                         .ValueGeneratedOnAdd()
@@ -420,16 +417,15 @@ namespace eSolutionTech.Data.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DepartmentId")
-                        .IsRequired()
+                    b.Property<int>("DepartmentId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("1");
+                        .HasColumnType("int")
+                        .HasDefaultValue(1);
 
                     b.Property<DateTime>("DoB")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2021, 12, 27, 4, 47, 58, 361, DateTimeKind.Utc).AddTicks(9609));
+                        .HasDefaultValue(new DateTime(2022, 1, 1, 7, 25, 34, 189, DateTimeKind.Utc).AddTicks(6593));
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
@@ -442,11 +438,10 @@ namespace eSolutionTech.Data.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<string>("JobTitleId")
-                        .IsRequired()
+                    b.Property<int>("JobTitleId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("1");
+                        .HasColumnType("int")
+                        .HasDefaultValue(1);
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");

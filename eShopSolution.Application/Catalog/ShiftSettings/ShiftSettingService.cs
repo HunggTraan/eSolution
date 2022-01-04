@@ -34,7 +34,7 @@ namespace eSolutionTech.ViewModels.Catalog.ShiftSettings
         TimeIn = request.TimeIn,
         TimeOut = request.TimeOut,
         ExceedTimeIn = request.ExceedTimeIn,
-        ExceedTimeOut = request.ExceedTimeOut,
+        RestTime = request.RestTime,
       };
       _context.ShiftSettings.Add(shiftSetting);
       return await _context.SaveChangesAsync();
@@ -63,7 +63,7 @@ namespace eSolutionTech.ViewModels.Catalog.ShiftSettings
         TimeIn = x.shiftSetting.TimeIn,
         TimeOut = x.shiftSetting.TimeOut,
         ExceedTimeIn = x.shiftSetting.ExceedTimeIn,
-        ExceedTimeOut = x.shiftSetting.ExceedTimeOut,
+        RestTime = x.shiftSetting.RestTime,
       }).ToListAsync();
 
       if (data != null)
@@ -93,12 +93,14 @@ namespace eSolutionTech.ViewModels.Catalog.ShiftSettings
             TimeIn = x.shiftSetting.TimeIn,
             TimeOut = x.shiftSetting.TimeOut,
             ExceedTimeIn = x.shiftSetting.ExceedTimeIn,
-            ExceedTimeOut = x.shiftSetting.ExceedTimeOut,
+            RestTime = x.shiftSetting.RestTime,
           }).ToListAsync();
 
       var pagedResult = new PagedResult<ShiftSettingViewModel>()
       {
         TotalRecords = totalRow,
+        PageSize = request.PageSize,
+        PageIndex = request.PageIndex,
         Items = data
       };
       return pagedResult;
@@ -116,7 +118,7 @@ namespace eSolutionTech.ViewModels.Catalog.ShiftSettings
         TimeIn = shiftSetting.TimeIn,
         TimeOut = shiftSetting.TimeOut,
         ExceedTimeIn = shiftSetting.ExceedTimeIn,
-        ExceedTimeOut = shiftSetting.ExceedTimeOut
+        RestTime = shiftSetting.RestTime
       };
       return shiftSettingViewModel;
     }
@@ -131,7 +133,7 @@ namespace eSolutionTech.ViewModels.Catalog.ShiftSettings
       shiftSetting.TimeIn = request.TimeIn;
       shiftSetting.TimeOut = request.TimeOut;
       shiftSetting.ExceedTimeIn = request.ExceedTimeIn;
-      shiftSetting.ExceedTimeOut = request.ExceedTimeOut;
+      shiftSetting.RestTime = request.RestTime;
 
       return await _context.SaveChangesAsync();
     }

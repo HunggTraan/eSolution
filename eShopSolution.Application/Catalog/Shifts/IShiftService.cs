@@ -9,7 +9,7 @@ namespace eSolutionTech.ViewModels.Catalog.Shifts
         Task<int> LoginShift(ShiftCreateRequest request);
         Task<int> LogoutShift(ShiftUpdateRequest request);
         Task<int> Delete(int shiftId);
-        ShiftViewModel GetAll(string userId);
+        Task<ShiftViewModel> GetAll(string userId);
         Task<PagedResult<ShiftManageViewModel>> GetAllPaging(GetShiftPagingRequest request);
         Task<ShiftViewModel> GetById(int shiftId);
     }

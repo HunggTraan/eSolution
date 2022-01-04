@@ -18,7 +18,7 @@ namespace eSolutionTech.Data.Configurations
             builder.Property(x => x.TimeIn).IsRequired(true);
             builder.Property(x => x.TimeOut).IsRequired(true);
             builder.Property(x => x.ExceedTimeIn).IsRequired(true);
-            builder.Property(x => x.ExceedTimeOut).IsRequired(true);
+            builder.Property(x => x.RestTime).IsRequired(true);
         }
     }
 }

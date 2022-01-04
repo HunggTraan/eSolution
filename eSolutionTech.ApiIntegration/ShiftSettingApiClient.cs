@@ -49,7 +49,7 @@ namespace eSolutionTech.ApiIntegration
       requestContent.Add(new StringContent(request.TimeIn.ToString()), "timeIn");
       requestContent.Add(new StringContent(request.TimeOut.ToString()), "timeOut");
       requestContent.Add(new StringContent(request.ExceedTimeIn.ToString()), "exceedTimeIn");
-      requestContent.Add(new StringContent(request.ExceedTimeOut.ToString()), "exceedTimeOut");
+      requestContent.Add(new StringContent(request.RestTime.ToString()), "restTime");
 
       var response = await client.PostAsync($"/api/shiftSettings/", requestContent);
       return response.IsSuccessStatusCode;
@@ -103,7 +103,7 @@ namespace eSolutionTech.ApiIntegration
       requestContent.Add(new StringContent(request.TimeIn.ToString()), "timeIn");
       requestContent.Add(new StringContent(request.TimeOut.ToString()), "timeOut");
       requestContent.Add(new StringContent(request.ExceedTimeIn.ToString()), "exceedTimeIn");
-      requestContent.Add(new StringContent(request.ExceedTimeOut.ToString()), "exceedTimeOut");
+      requestContent.Add(new StringContent(request.RestTime.ToString()), "exceedTimeOut");
 
       var response = await client.PutAsync($"/api/shiftSettings/" + request.Id, requestContent);
       return response.IsSuccessStatusCode;

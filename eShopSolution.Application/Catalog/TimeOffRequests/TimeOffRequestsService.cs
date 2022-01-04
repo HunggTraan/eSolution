@@ -27,8 +27,8 @@ namespace eSolutionTech.Application.Catalog.TimeOffRequests
       {
         Name = request.Name,
         Description = request.Description,
-        TimeOffType = request.TimeOffTypeId,
-        UserId = request.UserId,
+        TimeOffType = Int32.Parse(request.TimeOffTypeId),
+        UserId = Guid.Parse(request.UserId),
         FromDate = request.FromDate,
         ToDate = request.ToDate,
         Duration = request.Duration,
@@ -59,12 +59,12 @@ namespace eSolutionTech.Application.Catalog.TimeOffRequests
     public async Task<List<TimeOffViewModel>> GetAll(string userId)
     {
       var query = from timeOffRequest in _context.TimeOffRequests
-                  join timeOffType in _context.TimeOffTypes on timeOffRequest.TimeOffType equals timeOffType.Id.ToString()
+                  join timeOffType in _context.TimeOffTypes on timeOffRequest.TimeOffType equals timeOffType.Id
                   select new { timeOffRequest, timeOffType };
 
       if (!string.IsNullOrEmpty(userId))
       {
-        query = query.Where(x => x.timeOffRequest.UserId == userId);
+        query = query.Where(x => x.timeOffRequest.UserId == Guid.Parse(userId));
       }
 
       var data = await query
@@ -74,7 +74,7 @@ namespace eSolutionTech.Application.Catalog.TimeOffRequests
           Name = x.timeOffRequest.Name,
           Description = x.timeOffRequest.Description,
           TimeOffType = x.timeOffRequest.Name,
-          UserId = x.timeOffRequest.UserId,
+          UserId = x.timeOffRequest.UserId.ToString(),
           FromDate = x.timeOffRequest.FromDate,
           ToDate = x.timeOffRequest.ToDate,
           Duration = x.timeOffRequest.Duration,
@@ -93,23 +93,38 @@ namespace eSolutionTech.Application.Catalog.TimeOffRequests
       try
       {
         var query = from timeOffRequest in _context.TimeOffRequests
-                    join timeOffType in _context.TimeOffTypes on timeOffRequest.TimeOffType equals timeOffType.Id.ToString()
+                    join timeOffType in _context.TimeOffTypes on timeOffRequest.TimeOffType equals timeOffType.Id
                     select new { timeOffRequest, timeOffType };
 
         DateTime FromDate = DateTime.Now;
         DateTime ToDate = DateTime.Now;
 
         CultureInfo provider = CultureInfo.InvariantCulture;
-        if (!string.IsNullOrEmpty(request.FromDate) || !string.IsNullOrEmpty(request.ToDate))
+        if (!string.IsNullOrEmpty(request.FromDate))
         {
           FromDate = DateTime.ParseExact(request.FromDate, Constants.Constants.DateTimeFormatDate, provider);
-          ToDate = DateTime.ParseExact(request.ToDate, Constants.Constants.DateTimeFormatDate, provider);
-
-          query = query.Where(x => x.timeOffRequest.FromDate >= FromDate && x.timeOffRequest.ToDate <= ToDate);
         }
 
+        if (!string.IsNullOrEmpty(request.ToDate))
+        {
+          ToDate = DateTime.ParseExact(request.ToDate, Constants.Constants.DateTimeFormatDate, provider);
+        }
+
+        if (FromDate > ToDate)
+          FromDate = ToDate;
+
+        query = query.Where(x => x.timeOffRequest.FromDate >= FromDate && x.timeOffRequest.ToDate <= ToDate);
+
         if (!string.IsNullOrEmpty(request.UserId))
-          query = query.Where(x => x.timeOffRequest.UserId == request.UserId.ToString());
+          query = query.Where(x => x.timeOffRequest.UserId == Guid.Parse(request.UserId));
+
+        if (!string.IsNullOrEmpty(request.Status))
+          query = query.Where(x => x.timeOffRequest.Status == request.Status);
+
+        if (!string.IsNullOrEmpty(request.TimeOffTypeId))
+          query = query.Where(x => x.timeOffRequest.Status == request.TimeOffTypeId);
+
+        query = query.OrderByDescending(x => x.timeOffRequest.FromDate);
 
         int totalRow = await query.CountAsync();
 
@@ -121,7 +136,7 @@ namespace eSolutionTech.Application.Catalog.TimeOffRequests
               Name = x.timeOffRequest.Name,
               Description = x.timeOffRequest.Description,
               TimeOffType = x.timeOffRequest.Name,
-              UserId = x.timeOffRequest.UserId,
+              UserId = x.timeOffRequest.UserId.ToString(),
               FromDate = x.timeOffRequest.FromDate,
               ToDate = x.timeOffRequest.ToDate,
               Duration = x.timeOffRequest.Duration,
@@ -133,6 +148,8 @@ namespace eSolutionTech.Application.Catalog.TimeOffRequests
         var pagedResult = new PagedResult<TimeOffViewModel>()
         {
           TotalRecords = totalRow,
+          PageIndex = request.PageIndex,
+          PageSize = request.PageSize,
           Items = data
         };
         return pagedResult;
@@ -148,7 +165,7 @@ namespace eSolutionTech.Application.Catalog.TimeOffRequests
       try
       {
         var query = from timeOffRequest in _context.TimeOffRequests
-                    join timeOffType in _context.TimeOffTypes on timeOffRequest.TimeOffType equals timeOffType.Id.ToString()
+                    join timeOffType in _context.TimeOffTypes on timeOffRequest.TimeOffType equals timeOffType.Id
                     select new { timeOffRequest, timeOffType };
 
         DateTime FromDate = DateTime.Now;
@@ -159,12 +176,23 @@ namespace eSolutionTech.Application.Catalog.TimeOffRequests
         {
           FromDate = DateTime.ParseExact(request.FromDate, Constants.Constants.DateTimeFormatDate, provider);
           ToDate = DateTime.ParseExact(request.ToDate, Constants.Constants.DateTimeFormatDate, provider);
+
+          if (FromDate > ToDate)
+            FromDate = ToDate;
+
+          query = query.Where(x => x.timeOffRequest.FromDate >= FromDate && x.timeOffRequest.ToDate <= ToDate);
         }
 
-        if (string.IsNullOrEmpty(request.UserId))
-          query = query.Where(x => x.timeOffRequest.UserId == request.UserId.ToString());
+        if (!string.IsNullOrEmpty(request.UserId))
+          query = query.Where(x => x.timeOffRequest.UserId == Guid.Parse(request.UserId));
 
-        query = query.Where(x => x.timeOffRequest.FromDate >= FromDate && x.timeOffRequest.ToDate <= ToDate);
+        if (!string.IsNullOrEmpty(request.Status))
+          query = query.Where(x => x.timeOffRequest.Status == request.Status);
+
+        if (!string.IsNullOrEmpty(request.TimeOffTypeId))
+          query = query.Where(x => x.timeOffRequest.Status == request.TimeOffTypeId);
+
+        query = query.OrderByDescending(x => x.timeOffRequest.FromDate);
 
         int totalRow = await query.CountAsync();
 
@@ -176,7 +204,7 @@ namespace eSolutionTech.Application.Catalog.TimeOffRequests
               Name = x.timeOffRequest.Name,
               Description = x.timeOffRequest.Description,
               TimeOffType = x.timeOffRequest.Name,
-              UserId = x.timeOffRequest.UserId,
+              UserId = x.timeOffRequest.UserId.ToString(),
               FromDate = x.timeOffRequest.FromDate,
               ToDate = x.timeOffRequest.ToDate,
               Duration = x.timeOffRequest.Duration,
@@ -188,6 +216,8 @@ namespace eSolutionTech.Application.Catalog.TimeOffRequests
         var pagedResult = new PagedResult<TimeOffViewModel>()
         {
           TotalRecords = totalRow,
+          PageIndex = request.PageIndex,
+          PageSize = request.PageSize,
           Items = data
         };
         return pagedResult;
@@ -205,7 +235,7 @@ namespace eSolutionTech.Application.Catalog.TimeOffRequests
       if (timeOffRequest == null)
         return new TimeOffViewModel();
 
-      var user = await _context.Users.FindAsync(Guid.Parse(timeOffRequest.UserId));
+      var user = await _context.Users.FindAsync(timeOffRequest.UserId);
       if (user == null)
         return new TimeOffViewModel();
 
@@ -213,8 +243,8 @@ namespace eSolutionTech.Application.Catalog.TimeOffRequests
       {
         Name = timeOffRequest.Name,
         Description = timeOffRequest.Description,
-        TimeOffType = timeOffRequest.TimeOffType,
-        UserId = timeOffRequest.UserId,
+        TimeOffType = timeOffRequest.TimeOffType.ToString(),
+        UserId = timeOffRequest.UserId.ToString(),
         FromDate = timeOffRequest.FromDate,
         ToDate = timeOffRequest.ToDate,
         Duration = timeOffRequest.Duration,
@@ -234,8 +264,8 @@ namespace eSolutionTech.Application.Catalog.TimeOffRequests
 
       timeOffRequest.Name = request.Name;
       timeOffRequest.Description = request.Description;
-      timeOffRequest.TimeOffType = request.TimeOffTypeId;
-      timeOffRequest.UserId = request.UserId;
+      timeOffRequest.TimeOffType = Int32.Parse(request.TimeOffTypeId);
+      timeOffRequest.UserId = Guid.Parse(request.UserId);
       timeOffRequest.FromDate = request.FromDate;
       timeOffRequest.ToDate = request.ToDate;
       timeOffRequest.Duration = request.Duration;

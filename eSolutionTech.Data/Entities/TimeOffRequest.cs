@@ -14,9 +14,9 @@ namespace eSolutionTech.Data.Entities
     public string Name { get; set; }
     public string Description { get; set; }
     [Required]
-    public string TimeOffType { get; set; }
+    public int TimeOffType { get; set; }
     [Required]
-    public string UserId { get; set; }
+    public Guid UserId { get; set; }
     public DateTime FromDate { get; set; }
     public DateTime ToDate { get; set; }
     public string Duration { get; set; }

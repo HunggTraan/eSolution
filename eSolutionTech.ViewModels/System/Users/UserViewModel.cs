@@ -31,5 +31,10 @@ namespace eSolutionTech.ViewModels.System.Users
     public string Department { get; set; }
 
     public IList<string> Roles { get; set; }
+
+    public string DobString
+    {
+      get { return Dob.ToString("dd/MM/yyyy"); }
+    }
   }
 }

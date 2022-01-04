@@ -104,10 +104,32 @@ namespace eSolutionTech.ApiIntegration
     public async Task<PagedResult<TimeOffViewModel>> GetPagings(TimeOffPagingRequest request)
     {
       var url = $"/api/timeOffRequests/paging?pageIndex={request.PageIndex}" + $"&pageSize={request.PageSize}";
+
       if (!string.IsNullOrEmpty(request.UserId))
       {
         url += $"&userId={request.UserId}";
       }
+
+      if (!string.IsNullOrEmpty(request.FromDate))
+      {
+        url += $"&fromDate={request.FromDate}";
+      }
+
+      if (!string.IsNullOrEmpty(request.ToDate))
+      {
+        url += $"&toDate={request.ToDate}";
+      }
+
+      if (!string.IsNullOrEmpty(request.Status))
+      {
+        url += $"&status={request.Status}";
+      }
+
+      if (!string.IsNullOrEmpty(request.TimeOffTypeId))
+      {
+        url += $"&timeOffTypeId={request.TimeOffTypeId}";
+      }
+
       var data = await GetAsync<PagedResult<TimeOffViewModel>>(url);
       return data;
     }

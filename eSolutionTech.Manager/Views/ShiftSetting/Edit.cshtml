@@ -1,13 +1,13 @@
 ﻿@model eSolutionTech.ViewModels.Catalog.ShiftSettings.ShiftSettingUpdateRequest
 
 @{
-    ViewData["Title"] = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+  ViewData["Title"] = "Edit";
+  Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="container-fluid">
-  <ol class="breadcrumb mb-4">
-    <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+  <ol class="breadcrumb mb-4 mt-4">
+    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Trang chủ</a></li>
     <li class="breadcrumb-item active">Cập nhật khai báo</li>
   </ol>
   <div class="card mb-4">
@@ -18,7 +18,7 @@
       <div class="col-md-4">
         <form asp-action="Edit" enctype="multipart/form-data" method="post">
           <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input asp-for="Id" class="form-control" type="hidden"/>
+          <input asp-for="Id" class="form-control" type="hidden" />
           <div class="form-group">
             <label asp-for="Code" class="control-label">Mã loại khai báo</label>
             <input asp-for="Code" class="form-control" />
@@ -29,7 +29,7 @@
             <input asp-for="Name" class="form-control" />
             <span asp-validation-for="Name" class="text-danger"></span>
           </div>
-          <div class="form-group">
+          <div class="form-group clockpicker">
             <label asp-for="TimeIn" class="control-label">Thời gian vào</label>
             <input asp-for="TimeIn" class="form-control" />
             <span asp-validation-for="TimeIn" class="text-danger"></span>
@@ -39,15 +39,15 @@
             <input asp-for="ExceedTimeIn" class="form-control" />
             <span asp-validation-for="ExceedTimeIn" class="text-danger"></span>
           </div>
-          <div class="form-group">
+          <div class="form-group clockpicker">
             <label asp-for="TimeOut" class="control-label">Thời gian ra</label>
             <input asp-for="TimeOut" class="form-control" />
             <span asp-validation-for="TimeOut" class="text-danger"></span>
           </div>
           <div class="form-group">
-            <label asp-for="ExceedTimeOut" class="control-label">Thời gian quá hạn ra</label>
-            <input asp-for="ExceedTimeOut" class="form-control" />
-            <span asp-validation-for="ExceedTimeOut" class="text-danger"></span>
+            <label asp-for="RestTime" class="control-label">Thời gian nghỉ</label>
+            <input asp-for="RestTime" class="form-control" />
+            <span asp-validation-for="RestTime" class="text-danger"></span>
           </div>
           <div class="form-group">
             <input type="submit" value="Save" class="btn btn-primary" />
@@ -58,4 +58,24 @@
   </div>
 </div>
 
-
+@section Styles {
+  <link href="~/libs/daterangepicker/daterangepicker.css" rel="stylesheet" />
+  <link href="~/libs/clockpicker/clockpicker.css" rel="stylesheet" />
+}
+@section Scripts{
+  <script src="~/libs/clockpicker/clockpicker.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    $('.clockpicker').clockpicker({
+      donetext: 'Done',
+      twelvehour: false,
+      autoclose: false,
+      leadingZeroHours: false,
+      afterHourSelect: function () {
+        $('.clockpicker').clockpicker('realtimeDone');
+      },
+      afterMinuteSelect: function () {
+        $('.clockpicker').clockpicker('realtimeDone');
+      }
+    });
+  </script>
+}

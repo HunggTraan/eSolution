@@ -77,7 +77,7 @@ namespace eSolutionTech.Manager.Controllers
         TimeIn = shiftSetting.TimeIn,
         TimeOut = shiftSetting.TimeOut,
         ExceedTimeIn = shiftSetting.ExceedTimeIn,
-        ExceedTimeOut = shiftSetting.ExceedTimeOut
+        RestTime = shiftSetting.RestTime
       };
       return View(editVm);
     }

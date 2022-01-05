@@ -120,66 +120,114 @@
 @section Scripts{
   <script type="text/javascript">
     $(document).ready(function () {
-      $('#dataTable').dataTable({
-        "paging": false
-      });
-      Toast();
+      initDataTable();
     });
 
+
     function login(ids) {
-          var model = {};
-          model.ProjectId = ids;
-          model.UserId = "";
+      $.confirm({
+        title: 'Thông báo!',
+        content: 'Xác nhận chấm công vào?',
+        buttons: {
+          confirm: {
+            text: 'Xác nhận',
+            keys: ['enter'],
+            action: function () {
+              var model = {};
+              model.ProjectId = ids;
+              model.UserId = "";
 
-          var items = JSON.stringify(model);
+              var items = JSON.stringify(model);
 
-         $.ajax({
-            type: "POST",
-            url: '@Url.Action("Create", "Shift")',
-            data: items,
-            //dataType: "text",
-            contentType: "application/json; charset=utf-8",
-             success: function (response) {
-             var data = JSON.parse(response);
-             if (data.code == 2 || data.code == 0) {
-               toastr.error(data.value, "Thông báo");
-             }
-             else {
-               toastr.success(data.value, "Thông báo");
-             }
-            },
-            error: function () {
-              toastr.error("Có lỗi xảy ra", "Thông báo");
+              $.ajax({
+                type: "POST",
+                url: '@Url.Action("Create", "Shift")',
+                data: items,
+                //dataType: "text",
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                  var data = JSON.parse(response);
+                  if (data.code == 2 || data.code == 0) {
+                    $.alert({
+                      title: 'Thông báo!',
+                      content: data.value,
+                    });
+                  }
+                  else {
+                    $.alert({
+                      title: 'Thông báo!',
+                      content: data.value,
+                    });
+                  }
+                },
+                error: function () {
+                  $.alert({
+                    title: 'Thông báo!',
+                    content: 'Có lỗi xảy ra, vui lòng thử lại sau!',
+                  });
+                }
+              });
             }
-        });
-    };
-
+          },
+          cancel: {
+            text: 'Huỷ bỏ',
+            action: function () { }
+          }
+        }
+      });
+    }
     function logout(ids) {
-          var model = {};
-          model.ProjectId = ids;
-          model.UserId = "";
+      $.confirm({
+        title: 'Thông báo!',
+        content: 'Xác nhận chấm công ra?',
+        buttons: {
+          confirm: {
+            text: 'Xác nhận',
+            keys: ['enter'],
+            action: function () {
+              var model = {};
+              model.ProjectId = ids;
+              model.UserId = "";
 
-          var items = JSON.stringify(model);
-         $.ajax({
-            type: "POST",
-            url: '@Url.Action("Edit", "Shift")',
-            data: items,
-            //dataType: "text",
-            contentType: "application/json; charset=utf-8",
-           success: function (response) {
-             var data = JSON.parse(response);
-             if (data.code == 2 || data.code == 0 || data.code == 3) {
-               toastr.error(data.value, "Thông báo");
-             }
-             else {
-               toastr.success(data.value, "Thông báo");
-             }
-           },
-           error: function () {
-             toastr.error("Có lỗi xảy ra", "Thông báo");
-           }
-        });
-    };
+              var items = JSON.stringify(model);
+
+              $.ajax({
+                type: "POST",
+                url: '@Url.Action("Edit", "Shift")',
+                data: items,
+                //dataType: "text",
+                contentType: "application/json; charset=utf-8",
+                success: function (response) {
+                  var data = JSON.parse(response);
+                  if (data.code == 2 || data.code == 0 || data.code == 3) {
+                    $.alert({
+                      title: 'Thông báo!',
+                      content: data.value,
+                    });
+                  }
+                  else {
+                    $.alert({
+                      title: 'Thông báo!',
+                      content: data.value,
+                    });
+                  }
+                },
+                error: function () {
+                  $.alert({
+                    title: 'Thông báo!',
+                    content: 'Có lỗi xảy ra, vui lòng thử lại sau!',
+                  });
+                }
+              });
+            }
+          },
+          cancel: {
+            text: 'Huỷ bỏ',
+            action: function () { }
+          }
+        }
+      });
+    }
   </script>
 }
 

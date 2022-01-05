@@ -18,7 +18,12 @@ namespace eSolutionTech.Manager.Controllers
     {
       var sessions = context.HttpContext.Session.GetString("Token");
 
-      ViewBag.Role = getRole();
+      var role = getRole();
+      if (role == null)
+      {
+        RedirectToAction("Unauthorized", "Home");
+      }
+      ViewBag.Role = role;
       if (sessions == null)
       {
         context.Result = new RedirectToActionResult("Unauthorized", "Home", null);
@@ -30,9 +35,11 @@ namespace eSolutionTech.Manager.Controllers
     {
       try
       {
-        ClaimsPrincipal currentUser = this.User;
-        string isAdmin = currentUser.IsInRole("Administrator") ? "Admin" : "User";
-        return isAdmin;
+        var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+        var claim = claimsIdentity.FindFirst(ClaimTypes.Role);
+        if (claim == null) return string.Empty;
+        string Role = claim.Value;
+        return Role;
       }
       catch (Exception ex)
       {

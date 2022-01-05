@@ -278,9 +278,9 @@ namespace eSolutionTech.ViewModels.Catalog.Shifts
       try
       {
         var shift = await GetAll(request.UserId);
-        var shiftUpdate = await _context.Shifts.FindAsync(shift.Id);
-        if (shiftUpdate != null)
+        if (shift != null)
         {
+          var shiftUpdate = await _context.Shifts.FindAsync(shift.Id);
           if (shiftUpdate.ProjectId.ToString() != request.ProjectId)
           {
             return 4;// khác project

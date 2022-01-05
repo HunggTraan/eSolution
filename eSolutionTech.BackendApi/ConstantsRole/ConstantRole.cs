@@ -7,6 +7,7 @@ namespace eSolutionTech.BackendApi.Constants
 {
   public class ConstantRole
   {
+    public static string CONNECTIONSTRING = "eTechDatabase";
     public const string Admin = "Administrator";
     public const string Manager = "Administrator";
     public const string Employee = "Administrator";

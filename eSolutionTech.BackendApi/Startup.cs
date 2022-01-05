@@ -44,7 +44,7 @@ namespace eSolutionTech.BackendApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<eTechDbContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString(Constants.CONNECTIONSTRING)));
+                    options.UseSqlServer(Configuration.GetConnectionString(Constants.ConstantRole.CONNECTIONSTRING)));
 
             services.AddIdentity<User, Role>()
                 .AddEntityFrameworkStores<eTechDbContext>()

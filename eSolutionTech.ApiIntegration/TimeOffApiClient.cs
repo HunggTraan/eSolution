@@ -141,6 +141,27 @@ namespace eSolutionTech.ApiIntegration
       {
         url += $"&userId={request.UserId}";
       }
+
+      if (!string.IsNullOrEmpty(request.FromDate))
+      {
+        url += $"&fromDate={request.FromDate}";
+      }
+
+      if (!string.IsNullOrEmpty(request.ToDate))
+      {
+        url += $"&toDate={request.ToDate}";
+      }
+
+      if (!string.IsNullOrEmpty(request.Status))
+      {
+        url += $"&status={request.Status}";
+      }
+
+      if (!string.IsNullOrEmpty(request.TimeOffTypeId))
+      {
+        url += $"&timeOffTypeId={request.TimeOffTypeId}";
+      }
+
       var data = await GetAsync<PagedResult<TimeOffViewModel>>(url);
       return data;
     }

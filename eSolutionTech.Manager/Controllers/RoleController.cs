@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace eSolutionTech.Manager.Controllers
 {
-  public class RoleController : Controller
+  public class RoleController : BaseController
   {
     private readonly IRoleApiClient _roleApiClient;
     private readonly IConfiguration _configuration;

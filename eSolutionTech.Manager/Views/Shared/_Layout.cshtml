@@ -58,14 +58,14 @@
               <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
               Trang chủ
             </a>
-            @if (ViewBag.Role == "Admin")
+            @if (ViewBag.Role == "Administrator")
             {
               <a class="nav-link" href="@Url.Action("Index", "Role")">
                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                Trang chủ
+                Quản lý vai trò
               </a>
             }
-            @if (ViewBag.Role == "Admin")
+            @if (ViewBag.Role == "Administrator" || ViewBag.Role == "Manager")
             {
               <div class="sb-sidenav-menu-heading">Quản lý</div>
               <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
@@ -112,7 +112,7 @@
                 </nav>
               </div>
             }
-            @if (ViewBag.Role == "User" || ViewBag.Role == "Admin")
+            @if (ViewBag.Role != "Manager")
             {
               <div class="sb-sidenav-menu-heading">Nhân viên</div>
               <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayoutUser" aria-expanded="false" aria-controls="collapseLayouts">
